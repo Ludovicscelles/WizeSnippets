@@ -82,7 +82,7 @@ console.log(counter()); // 2
   },
 ];
 
-export const getAllSnippets = (req: Request, res: Response) => {
+export const getSnippets = (req: Request, res: Response) => {
   res.json(snippets);
 };
 

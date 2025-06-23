@@ -1,6 +1,8 @@
 import express from "express";
 import dotenv from "dotenv";
 import userRouter from "./routes/userRoutes";
+import snippetRouter from "./routes/snippetRoutes";
+import commentRouter from "./routes/commentRoutes";
 dotenv.config();
 
 const app = express();
@@ -15,6 +17,10 @@ app.get("/", (req, res) => {
 
 app.use("/api/users", userRouter);
 
+app.use("/api/snippets", snippetRouter);
+
+app.use("/api/comments", commentRouter);
+
 app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+  console.log(`Server is running on port ${PORT}`);
 });

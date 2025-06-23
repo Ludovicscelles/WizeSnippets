@@ -88,7 +88,7 @@ console.log(oddNumbers); // [1, 3, 5]
 
 ];
 
-export const getAllComments = (req: Request, res: Response) => {
+export const getComments = (req: Request, res: Response) => {
   res.json(snippets);
 };
 

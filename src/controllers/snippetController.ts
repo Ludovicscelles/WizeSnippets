@@ -1,13 +1,5 @@
 import { Request, Response } from "express";
-
-type Snippet = {
-  id: number;
-  title: string;
-  code: string;
-  message: string;
-  createdAt: Date;
-  user_id: number;
-};
+import { Snippet } from "../models/Snippet";
 
 const snippets: Snippet[] = [
   {

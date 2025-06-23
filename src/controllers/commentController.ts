@@ -1,13 +1,5 @@
 import { Request, Response } from "express";
-
-type Comment = {
-  id: number;
-  suggestedCode: string;
-  message: string;
-  createdAt: Date;
-  snippetId: number;
-  userId: number;
-};
+import { Comment } from "../models/Comment";
 
 const comments: Comment[] = [
   {

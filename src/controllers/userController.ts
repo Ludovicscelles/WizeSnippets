@@ -93,11 +93,14 @@ const users: User[] = [
   },
 ];
 
-export const getUsers = (req: Request, res: Response) => {
+export const getUsers = (req: Request, res: Response<User[]>) => {
   res.json(users);
 };
 
-export const getUserById = (req: Request, res: Response) => {
+export const getUserById = (
+  req: Request<{ id: string }>,
+  res: Response<User | { message: string }>
+) => {
   const userId = parseInt(req.params.id, 10);
   const user = users.find((u) => u.id === userId);
 

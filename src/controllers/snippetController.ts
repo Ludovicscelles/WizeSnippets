@@ -1,6 +1,15 @@
 import { Request, Response } from "express";
 
-const snippets = [
+type Snippet = {
+  id: number;
+  title: string;
+  code: string;
+  message: string;
+  createdAt: Date;
+  user_id: number;
+};
+
+const snippets: Snippet[] = [
   {
     id: 1,
     title: "Comprendre l'asynchronisme avec async/await",
@@ -82,11 +91,14 @@ console.log(counter()); // 2
   },
 ];
 
-export const getSnippets = (req: Request, res: Response) => {
+export const getSnippets = (req: Request, res: Response<Snippet[]>) => {
   res.json(snippets);
 };
 
-export const getSnippetById = (req: Request, res: Response) => {
+export const getSnippetById = (
+  req: Request<{ id: string }>,
+  res: Response<Snippet | { message: string }>
+) => {
   const snippetId = parseInt(req.params.id, 10);
   const snippet = snippets.find((s) => s.id === snippetId);
 

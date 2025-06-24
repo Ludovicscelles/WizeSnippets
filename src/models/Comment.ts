@@ -1,4 +1,4 @@
-export interface Comment {
+export interface CommentType {
   id: number;
   suggestedCode: string;
   message: string;

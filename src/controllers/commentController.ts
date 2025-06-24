@@ -1,7 +1,11 @@
 import { Request, Response } from "express";
-import { Comment } from "../models/Comment";
+import { CommentType } from "../models/Comment";
+import { Comment } from "../entities/Comment";
+import { AppDataSource } from "../data-source";
 
-const comments: Comment[] = [
+const commentRepository = AppDataSource.getRepository(Comment);
+
+const comments: CommentType[] = [
   {
     id: 1,
     suggestedCode: `
@@ -93,20 +97,48 @@ console.log(oddNumbers); // [1, 3, 5]
   },
 ];
 
-export const getComments = (req: Request, res: Response<Comment[]>) => {
-  res.json(comments);
+export const getComments = async (
+  req: Request,
+  res: Response<CommentType[]>
+) => {
+  const comments = await commentRepository.find({
+    relations: ["user", "snippet"],
+  });
+
+  const safeComments: CommentType[] = comments.map((comment) => ({
+    id: comment.id,
+    suggestedCode: comment.suggestedCode,
+    message: comment.message,
+    createdAt: comment.createdAt,
+    snippetId: comment.snippet.id,
+    userId: comment.user.id,
+  }));
+
+  res.json(safeComments);
 };
 
-export const getCommentById = (
+export const getCommentById = async (
   req: Request<{ id: string }>,
-  res: Response<Comment | { message: string }>
+  res: Response<CommentType | { message: string }>
 ) => {
-  const commentId = parseInt(req.params.id, 10);
-  const comment = comments.find((c) => c.id === commentId);
+  const id = parseInt(req.params.id, 10);
+  const comment = await commentRepository.findOne({
+    where: { id },
+    relations: ["user", "snippet"],
+  });
 
   if (!comment) {
     return res.status(404).json({ message: "Comment not found" });
   }
 
-  res.json(comment);
+  const safeComment: CommentType = {
+    id: comment.id,
+    suggestedCode: comment.suggestedCode,
+    message: comment.message,
+    createdAt: comment.createdAt,
+    snippetId: comment.snippet.id,
+    userId: comment.user.id,
+  };
+
+  res.json(safeComment);
 };

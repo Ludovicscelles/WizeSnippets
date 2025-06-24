@@ -1,4 +1,4 @@
-export interface Snippet {
+export interface SnippetType {
   id: number;
   title: string;
   code: string;

@@ -1,7 +1,11 @@
 import { Request, Response } from "express";
-import { Snippet } from "../models/Snippet";
+import { SnippetType } from "../models/Snippet";
+import { Snippet } from "../entities/Snippet";
+import { AppDataSource } from "../data-source";
 
-const snippets: Snippet[] = [
+const snippetRepository = AppDataSource.getRepository(Snippet);
+
+const snippets: SnippetType[] = [
   {
     id: 1,
     title: "Comprendre l'asynchronisme avec async/await",
@@ -83,20 +87,47 @@ console.log(counter()); // 2
   },
 ];
 
-export const getSnippets = (req: Request, res: Response<Snippet[]>) => {
-  res.json(snippets);
+export const getSnippets = async (
+  req: Request,
+  res: Response<SnippetType[]>
+) => {
+  const snippets = await snippetRepository.find({
+    relations: ["user"],
+  });
+
+  const safeSnippets: SnippetType[] = snippets.map((snippet) => ({
+    id: snippet.id,
+    title: snippet.title,
+    code: snippet.code,
+    message: snippet.message,
+    createdAt: snippet.createdAt,
+    user_id: snippet.user.id,
+  }));
+  res.json(safeSnippets);
 };
 
-export const getSnippetById = (
+export const getSnippetById = async (
   req: Request<{ id: string }>,
   res: Response<Snippet | { message: string }>
 ) => {
-  const snippetId = parseInt(req.params.id, 10);
-  const snippet = snippets.find((s) => s.id === snippetId);
+  const id = parseInt(req.params.id, 10);
+  const snippet = await snippetRepository.findOne({
+    where: { id },
+    relations: ["user"],
+  });
 
   if (!snippet) {
     return res.status(404).json({ message: "Snippet not found" });
   }
 
-  res.json(snippet);
+  const safeSnippet: SnippetType = {
+    id: snippet.id,
+    title: snippet.title,
+    code: snippet.code,
+    message: snippet.message,
+    createdAt: snippet.createdAt,
+    user_id: snippet.user.id,
+  };
+
+  res.json(safeSnippet);
 };

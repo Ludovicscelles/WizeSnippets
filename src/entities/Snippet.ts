@@ -20,7 +20,7 @@ export class Snippet {
   @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
   createdAt!: Date;
 
-  @ManyToOne(() => User, (user) => user.snippets)
+  @ManyToOne(() => User, (user) => user.snippets, { nullable: false, onDelete: "CASCADE" })
   user!: User;
 
   @OneToMany(() => Comment, (comment) => comment.snippet)

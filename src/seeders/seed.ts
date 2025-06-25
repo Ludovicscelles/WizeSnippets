@@ -1,6 +1,7 @@
 import { AppDataSource } from "../data-source";
 import { userSeeder } from "./userSeeder";
 import { snippetSeeder } from "./snippetSeeder";
+import { commentSeeder } from "./commentSeeder";
 
 async function seedDatabase() {
   try {
@@ -11,6 +12,8 @@ async function seedDatabase() {
     await userSeeder();
     // Call the snippet seeder
     await snippetSeeder();
+    // Call the comment seeder
+    await commentSeeder();
 
     console.log("Base de données initialisée avec succès");
   } catch (error) {

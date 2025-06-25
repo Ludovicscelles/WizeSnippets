@@ -26,6 +26,7 @@ fetchData().then(data => console.log(data));
         "J’ai du mal à comprendre ce qu’il se passe si `fetch` échoue. Est-ce que je dois forcément utiliser un try/catch ?",
       createdAt: new Date(),
       userId: userRefs["user9"],
+      refName: "snippet1",
     },
     {
 
@@ -38,6 +39,7 @@ console.log(doubled); // [2, 4, 6, 8, 10]
       message: "Est-ce que je peux utiliser map sur un objet ?",
       createdAt: new Date(),
       userId: userRefs["user2"],
+      refName: "snippet2",
     },
     {
 
@@ -56,6 +58,7 @@ riskyFunction();
       message: "Comment puis-je gérer les erreurs de manière plus élégante ?",
       createdAt: new Date(),
       userId: userRefs["user3"],
+      refName: "snippet3",
     },
     {
 
@@ -69,6 +72,7 @@ console.log(evenNumbers); // [2, 4]
         "Est-ce que je peux utiliser filter pour modifier les éléments d'un tableau ?",
       createdAt: new Date(),
       userId: userRefs["user4"],
+      refName: "snippet4",
     },
     {
 
@@ -88,10 +92,13 @@ console.log(counter()); // 2
       message: "Comment fonctionnent les closures en JavaScript ?",
       createdAt: new Date(),
       userId: userRefs["user5"],
+      refName: "snippet5",
     },
   ];
 
-  for (const snippetData of snippets) {
+  const snippetRefs: Record<string, number> = {};
+
+  for (const {refName, ...snippetData} of snippets) {
     const user = await userRepository.findOneBy({ id: snippetData.userId });
     if (!user) {
       console.warn(
@@ -129,16 +136,13 @@ console.log(counter()); // 2
         user: user,
       });
       await snippetRepository.save(snippet);
-      console.log(`Snippet avec l'ID ${snippetData.title} créé avec succès`);
+      console.log(`Snippet ${snippetData.title} créé avec succès`);
     }
-    console.log("Seeding des snippets terminé");
-  }
-  console.log("Vérification des snippets enregistrés en base :");
-  const persistedSnippets = await snippetRepository.find({
-    relations: ["user"],
-  });
 
-  for (const s of persistedSnippets) {
-    console.log(`Snippet ${s.id} → user:`, s.user?.id ?? "null");
+    if (refName) {
+      snippetRefs[refName] = snippet.id;
+    }
   }
-};
+    console.log("Seeding des snippets terminé");
+  return snippetRefs;
+  };

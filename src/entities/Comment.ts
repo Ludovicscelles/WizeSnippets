@@ -1,10 +1,5 @@
 import "reflect-metadata";
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  ManyToOne,
-} from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from "typeorm";
 import { Snippet } from "./Snippet";
 import { User } from "./User";
 
@@ -12,9 +7,6 @@ import { User } from "./User";
 export class Comment {
   @PrimaryGeneratedColumn()
   id!: number;
-
-  @Column()
-  title!: string;
 
   @Column("text")
   suggestedCode!: string;

@@ -6,7 +6,10 @@
   "scripts": {
     "dev": "ts-node-dev --respawn src/index.ts",
     "build": "tsc",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "seed": "ts-node src/seeders/seed.ts",
+    "clear": "ts-node src/seeders/clearDatabase.ts",
+    "reset": "npm run clear && npm run seed"
   },
   "keywords": [],
   "author": "",
@@ -21,6 +24,7 @@
   "devDependencies": {
     "@types/express": "^5.0.3",
     "@types/node": "^24.0.3",
+    "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.8.3"
   }

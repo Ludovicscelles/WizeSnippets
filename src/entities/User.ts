@@ -1,7 +1,14 @@
 import "reflect-metadata";
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from "typeorm";
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  OneToMany,
+  BeforeInsert,
+} from "typeorm";
 import { Snippet } from "./Snippet";
 import { Comment } from "./Comment";
+import * as argon2 from "argon2";
 
 @Entity()
 export class User {
@@ -29,4 +36,8 @@ export class User {
   @OneToMany(() => Comment, (comment) => comment.user)
   comments!: Comment[];
 
+  @BeforeInsert()
+  async hashPassword() {
+    this.password = await argon2.hash(this.password);
+  }
 }

@@ -4,7 +4,6 @@ import {
   Column,
   PrimaryGeneratedColumn,
   ManyToOne,
-  OneToMany,
 } from "typeorm";
 import { Snippet } from "./Snippet";
 import { User } from "./User";

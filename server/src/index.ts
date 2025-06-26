@@ -30,4 +30,5 @@ AppDataSource.initialize()
       console.log(`Serveur lancé sur http://localhost:${PORT}`);
     });
   })
+
   .catch((error) => console.error("Erreur de connexion BDD :", error));

@@ -2,7 +2,16 @@
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        quicksand: ["Quicksand", "sans-serif"],
+      },
+      colors: {
+        primary: "#000000",
+        bluewize: "#2A7FFF",
+      }
+
+    },
   },
   plugins: [],
 };

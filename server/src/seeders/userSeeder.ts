@@ -90,7 +90,9 @@ export const userSeeder = async () => {
 
   const userRefs: Record<string, number> = {};
 
-  for (const { refName, ...userData } of users) {
+  for (const {refName, ...userData} of users) {
+
+    
     const existingUser = await userRepository.findOneBy({
       email: userData.email,
     });
@@ -108,7 +110,7 @@ export const userSeeder = async () => {
         `Utilisateur  ${userData.firstname} ${userData.lastname} existe déjà, pas de création`
       );
       savedUser = existingUser;
-      console.log("mot de passe :", savedUser.password);
+    
     }
     if (refName) {
       userRefs[refName] = savedUser.id;

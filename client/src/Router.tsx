@@ -1,0 +1,27 @@
+import { createBrowserRouter } from "react-router-dom";
+import IntroPage from "./pages/IntroPage";
+import Snippets from "./pages/Snippets";
+import DetailSnippet from "./pages/DetailSnippet";
+import Inscription from "./pages/Inscription";
+import Connexion from "./pages/Connexion";
+import Layout from "./components/Layout";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <IntroPage />,
+  },
+
+  {
+    path: "/",
+    element: <Layout />,
+    children: [
+      { path: "snippets", element: <Snippets />},
+      { path: "snippets/:id", element: <DetailSnippet /> },
+      { path: "inscription", element: <Inscription /> },
+      { path: "connexion", element: <Connexion /> },
+    ],
+  },
+]);
+
+export default router;

@@ -40,12 +40,7 @@ export default function Header() {
           <h1 className="text-white text-center text-[4rem] font-bold mt-10 mb-10 max-w-none">
             Partage ton code&nbsp;!
           </h1>
-          <img
-            src={avatar}
-            alt="icon avatar"
-            className="w-20 h-auto"
-            onClick={handleClickAvatar}
-          />
+          <img src={avatar} alt="icon avatar" className="w-20 h-auto" onClick={handleClickAvatar} />
         </div>
       ) : (
         <div className="flex w-full flex-col items-center justify-between px-4">
@@ -57,12 +52,7 @@ export default function Header() {
               alt="LogoWizeSnippets"
               className="w-[200px] h-auto"
             />
-            <img
-              src={avatar}
-              alt="icon avatar"
-              className="w-16 h-auto mt-5"
-              onClick={handleClickAvatar}
-            />
+            <img src={avatar} alt="icon avatar" className="w-16 h-auto mt-5" onClick={handleClickAvatar} />
           </div>
           <h1 className="text-white text-center text-[4rem] font-bold mt-10 mb-10 max-w-xs">
             Partage ton code&nbsp;!

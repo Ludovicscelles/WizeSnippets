@@ -41,7 +41,7 @@ export const commentSeeder = async () => {
       message:
         "Oui, pour bien gérer les erreurs (réseau, parsing, etc.), l’usage de `try/catch` est recommandé avec `async/await`. Cela te permet d’avoir un comportement contrôlé si quelque chose échoue.",
       createdAt: new Date(),
-      snippetId: userRefs["snippet1"],
+      snippetId: snippetRefs["snippet1"],
       userId: userRefs["user2"],
       refName: "snippet1",
     },
@@ -54,7 +54,7 @@ export const commentSeeder = async () => {
       message:
         "Non, `map` est une méthode des tableaux et ne peut pas être utilisée directement sur un objet. Tu peux convertir un objet en tableau avec `Object.values()` ou `Object.entries()` avant d'utiliser `map`.",
       createdAt: new Date(),
-      snippetId: userRefs["snippet2"],
+      snippetId: snippetRefs["snippet2"],
       userId: userRefs["user3"],
       refName: "snippet2",
     },
@@ -73,7 +73,7 @@ export const commentSeeder = async () => {
       message:
         "Pour une gestion plus élégante des erreurs, tu peux utiliser des classes d'erreur personnalisées ou des bibliothèques comme `winston` pour la journalisation. Cela  te permet de mieux structurer et gérer les erreurs dans ton application.",
       createdAt: new Date(),
-      snippetId: userRefs["snippet3"],
+      snippetId: snippetRefs["snippet3"],
       userId: userRefs["user4"],
       refName: "snippet3",
     },
@@ -86,7 +86,7 @@ export const commentSeeder = async () => {
       message:
         "Non, `filter` est utilisé pour créer un nouveau tableau avec les éléments qui passent un test spécifique. Si tu veux modifier les éléments, tu devrais utiliser `map`. Par exemple, si tu veux doubler les nombres pairs, tu peux combiner `filter` et `map` comme ceci :\n\n```javascript\nconst doubledEvenNumbers = numbers.filter(num => num % 2 === 0).map(num => num * 2);\nconsole.log(doubledEvenNumbers); // [4, 8]\n```",
       createdAt: new Date(),
-      snippetId: userRefs["snippet4"],
+      snippetId: snippetRefs["snippet4"],
       userId: userRefs["user5"],
       refName: "snippet4",
     },
@@ -99,10 +99,55 @@ export const commentSeeder = async () => {
       message:
         "Oui, tu peux utiliser `filter` pour créer un nouveau tableau contenant uniquement les nombres impairs. La méthode `filter` crée un nouveau tableau avec tous les éléments qui passent le test implémenté par la fonction fournie. Dans cet exemple, la fonction teste si chaque nombre est impair en vérifiant si le reste de la division par 2 n'est pas égal à 0.",
       createdAt: new Date(),
-      snippetId: userRefs["snippet5"],
+      snippetId: snippetRefs["snippet5"],
       userId: userRefs["user6"],
       refName: "snippet5",
     },
+
+    {
+  suggestedCode: `
+  async function getUserInfo(userId) {
+    try {
+      const response = await fetch(\`https://api.example.com/users/\${userId}\`);
+      if (!response.ok) {
+        throw new Error(\`Erreur HTTP ! Statut : \${response.status}\`);
+      }
+      const userInfo = await response.json();
+      return userInfo;
+    } catch (error) {
+      console.error("Erreur lors de la récupération des informations utilisateur :", error);
+      return null;
+    }
+  }
+  
+  getUserInfo(42).then(user => {
+    if (user) {
+      console.log("Utilisateur récupéré :", user);
+    } else {
+      console.log("Impossible de récupérer les informations de l'utilisateur.");
+    }
+  });
+  `,
+  message:
+    "Exactement, encapsuler la logique `fetch` dans un `try/catch` permet de traiter proprement les cas d’échec (réseau, statut HTTP, JSON invalide). C’est essentiel pour éviter les plantages silencieux.",
+  createdAt: new Date(),
+  snippetId: snippetRefs["snippet1"],
+  userId: userRefs["user4"],
+  refName: "snippet1",
+},
+{
+  suggestedCode: `
+  const numbers = [10, 15, 20, 25, 30];
+  const multiplesOfTen = numbers.filter(n => n % 10 === 0);
+  console.log(multiplesOfTen); // [10, 20, 30]
+  `,
+  message:
+    "Oui, ici `filter` permet d’extraire uniquement les nombres qui sont des multiples de 10. C’est parfait quand tu veux **sélectionner** des éléments selon un critère. Pour **transformer** ces éléments ensuite, pense à chaîner un `map`.",
+  createdAt: new Date(),
+  snippetId: snippetRefs["snippet4"],
+  userId: userRefs["user7"],
+  refName: "snippet4",
+}
   ];
   const commentRefs: Record<string, number> = {};
 

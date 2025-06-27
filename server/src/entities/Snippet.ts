@@ -38,11 +38,24 @@ export class Snippet {
   @IsDate()
   createdAt!: Date;
 
+  @Column({ nullable: true, type: "varchar", length: 150 })
+  @IsString()
+  @Length(1, 150)
+  pseudo?: string;
+
+  @Column({ nullable: false, type: "varchar", length: 150 })
+  @IsString()
+  @IsNotEmpty()
+  @Length(1, 150)
+  firstname!: string;
+
   @ManyToOne(() => User, (user) => user.snippets, {
     nullable: false,
     onDelete: "CASCADE",
   })
   user!: User;
+
+
 
   @OneToMany(() => Comment, (comment) => comment.snippet)
   comments!: Comment[];

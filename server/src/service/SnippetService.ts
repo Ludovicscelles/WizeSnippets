@@ -12,8 +12,10 @@ export class SnippetService {
       title,
       message,
       code,
-      createdAt, // Assuming createdAt is set to current time
+      createdAt, 
       user_id: user.id,
+      pseudo: user.pseudo,
+      firstname: user.firstname 
     }));
   }
 
@@ -30,6 +32,8 @@ export class SnippetService {
       message: snippet.message,
       createdAt: snippet.createdAt,
       user_id: snippet.user.id,
+      pseudo: snippet.user.pseudo,
+      firstname: snippet.user.firstname 
     };
   }
 }

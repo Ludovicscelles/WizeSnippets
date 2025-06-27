@@ -9,25 +9,37 @@ import {
 import { Snippet } from "./Snippet";
 import { Comment } from "./Comment";
 import * as argon2 from "argon2";
+import { IsString, IsEmail, Length, IsNotEmpty } from "class-validator";
 
 @Entity()
 export class User {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @Column()
+  @Column({ nullable: false, type: "varchar", length: 150 })
+  @IsString()
+  @IsNotEmpty()
+  @Length(1, 150)
   firstname!: string;
 
-  @Column()
+  @Column({ nullable: false, type: "varchar", length: 150 })
+  @IsString()
+  @IsNotEmpty()
+  @Length(1, 150)
   lastname!: string;
 
-  @Column({ unique: true })
+  @Column({ nullable: false, unique: true, type: "varchar", length: 150 })
+  @IsEmail()
+  @Length(1, 150)
+  @IsNotEmpty()
   email!: string;
 
-  @Column({ unique: true })
-  pseudo!: string;
+  @Column({ nullable: true, unique: true, type: "varchar", length: 150 })
+  @IsString()
+  @Length(1, 150)
+  pseudo?: string;
 
-  @Column()
+  @Column({ nullable: false, type: "varchar", length: 255 })
   password!: string;
 
   @OneToMany(() => Snippet, (snippet) => snippet.user)

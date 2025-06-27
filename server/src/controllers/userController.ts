@@ -1,14 +1,17 @@
 import { Request, Response } from "express";
 import { AppDataSource } from "../data-source";
 import { User } from "../entities/User";
-import { UserType } from "../models/User";
+import { PublicUserType } from "../models/User";
 
 const userRepository = AppDataSource.getRepository(User);
 
-export const getUsers = async (req: Request, res: Response<UserType[]>) => {
+export const getUsers = async (
+  req: Request,
+  res: Response<PublicUserType[]>
+) => {
   const users = await userRepository.find();
 
-  const safeUsers: UserType[] = users.map(
+  const safeUsers: PublicUserType[] = users.map(
     ({ id, firstname, lastname, email, pseudo }) => ({
       id,
       firstname,
@@ -23,7 +26,7 @@ export const getUsers = async (req: Request, res: Response<UserType[]>) => {
 
 export const getUserById = async (
   req: Request<{ id: string }>,
-  res: Response<UserType | { message: string }>
+  res: Response<PublicUserType | { message: string }>
 ) => {
   const id = parseInt(req.params.id, 10);
   const user = await userRepository.findOneBy({ id });
@@ -32,7 +35,7 @@ export const getUserById = async (
     return res.status(404).json({ message: "User not found" });
   }
 
-  const safeUser: UserType = {
+  const safeUser: PublicUserType = {
     id: user.id,
     firstname: user.firstname,
     lastname: user.lastname,

@@ -4,6 +4,7 @@ import userRouter from "./routes/userRoutes";
 import snippetRouter from "./routes/snippetRoutes";
 import commentRouter from "./routes/commentRoutes";
 import { AppDataSource } from "./data-source";
+import cors from "cors";
 
 dotenv.config();
 
@@ -15,6 +16,13 @@ AppDataSource.initialize()
 
     const app = express();
     app.use(express.json());
+
+    app.use(
+      cors({
+        origin: process.env.FRONTEND_URL,
+        credentials: true,
+      })
+    );
 
     app.get("/", (req, res) => {
       res.send("Hello, World!");

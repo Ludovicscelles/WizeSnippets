@@ -1,47 +1,31 @@
 import { Request, Response } from "express";
-import { AppDataSource } from "../data-source";
-import { User } from "../entities/User";
-import { PublicUserType } from "../models/User";
+import { UserService } from "../service/UserService";
 
-const userRepository = AppDataSource.getRepository(User);
-
-export const getUsers = async (
-  req: Request,
-  res: Response<PublicUserType[]>
-) => {
-  const users = await userRepository.find();
-
-  const safeUsers: PublicUserType[] = users.map(
-    ({ id, firstname, lastname, email, pseudo }) => ({
-      id,
-      firstname,
-      lastname,
-      email,
-      pseudo,
-    })
-  );
-
-  res.json(safeUsers);
+export const getUsers = async (req: Request, res: Response) => {
+  try {
+    const users = await UserService.getAll();
+    res.json(users);
+  } catch (e) {
+    res.status(500).json({ message: "Internal server error" });
+  }
 };
 
 export const getUserById = async (
   req: Request<{ id: string }>,
-  res: Response<PublicUserType | { message: string }>
+  res: Response
 ) => {
   const id = parseInt(req.params.id, 10);
-  const user = await userRepository.findOneBy({ id });
-
-  if (!user) {
-    return res.status(404).json({ message: "User not found" });
+  if (isNaN(id)) {
+    return res.status(400).json({ message: "Invalid user ID" });
   }
 
-  const safeUser: PublicUserType = {
-    id: user.id,
-    firstname: user.firstname,
-    lastname: user.lastname,
-    email: user.email,
-    pseudo: user.pseudo,
-  };
-
-  res.json(safeUser);
+  try {
+    const user = await UserService.getById(id);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    res.json(user);
+  } catch (e) {
+    res.status(500).json({ message: "Internal server error" });
+  }
 };

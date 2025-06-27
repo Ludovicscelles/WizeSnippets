@@ -3,6 +3,8 @@ export interface UserType {
   firstname: string;
   lastname: string;
   email: string;
-  pseudo: string;
-  password?: string;
+  pseudo?: string;
+  password: string;
 }
+
+export type PublicUserType = Omit<UserType, "password">;

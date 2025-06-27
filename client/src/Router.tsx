@@ -16,10 +16,17 @@ const router = createBrowserRouter([
     path: "/",
     element: <Layout />,
     children: [
-      { path: "snippets", element: <Snippets />, 
-        loader: () => fetch(`${import.meta.env.VITE_API_URL}/snippets`)
+      {
+        path: "snippets",
+        element: <Snippets />,
+        loader: () => fetch(`${import.meta.env.VITE_API_URL}/snippets`),
       },
-      { path: "snippets/:id", element: <DetailSnippet /> },
+      {
+        path: "snippets/:id",
+        element: <DetailSnippet />,
+        loader: ({ params }) =>
+          fetch(`${import.meta.env.VITE_API_URL}/snippets/${params.id}`),
+      },
       { path: "inscription", element: <Inscription /> },
       { path: "connexion", element: <Connexion /> },
     ],

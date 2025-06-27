@@ -7,4 +7,5 @@ router.get("/", getUsers);
 
 router.get("/:id", getUserById as unknown as RequestHandler);
 
+
 export default router;

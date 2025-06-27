@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import userRouter from "./routes/userRoutes";
 import snippetRouter from "./routes/snippetRoutes";
 import commentRouter from "./routes/commentRoutes";
+import authRouter from "./routes/authRoutes";
 import { AppDataSource } from "./data-source";
 import cors from "cors";
 
@@ -33,6 +34,8 @@ AppDataSource.initialize()
     app.use("/api/snippets", snippetRouter);
 
     app.use("/api/comments", commentRouter);
+
+    app.use("/api/auth", authRouter);
 
     app.listen(PORT, () => {
       console.log(`Serveur lancé sur http://localhost:${PORT}`);

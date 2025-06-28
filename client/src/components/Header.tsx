@@ -3,9 +3,13 @@ import avatar from "../assets/avatar_icon.svg";
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../service/UseAuth";
+import { LogoutButton } from "./LogoutButton";
 
 export default function Header() {
   const [isDesktop, setIsDesktop] = useState(window.innerWidth > 768);
+
+  const [hovered, setHovered] = useState(false);
+
   const navigate = useNavigate();
 
   const updateMedia = useCallback(() => {
@@ -28,7 +32,7 @@ export default function Header() {
     navigate("/connexion");
   };
 
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
 
   const greetingName = user?.pseudo || user?.firstname || "à vous";
 
@@ -46,12 +50,24 @@ export default function Header() {
             Partage ton code&nbsp;!
           </h1>
           <div className="w-16 mr-10 flex flex-col items-center justify-center">
-            <img
-              src={avatar}
-              alt="icon avatar"
-              className="w-20 h-auto"
-              onClick={handleClickAvatar}
-            />
+            <div
+              className="relative flex justify-center items-center w-20 h-20 rounded-full cursor-pointer hover:opacity-80 transition-opacity duration-300"
+              onMouseEnter={() => setHovered(true)}
+              onMouseLeave={() => setHovered(false)}
+            >
+              <img
+                src={avatar}
+                alt="icon avatar"
+                className="w-20 h-auto"
+                onClick={handleClickAvatar}
+              />
+              {user && hovered && (
+                <LogoutButton
+                  onLogout={logout}
+                  isMobile={false}
+                />
+              )}
+            </div>
             {user && (
               <div className="text-white text-lg flex flex-col items-center">
                 Bonjour&nbsp;
@@ -71,14 +87,26 @@ export default function Header() {
               className="w-[200px] h-auto"
             />
             <div className="w-12 flex flex-col items-center justify-center">
-              <img
-                src={avatar}
-                alt="icon avatar"
-                className="w-12 h-auto mt-5"
-                onClick={handleClickAvatar}
-              />
+              <div
+                className="relative flex justify-center items-center w-20 h-20 rounded-full cursor-pointer hover:opacity-80 transition-opacity duration-300"
+                onMouseEnter={() => setHovered(true)}
+                onMouseLeave={() => setHovered(false)}
+              >
+                <img
+                  src={avatar}
+                  alt="icon avatar"
+                  className="w-12 h-auto mt-5"
+                  onClick={handleClickAvatar}
+                />
+                {user && hovered && (
+                  <LogoutButton
+                    onLogout={logout}
+                    isMobile={true}
+                  />
+                )}
+              </div>
               {user && (
-                <div className="flex flex-col text-white text-xs text-center leading-tight">
+                <div className="flex flex-col text-white font-bold text-xs text-center leading-tight">
                   Bonjour&nbsp;
                   <span>{greetingName}</span>
                 </div>

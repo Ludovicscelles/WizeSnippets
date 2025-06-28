@@ -40,7 +40,7 @@ export function SnippetsArray({
     <>
       {isMobile ? (
         <div className="flex justify-center  justify-center w-full bg-black mb-5">
-          <div className="p-4 bg-black text-white border-4 border-bluewize rounded-lg w-[80%]">
+          <div className="p-4 bg-black text-white border-4 border-bluewize rounded-lg">
             <h2 className="text-center text-4xl font-bold mb-4">Snippets</h2>
 
             <table className="w-full table-auto text-left border-collapse">

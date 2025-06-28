@@ -33,6 +33,13 @@ export default function Connexion() {
       toast.success("Connexion réussie !");
 
       localStorage.setItem("token", token);
+      localStorage.setItem(
+        "user",
+        JSON.stringify({
+          pseudo: user.pseudo,
+          firstname: user.firstname,
+        })
+      );
 
       console.log("Connexion réussie :", user);
     } catch (error: unknown) {
@@ -84,7 +91,10 @@ export default function Connexion() {
 
       <p className="text-center mt-6 text-sm">
         Envie de nous rejoindre ?
-        <a href="#" className="font-semibold underline hover:text-bluewize">
+        <a
+          href="/inscription"
+          className="font-semibold underline hover:text-bluewize"
+        >
           créer un compte
         </a>
       </p>

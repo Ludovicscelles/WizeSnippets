@@ -8,3 +8,5 @@ export interface UserType {
 }
 
 export type PublicUserType = Omit<UserType, "password">;
+
+export type RegisterInput = Omit<UserType, "id">;

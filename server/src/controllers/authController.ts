@@ -23,3 +23,20 @@ export const login = async (req: Request, res: Response) => {
       .json({ message: error.message || "Identifiants invalides" });
   }
 };
+
+export const register = async (req: Request, res: Response) => {
+  try {
+    const userData = req.body;
+
+    const { token, user } = await AuthService.register(userData);
+
+    res.status(201).json({
+      message: "Inscription réussie",
+      token,
+      user,
+    });
+  } catch (error: any) {
+    console.error("Erreur inscription", error);
+    res.status(400).json({ message: error.message || "Erreur d'inscription" });
+  }
+};

@@ -1,8 +1,11 @@
 import { useState } from "react";
+import { useAuth } from "../service/UseAuth";
 import axios from "axios";
 import { toast } from "react-toastify";
 
 export default function Connexion() {
+  const { login } = useAuth();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -32,15 +35,14 @@ export default function Connexion() {
 
       toast.success("Connexion réussie !");
 
-      localStorage.setItem("token", token);
-      localStorage.setItem(
-        "user",
-        JSON.stringify({
+      login(
+        {
           pseudo: user.pseudo,
           firstname: user.firstname,
-        })
+        },
+        token
       );
-
+      
       console.log("Connexion réussie :", user);
     } catch (error: unknown) {
       console.error("Erreur de connexion :", error);

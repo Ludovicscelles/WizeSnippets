@@ -1,8 +1,11 @@
 import { useState } from "react";
+import { useAuth } from "../service/UseAuth";
 import axios from "axios";
 import { toast } from "react-toastify";
 
 export default function Inscription() {
+  const { login } = useAuth();
+
   const [pseudo, setPseudo] = useState("");
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
@@ -59,13 +62,13 @@ export default function Inscription() {
       const { token, user } = response.data;
 
       toast.success("Inscription réussie !");
-      localStorage.setItem("token", token);
-      localStorage.setItem(
-        "user",
-        JSON.stringify({
+
+      login(
+        {
           pseudo: user.pseudo,
-          firstname: user.firstnmame,
-        })
+          firstname: user.firstname,
+        },
+        token
       );
 
       console.log("Inscription réussie :", user);

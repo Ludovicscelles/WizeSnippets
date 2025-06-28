@@ -2,11 +2,7 @@ import logo from "../assets/logo.svg";
 import avatar from "../assets/avatar_icon.svg";
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
-type UserInfo = {
-  pseudo: string;
-  firstname: string;
-};
+import { useAuth } from "../service/UseAuth";
 
 export default function Header() {
   const [isDesktop, setIsDesktop] = useState(window.innerWidth > 768);
@@ -32,8 +28,8 @@ export default function Header() {
     navigate("/connexion");
   };
 
-  const userInfo = localStorage.getItem("user");
-  const user: UserInfo | null = userInfo ? JSON.parse(userInfo) : null;
+  const { user } = useAuth();
+
   const greetingName = user?.pseudo || user?.firstname || "à vous";
 
   return (
@@ -82,7 +78,7 @@ export default function Header() {
                 onClick={handleClickAvatar}
               />
               {user && (
-                <div className="flex flex-col text-white text-xs text-center leading-tight"> 
+                <div className="flex flex-col text-white text-xs text-center leading-tight">
                   Bonjour&nbsp;
                   <span>{greetingName}</span>
                 </div>

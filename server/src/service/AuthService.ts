@@ -1,6 +1,6 @@
 import { AppDataSource } from "../data-source";
 import { User } from "../entities/User";
-import { PublicUserType } from "../models/User";
+import { PublicUserType, RegisterInput } from "../models/User";
 import argon2 from "argon2";
 import jwt from "jsonwebtoken";
 
@@ -33,6 +33,42 @@ export class AuthService {
         pseudo: user.pseudo,
         firstname: user.firstname,
         lastname: user.lastname,
+      },
+    };
+  }
+
+  static async register(
+    userData: RegisterInput
+  ): Promise< {token: string; user:PublicUserType}> {
+    const userRepository = AppDataSource.getRepository(User);
+    const existingUser = await userRepository.findOneBy({ email: userData.email });
+
+    if (existingUser) {
+      throw new Error("Email déjà utilisé");
+    }
+
+    const hashedPassword = await argon2.hash(userData.password);
+    const newUser = userRepository.create({
+      ...userData,
+      password: hashedPassword,
+    });
+
+    await userRepository.save(newUser);
+
+    const token = jwt.sign(
+      { userId: newUser.id },
+      process.env.JWT_SECRET || "dev-secret",
+      { expiresIn: "1h" }
+    );
+
+    return {
+      token,
+      user: {
+        id: newUser.id,
+        email: newUser.email,
+        pseudo: newUser.pseudo,
+        firstname: newUser.firstname,
+        lastname: newUser.lastname,
       },
     };
   }

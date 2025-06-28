@@ -23,7 +23,7 @@ export function DetailCardSnippet({
 }) {
   return (
     <div className="flex justify-center w-full bg-black mt-10 mt-10 mb-5">
-      <div className="bg-black text-white border-4 border-bluewize rounded-lg w-[80%] p-4 md:p-10 ">
+      <div className="bg-black text-white border-4 border-bluewize rounded-lg p-4 md:p-10 ">
         <h2 className="text-center text-5xl font-bold mb-8">
           Détail du Snippet
         </h2>

@@ -70,6 +70,8 @@ export class CommentService {
       message: savedComment.message,
       createdAt: savedComment.createdAt,
       userId: user.id,
+      userPseudo: user.pseudo,
+      userFirstname: user.firstname,
       snippetId: snippet.id,
     };
   }

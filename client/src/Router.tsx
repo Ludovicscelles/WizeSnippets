@@ -4,6 +4,8 @@ import Snippets from "./pages/Snippets";
 import DetailSnippet from "./pages/DetailSnippet";
 import Inscription from "./pages/Inscription";
 import Connexion from "./pages/Connexion";
+import AddASnippet from "./pages/AddASnippet";
+import AddComment from "./pages/AddComment";
 import Layout from "./components/Layout";
 
 const router = createBrowserRouter([
@@ -27,8 +29,15 @@ const router = createBrowserRouter([
         loader: ({ params }) =>
           fetch(`${import.meta.env.VITE_API_URL}/snippets/${params.id}`),
       },
+      {
+        path: "snippets/:id/ajouter-commentaire",
+        element: <AddComment />,
+        loader: ({ params }) =>
+          fetch(`${import.meta.env.VITE_API_URL}/snippets/${params.id}`),
+      },
       { path: "inscription", element: <Inscription /> },
       { path: "connexion", element: <Connexion /> },
+      { path: "ajouter-snippet", element: <AddASnippet /> },
     ],
   },
 ]);

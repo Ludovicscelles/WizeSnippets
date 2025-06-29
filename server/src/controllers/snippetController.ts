@@ -29,3 +29,31 @@ export const getSnippetById = async (
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
+export const createSnippet = async (
+  req: Request<{}, {}, { title: string; message: string; code: string }>,
+  res: Response
+) => {
+  const { title, message, code } = req.body;
+
+  if (!title || !message || !code) {
+    return res.status(400).json({ message: "All fields are required" });
+  }
+
+  if (!req.user) {
+    return res.status(401).json({ message: "Non autorisé" });
+  }
+
+  try {
+    const snippetData = {
+      title,
+      message,
+      code,
+      user_id: req.user.id, // Assuming req.user is set by authentication middleware
+    };
+    const newSnippet = await SnippetService.create(snippetData);
+    res.status(201).json(newSnippet);
+  } catch (e) {
+    res.status(500).json({ message: "Internal server error" });
+  }
+};

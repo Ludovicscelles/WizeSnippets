@@ -1,6 +1,9 @@
 import eye from "../assets/eye_icon.svg";
+import chevrons from "../assets/chevron_icon.png";
+import cross from "../assets/cross_icon.svg";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../service/UseAuth";
 
 export function SnippetsArray({
   snippets: snippets,
@@ -16,13 +19,16 @@ export function SnippetsArray({
     firstname: string;
   }[];
 }) {
+  const { isLogged } = useAuth();
+
   const [isMobile, setIsMobile] = useState(false);
+
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768);
     };
 
-    handleResize(); // Set initial state
+    handleResize(); 
     window.addEventListener("resize", handleResize);
 
     return () => {
@@ -105,6 +111,20 @@ export function SnippetsArray({
               ))}
             </tbody>
           </table>
+          <div className="flex justify-center items-center h-24 gap-20">
+            <p className="text-white text-2xl font-bold">
+              Envie de partager un snippet ?
+            </p>
+            <img src={chevrons} alt="chevrons " className="w-24 h-24" />
+            <img
+              src={cross}
+              alt="croix bleu pour ajouter un snippet"
+              className="w-14 h-14 cursor-pointer"
+              onClick={() =>
+                isLogged ? navigate("/ajouter-snippet") : navigate("/connexion")
+              }
+            />
+          </div>
         </div>
       )}
     </>

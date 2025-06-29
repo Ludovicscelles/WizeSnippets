@@ -1,6 +1,11 @@
 import { AppDataSource } from "../data-source";
 import { Snippet } from "../entities/Snippet";
-import { SnippetType, SnippetWithCommentsType } from "../models/Snippet";
+import { User } from "../entities/User";
+import {
+  SnippetType,
+  SnippetWithCommentsType,
+  SnippetInputType,
+} from "../models/Snippet";
 
 export class SnippetService {
   static async getAll(): Promise<SnippetType[]> {
@@ -40,6 +45,39 @@ export class SnippetService {
         suggestedCode: comment.suggestedCode,
         message: comment.message,
       })),
+    };
+  }
+
+  static async create(snippetData: SnippetInputType): Promise<SnippetType> {
+    const user = await AppDataSource.getRepository(User).findOneBy({
+      id: snippetData.user_id,
+    });
+
+    if (!user) {
+      throw new Error("Utilisateur non trouvé");
+    }
+
+    const snippet = AppDataSource.getRepository(Snippet).create({
+      title: snippetData.title,
+      message: snippetData.message,
+      code: snippetData.code,
+      firstname: user.firstname,
+      pseudo: user.pseudo,
+      user,
+    });
+
+    const savedSnippet =
+      await AppDataSource.getRepository(Snippet).save(snippet);
+
+    return {
+      id: savedSnippet.id,
+      title: savedSnippet.title,
+      message: savedSnippet.message,
+      code: savedSnippet.code,
+      createdAt: savedSnippet.createdAt,
+      user_id: user.id,
+      pseudo: user.pseudo,
+      firstname: user.firstname,
     };
   }
 }

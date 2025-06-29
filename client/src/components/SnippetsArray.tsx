@@ -28,7 +28,7 @@ export function SnippetsArray({
       setIsMobile(window.innerWidth < 768);
     };
 
-    handleResize(); 
+    handleResize();
     window.addEventListener("resize", handleResize);
 
     return () => {
@@ -45,8 +45,8 @@ export function SnippetsArray({
   return (
     <>
       {isMobile ? (
-        <div className="flex justify-center  justify-center w-full bg-black mb-5">
-          <div className="p-4 bg-black text-white border-4 border-bluewize rounded-lg">
+        <div className="flex justify-center  justify-center w-full  bg-black mb-5">
+          <div className="p-4 bg-black text-white border-4  border-bluewize rounded-lg">
             <h2 className="text-center text-4xl font-bold mb-4">Snippets</h2>
 
             <table className="w-full table-auto text-left border-collapse">
@@ -75,6 +75,22 @@ export function SnippetsArray({
                 ))}
               </tbody>
             </table>
+            <div className="flex flex-col h-full items-center mt-10 mb-10 h-24 gap-5">
+              <p className="text-white text-xl font-bold">
+                Envie de partager un snippet ?
+              </p>
+              <img src={chevrons} alt="chevrons " className="w-24 h-24 transform rotate-90" />
+              <img
+                src={cross}
+                alt="croix bleu pour ajouter un snippet"
+                className="w-14 h-14 cursor-pointer"
+                onClick={() =>
+                  isLogged
+                    ? navigate("/ajouter-snippet")
+                    : navigate("/connexion")
+                }
+              />
+            </div>
           </div>
         </div>
       ) : (

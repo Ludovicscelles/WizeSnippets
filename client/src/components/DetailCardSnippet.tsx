@@ -1,5 +1,9 @@
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import oneDark from "react-syntax-highlighter/dist/esm/styles/prism/one-dark";
+import cross from "../assets/cross_icon.svg";
+import chevrons from "../assets/chevron_icon.png";
+import { useAuth } from "../service/UseAuth";
+import { useNavigate } from "react-router-dom";
 
 export function DetailCardSnippet({
   snippet,
@@ -21,15 +25,19 @@ export function DetailCardSnippet({
     }[];
   };
 }) {
+  const { isLogged } = useAuth();
+  const navigate = useNavigate();
+  const id = snippet.id;
+
   return (
-    <div className="flex justify-center w-full bg-black mt-10 mt-10 mb-5">
-      <div className="bg-black text-white border-4 border-bluewize rounded-lg p-4 md:p-10 ">
-        <h2 className="text-center text-5xl font-bold mb-8">
+    <div className="flex justify-center w-full px-4 bg-black mt-10 mb-5">
+      <div className="bg-black text-white border-4 border-bluewize rounded-lg p-4 md:p-10 max-w-5xl w-full min-w-[320px]">
+        <h2 className="text-center text-xl md:text-5xl font-bold mb-8">
           Détail du Snippet
         </h2>
         <div className="mb-4">
-          <h3 className="text-2xl font-semibold">{snippet.title}</h3>
-          <p className="text-base text-white font-semi-bold">
+          <h3 className="text-xl md:text-2xl font-semibold">{snippet.title}</h3>
+          <p className="text-xs md:text-base text-white font-semi-bold">
             {snippet.message}
           </p>
         </div>
@@ -41,7 +49,7 @@ export function DetailCardSnippet({
             Par: {snippet.pseudo || snippet.firstname || "Anonyme"}
           </p>
         </div>
-        <pre className="bg-gray-800 w-[50vw] p-4 rounded-lg overflow-x-auto">
+        <pre className="bg-gray-800 w-full p-4 rounded-lg overflow-x-auto">
           <SyntaxHighlighter
             language="javascript"
             style={oneDark}
@@ -57,7 +65,7 @@ export function DetailCardSnippet({
           snippet.Comments.map((comment, index) => (
             <div
               key={index}
-              className="mb-4 p-4 bg-gray-700 text-white font-bold rounded-lg"
+              className="mb-4 p-4 w-full bg-gray-700 text-white font-bold rounded-lg"
             >
               <p className="text-sm ">
                 Par: {comment.pseudo || comment.firstname || "Anonyme"}
@@ -83,7 +91,27 @@ export function DetailCardSnippet({
             Aucun commentaire pour ce snippet.
           </p>
         )}
-        <div className="w-full h-10"></div>
+
+        <div className="flex flex-col gap-10 md:flex-row h-full items-center md:justify-center mt-10 mb-10 md:h-24 md:gap-20">
+          <p className="text-white text-center text-2xl font-bold">
+            {`Apporter une solution à ${snippet.pseudo || snippet.firstname || "Anonyme"}`}
+          </p>
+          <img
+            src={chevrons}
+            alt="chevrons "
+            className="w-24 h-24 transform rotate-90 md:rotate-0"
+          />
+          <img
+            src={cross}
+            alt="croix bleu pour ajouter un snippet"
+            className="w-14 h-14 cursor-pointer"
+            onClick={() =>
+              isLogged
+                ? navigate(`/snippets/${id}/ajouter-commentaire`)
+                : navigate("/connexion")
+            }
+          />
+        </div>
       </div>
     </div>
   );

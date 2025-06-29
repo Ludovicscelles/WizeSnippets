@@ -6,3 +6,10 @@ export interface CommentType {
   snippetId: number;
   userId: number;
 }
+
+export type CommentInputType = {
+  suggestedCode: string;
+  message: string;
+  snippetId: number;
+  userId: number;
+};

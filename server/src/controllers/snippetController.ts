@@ -57,3 +57,5 @@ export const createSnippet = async (
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
+

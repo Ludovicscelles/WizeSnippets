@@ -41,7 +41,7 @@ export function DetailCardSnippet({
             Par: {snippet.pseudo || snippet.firstname || "Anonyme"}
           </p>
         </div>
-        <pre className="bg-gray-800 p-4 rounded-lg overflow-x-auto">
+        <pre className="bg-gray-800 w-[50vw] p-4 rounded-lg overflow-x-auto">
           <SyntaxHighlighter
             language="javascript"
             style={oneDark}

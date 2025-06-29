@@ -25,3 +25,10 @@ export interface SnippetWithCommentsType extends SnippetType {
     message: string;
   }[];
 }
+
+export type SnippetInputType = {
+  title: string;
+  code: string;
+  message: string;
+  user_id: number;
+}

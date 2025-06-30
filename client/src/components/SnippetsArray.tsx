@@ -42,6 +42,26 @@ export function SnippetsArray({
     navigate(`/snippets/${snippetId}`);
   };
 
+  const renderedSnippets = snippets.map((snippet) => (
+    <tr key={snippet.id} className="hover:bg-gray-800">
+      {!isMobile && (
+        <td className="px-4 py-2">
+          {snippet.pseudo ? snippet.pseudo : snippet.firstname}
+        </td>
+      )}
+
+      <td className="px-4 py-2">{snippet.title}</td>
+      <td className="px-4 py-2 text-center">
+        <img
+          src={eye}
+          alt="Voir"
+          className="w-6 h-6 inline-block cursor-pointer"
+          onClick={() => handleSnippetClick(snippet.id)}
+        />
+      </td>
+    </tr>
+  ));
+
   return (
     <>
       {isMobile ? (
@@ -57,29 +77,17 @@ export function SnippetsArray({
                 </tr>
               </thead>
 
-              <tbody className="text-sm text-bold">
-                {snippets.map((snippet) => (
-                  <tr key={snippet.id} className="hover:bg-gray-800">
-                    <td className="px-4 py-2">{snippet.title}</td>
-                    <td className="px-4 py-2 text-center">
-                      <img
-                        src={eye}
-                        alt="Voir"
-                        className="w-6 h-6 inline-block"
-                        onClick={() => {
-                          handleSnippetClick(snippet.id);
-                        }}
-                      />
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
+              <tbody className="text-sm text-bold">{renderedSnippets}</tbody>
             </table>
             <div className="flex flex-col h-full items-center mt-10 mb-10 h-24 gap-5">
               <p className="text-white text-xl font-bold">
                 Envie de partager un snippet ?
               </p>
-              <img src={chevrons} alt="chevrons " className="w-24 h-24 transform rotate-90" />
+              <img
+                src={chevrons}
+                alt="chevrons "
+                className="w-24 h-24 transform rotate-90"
+              />
               <img
                 src={cross}
                 alt="croix bleu pour ajouter un snippet"
@@ -106,26 +114,7 @@ export function SnippetsArray({
               </tr>
             </thead>
 
-            <tbody className="text-sm text-bold">
-              {snippets.map((snippet) => (
-                <tr key={snippet.id} className="hover:bg-gray-800">
-                  <td className="px-4 py-2">
-                    {snippet.pseudo ? snippet.pseudo : snippet.firstname}
-                  </td>
-                  <td className="px-4 py-2">{snippet.title}</td>
-                  <td className="px-4 py-2 text-center">
-                    <img
-                      src={eye}
-                      alt="Voir"
-                      className="w-6 h-6 inline-block"
-                      onClick={() => {
-                        handleSnippetClick(snippet.id);
-                      }}
-                    />
-                  </td>
-                </tr>
-              ))}
-            </tbody>
+            <tbody className="text-sm text-bold">{renderedSnippets}</tbody>
           </table>
           <div className="flex justify-center items-center h-24 gap-20">
             <p className="text-white text-2xl font-bold">

@@ -13,13 +13,14 @@ export function DetailCardSnippet({
     title: string;
     code: string;
     message: string;
-    createdAt: Date;
+    createdAt: string;
     user_id: number;
     pseudo?: string;
     firstname: string;
     languageId: number;
     language: string;
     Comments?: {
+      id: number;
       pseudo?: string;
       firstname: string;
       suggestedCode: string;
@@ -30,6 +31,35 @@ export function DetailCardSnippet({
   const { isLogged } = useAuth();
   const navigate = useNavigate();
   const id = snippet.id;
+
+  const snippetCommentsRendered = snippet.Comments ? (
+    snippet.Comments.map((comment) => (
+      <div
+        key={comment.id}
+        className="mb-4 p-4 w-full bg-gray-700 text-white font-bold rounded-lg"
+      >
+        <p className="text-sm ">
+          Par: {comment.pseudo || comment.firstname || "Anonyme"}
+        </p>
+        <p className="text-sm">{comment.message}</p>
+        {comment.suggestedCode && (
+          <pre className="bg-gray-800 text-white p-2 mt-2 rounded-lg overflow-x-auto">
+            <code>
+              <SyntaxHighlighter
+                language="javascript"
+                style={oneDark}
+                customStyle={{ backgroundColor: "#191F34" }}
+              >
+                {comment.suggestedCode}
+              </SyntaxHighlighter>
+            </code>
+          </pre>
+        )}
+      </div>
+    ))
+  ) : (
+    <p className="text-sm text-white">Aucun commentaire pour ce snippet.</p>
+  );
 
   return (
     <div className="flex justify-center w-full px-4 bg-black mt-10 mb-5">
@@ -66,36 +96,7 @@ export function DetailCardSnippet({
         <h3 className="text-2xl text-white font-semibold mt-8 mb-4">
           Solutions
         </h3>
-        {snippet.Comments && snippet.Comments.length > 0 ? (
-          snippet.Comments.map((comment, index) => (
-            <div
-              key={index}
-              className="mb-4 p-4 w-full bg-gray-700 text-white font-bold rounded-lg"
-            >
-              <p className="text-sm ">
-                Par: {comment.pseudo || comment.firstname || "Anonyme"}
-              </p>
-              <p className="text-sm">{comment.message}</p>
-              {comment.suggestedCode && (
-                <pre className="bg-gray-800 text-white p-2 mt-2 rounded-lg overflow-x-auto">
-                  <code>
-                    <SyntaxHighlighter
-                      language="javascript"
-                      style={oneDark}
-                      customStyle={{ backgroundColor: "#191F34" }}
-                    >
-                      {comment.suggestedCode}
-                    </SyntaxHighlighter>
-                  </code>
-                </pre>
-              )}
-            </div>
-          ))
-        ) : (
-          <p className="text-sm text-white">
-            Aucun commentaire pour ce snippet.
-          </p>
-        )}
+        {snippetCommentsRendered}
 
         <div className="flex flex-col gap-10 md:flex-row h-full items-center md:justify-center mt-10 mb-10 md:h-24 md:gap-20">
           <p className="text-white text-center text-2xl font-bold">

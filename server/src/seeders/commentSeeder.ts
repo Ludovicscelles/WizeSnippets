@@ -60,18 +60,23 @@ console.log(doubled); // [2, 4, 6, 8, 10]
     },
     {
       suggestedCode: `
-function riskyFunction() {
-  try {
-    // Code qui peut échouer
-    throw new Error("Quelque chose s'est mal passé");
-  } catch (error) {
-    console.error("Erreur capturée:", error.message);
-  }
-}
-riskyFunction();
+import logging
+
+logging.basicConfig(level=logging.ERROR)
+
+class CustomError(Exception):
+    pass
+
+def risky_operation():
+    raise CustomError("Quelque chose s'est mal passé")
+
+try:
+    risky_operation()
+except CustomError as error:
+    logging.error("Erreur capturée: %s", error)
 `,
       message:
-        "Pour une gestion plus élégante des erreurs, tu peux utiliser des classes d'erreur personnalisées ou des bibliothèques comme winston pour la journalisation. Cela te permet de mieux structurer et gérer les erreurs dans ton application.",
+        "Pour une gestion plus élégante des erreurs en Python, tu peux utiliser des classes d'exception personnalisées et le module `logging` pour une journalisation structurée. Cela améliore la lisibilité et la maintenabilité de ton application.",
       createdAt: new Date(),
       snippetId: snippetRefs["snippet3"],
       userId: userRefs["user4"],
@@ -79,12 +84,12 @@ riskyFunction();
     },
     {
       suggestedCode: `
-const numbers = [1, 2, 3, 4, 5];
-const evenNumbers = numbers.filter(num => num % 2 === 0);
+const numbers: number[] = [1, 2, 3, 4, 5];
+const evenNumbers: number[] = numbers.filter((num: number) => num % 2 === 0);
 console.log(evenNumbers); // [2, 4]
 `,
       message:
-        "Non, filter est utilisé pour créer un nouveau tableau avec les éléments qui passent un test spécifique. Si tu veux modifier les éléments, tu devrais utiliser map. Par exemple :\n\n```javascript\nconst doubledEvenNumbers = numbers.filter(num => num % 2 === 0).map(num => num * 2);\nconsole.log(doubledEvenNumbers); // [4, 8]\n```",
+        "Non, `filter` est utilisé pour créer un nouveau tableau contenant uniquement les éléments qui passent un test. Si tu veux modifier les éléments, utilise plutôt `map`. Par exemple :\n\n```ts\nconst doubledEvenNumbers: number[] = numbers\n  .filter((num: number) => num % 2 === 0)\n  .map((num: number) => num * 2);\nconsole.log(doubledEvenNumbers); // [4, 8]\n```",
       createdAt: new Date(),
       snippetId: snippetRefs["snippet4"],
       userId: userRefs["user5"],
@@ -92,12 +97,25 @@ console.log(evenNumbers); // [2, 4]
     },
     {
       suggestedCode: `
-const numbers = [1, 2, 3, 4, 5];
-const oddNumbers = numbers.filter(num => num % 2 !== 0);
-console.log(oddNumbers); // [1, 3, 5]
+#include <iostream>
+#include <functional>
+
+std::function<int()> makeCounter() {
+    int count = 0;
+    return [count]() mutable {
+        return ++count;
+    };
+}
+
+int main() {
+    auto counter = makeCounter();
+    std::cout << counter() << std::endl; // 1
+    std::cout << counter() << std::endl; // 2
+    return 0;
+}
 `,
       message:
-        "Oui, tu peux utiliser filter pour créer un nouveau tableau contenant uniquement les nombres impairs. La méthode filter crée un nouveau tableau avec tous les éléments qui passent le test implémenté par la fonction fournie.",
+        "Oui, ce code montre comment fonctionnent les closures en C++. La variable `count` est capturée par valeur dans la lambda, et grâce au mot-clé `mutable`, elle peut être modifiée à chaque appel. Cela permet de conserver un état interne, comme en JavaScript avec les closures.",
       createdAt: new Date(),
       snippetId: snippetRefs["snippet5"],
       userId: userRefs["user6"],
@@ -136,8 +154,8 @@ getUserInfo(42).then(user => {
     },
     {
       suggestedCode: `
-const numbers = [10, 15, 20, 25, 30];
-const multiplesOfTen = numbers.filter(n => n % 10 === 0);
+const numbers: number[] = [10, 15, 20, 25, 30];
+const multiplesOfTen: number[] = numbers.filter((n: number) => n % 10 === 0);
 console.log(multiplesOfTen); // [10, 20, 30]
 `,
       message:
@@ -195,7 +213,9 @@ console.log(multiplesOfTen); // [10, 20, 30]
         snippet,
       });
       await commentRepository.save(comment);
-      console.log(`Commentaire avec le titre du snippet "${snippet.title}" créé avec succès`);
+      console.log(
+        `Commentaire avec le titre du snippet "${snippet.title}" créé avec succès`
+      );
     }
 
     if (refName) {

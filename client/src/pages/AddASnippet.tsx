@@ -1,5 +1,5 @@
 import cross from "../assets/cross_icon.svg";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useAuth } from "../service/UseAuth";
@@ -14,6 +14,22 @@ export default function AddASnippet() {
   const [title, setTitle] = useState("");
   const [code, setCode] = useState("");
   const [message, setMessage] = useState("");
+  const [languages, setLanguages] = useState<{ id: number; name: string }[]>(
+    []
+  );
+  const [selectedLanguage, setSelectedLanguage] = useState("");
+
+  useEffect(() => {
+    axios
+      .get(`${import.meta.env.VITE_API_URL}/languages`)
+      .then((response) => {
+        setLanguages(response.data);
+      })
+      .catch((error) => {
+        console.error("Erreur lors de la récupération des langages:", error);
+        toast.error("Erreur lors de la récupération des langages.");
+      });
+  }, []);
 
   const handleChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
@@ -27,14 +43,32 @@ export default function AddASnippet() {
     setMessage(e.target.value);
   };
 
+  const handleChangeLanguage = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedLanguage(e.target.value);
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Title:", title);
     console.log("Code:", code);
     console.log("Message:", message);
+    console.log("Language:", languages);
 
     if (!title || !code || !message) {
       toast.error("Tous les champs doivent être remplis.");
+      return;
+    }
+
+    const selectLanguage = document.querySelector(
+      "select"
+    ) as HTMLSelectElement;
+    const selectedLanguage = selectLanguage.value;
+    if (!selectedLanguage) {
+      toast.error("Veuillez sélectionner un langage.");
+      return;
+    }
+    if (!token) {
+      toast.error("Vous devez être connecté pour ajouter un snippet.");
       return;
     }
 
@@ -45,6 +79,7 @@ export default function AddASnippet() {
           title,
           code,
           message,
+          languageId: selectedLanguage,
         },
         {
           headers: {
@@ -104,6 +139,23 @@ export default function AddASnippet() {
             />
           </div>
         )}
+
+        <div>
+          <label className="block text-center mb-2">Choisis ton langage</label>
+          <select
+            value={selectedLanguage}
+            onChange={handleChangeLanguage}
+            className="w-full px-4 py-2 bg-black text-white border-2 border-bluewize rounded focus:outline-none focus:ring-2 focus:ring-bluewize"
+          >
+            <option value="">Sélectionne un langage</option>
+            {languages.map((lang) => (
+              <option key={lang.id} value={lang.id}>
+                {lang.name}
+              </option>
+            ))}
+          </select>
+        </div>
+
         <div>
           <label className="block text-center mb-2">Ajoute ton code</label>
           <div className="w-full flex justify-center border-2 border-bluewize rounded p-4 text-center cursor-pointer hover:bg-gray-800">

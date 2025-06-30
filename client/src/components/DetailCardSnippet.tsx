@@ -17,6 +17,8 @@ export function DetailCardSnippet({
     user_id: number;
     pseudo?: string;
     firstname: string;
+    languageId: number;
+    language: string;
     Comments?: {
       pseudo?: string;
       firstname: string;
@@ -37,6 +39,9 @@ export function DetailCardSnippet({
         </h2>
         <div className="mb-4">
           <h3 className="text-xl md:text-2xl font-semibold">{snippet.title}</h3>
+          <p className="text-sm font-bold md:text-lg text-gray-400 mb-5">
+            Langage: {snippet.language}
+          </p>
           <p className="text-xs md:text-base text-white font-semi-bold">
             {snippet.message}
           </p>

@@ -9,7 +9,8 @@ export default {
       colors: {
         primary: "#000000",
         bluewize: "#2A7FFF",
-        pinkwize: "#FE4B9F"
+        pinkwize: "#FE4B9F",
+        
       }
 
     },

@@ -7,6 +7,8 @@ export interface SnippetType {
   user_id: number;
   pseudo?: string; // Optional, if you want to include the user's pseudo
   firstname: string; 
+  languageId: number; 
+  language: string; // Name of the language associated with the snippet
 }
 
 export interface SnippetWithCommentsType extends SnippetType {
@@ -16,6 +18,8 @@ export interface SnippetWithCommentsType extends SnippetType {
   message: string;
   createdAt: Date;
   user_id: number;
+  languageId: number; 
+  language: string; // Name of the language associated with the snippet
   pseudo?: string; // Optional, if you want to include the user's pseudo
   firstname: string;
   Comments: {
@@ -31,4 +35,6 @@ export type SnippetInputType = {
   code: string;
   message: string;
   user_id: number;
+  languageId: number; 
+
 }

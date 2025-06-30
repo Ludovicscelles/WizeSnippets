@@ -8,6 +8,7 @@ import {
 } from "typeorm";
 import { User } from "./User";
 import { Comment } from "./Comment";
+import { Language } from "./Languages";
 import { IsString, Length, IsNotEmpty, IsDate } from "class-validator";
 
 @Entity()
@@ -21,7 +22,7 @@ export class Snippet {
   @Length(1, 150)
   title!: string;
 
-  @Column({ nullable: false, type: "text"})
+  @Column({ nullable: false, type: "text" })
   @IsString()
   @IsNotEmpty()
   @Length(1, 5000)
@@ -55,8 +56,12 @@ export class Snippet {
   })
   user!: User;
 
-
-
   @OneToMany(() => Comment, (comment) => comment.snippet)
   comments!: Comment[];
+
+  @ManyToOne(() => Language, (language) => language.snippets, {
+    nullable: false,
+    onDelete: "CASCADE",
+  })
+  language!: Language;
 }

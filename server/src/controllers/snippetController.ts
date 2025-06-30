@@ -31,7 +31,7 @@ export const getSnippetById = async (
 };
 
 export const createSnippet = async (
-  req: Request<{}, {}, { title: string; message: string; code: string }>,
+  req: Request<{}, {}, { title: string; message: string; code: string, languageId: number }>,
   res: Response
 ) => {
   const { title, message, code } = req.body;
@@ -49,6 +49,7 @@ export const createSnippet = async (
       title,
       message,
       code,
+      languageId: req.body.languageId || 1, // Default to a language ID if not provided
       user_id: req.user.id, // Assuming req.user is set by authentication middleware
     };
     const newSnippet = await SnippetService.create(snippetData);

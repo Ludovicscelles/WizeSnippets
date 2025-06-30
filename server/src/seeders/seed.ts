@@ -2,6 +2,7 @@ import { AppDataSource } from "../data-source";
 import { userSeeder } from "./userSeeder";
 import { snippetSeeder } from "./snippetSeeder";
 import { commentSeeder } from "./commentSeeder";
+import { languageSeeder } from "./languageSeeder";
 
 async function seedDatabase() {
   try {
@@ -10,6 +11,8 @@ async function seedDatabase() {
 
     // Call the user seeder
     await userSeeder();
+    // Call the language seeder
+    await languageSeeder();
     // Call the snippet seeder
     await snippetSeeder();
     // Call the comment seeder

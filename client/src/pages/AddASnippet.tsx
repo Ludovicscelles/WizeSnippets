@@ -31,6 +31,12 @@ export default function AddASnippet() {
       });
   }, []);
 
+  const languageOptions = languages.map((lang) => (
+    <option key={lang.id} value={lang.id}>
+      {lang.name}
+    </option>
+  ));
+
   const handleChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
   };
@@ -59,10 +65,6 @@ export default function AddASnippet() {
       return;
     }
 
-    const selectLanguage = document.querySelector(
-      "select"
-    ) as HTMLSelectElement;
-    const selectedLanguage = selectLanguage.value;
     if (!selectedLanguage) {
       toast.error("Veuillez sélectionner un langage.");
       return;
@@ -147,12 +149,7 @@ export default function AddASnippet() {
             onChange={handleChangeLanguage}
             className="w-full px-4 py-2 bg-black text-white border-2 border-bluewize rounded focus:outline-none focus:ring-2 focus:ring-bluewize"
           >
-            <option value="">Sélectionne un langage</option>
-            {languages.map((lang) => (
-              <option key={lang.id} value={lang.id}>
-                {lang.name}
-              </option>
-            ))}
+            {languageOptions}
           </select>
         </div>
 

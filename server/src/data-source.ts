@@ -3,6 +3,7 @@ import { DataSource } from "typeorm";
 import { Snippet } from "./entities/Snippet";
 import { User } from "./entities/User";
 import { Comment } from "./entities/Comment";
+import { Language } from "./entities/Languages";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -20,5 +21,5 @@ export const AppDataSource = new DataSource({
   database: DATABASE,
   synchronize: true,
   logging: false,
-  entities: [Snippet, User, Comment],
+  entities: [Snippet, User, Comment, Language],
 });

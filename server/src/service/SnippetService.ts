@@ -1,6 +1,7 @@
 import { AppDataSource } from "../data-source";
 import { Snippet } from "../entities/Snippet";
 import { User } from "../entities/User";
+import { Language } from "../entities/Languages";
 import {
   SnippetType,
   SnippetWithCommentsType,
@@ -10,24 +11,28 @@ import {
 export class SnippetService {
   static async getAll(): Promise<SnippetType[]> {
     const snippets = await AppDataSource.getRepository(Snippet).find({
-      relations: ["user"],
+      relations: ["user", "language"],
     });
-    return snippets.map(({ id, title, message, code, createdAt, user }) => ({
-      id: id,
-      title,
-      message,
-      code,
-      createdAt,
-      user_id: user.id,
-      pseudo: user.pseudo,
-      firstname: user.firstname,
-    }));
+    return snippets.map(
+      ({ id, title, message, code, createdAt, user, language }) => ({
+        id: id,
+        title,
+        message,
+        code,
+        createdAt,
+        user_id: user.id,
+        pseudo: user.pseudo,
+        firstname: user.firstname,
+        languageId: language.id,
+        language: language.name,
+      })
+    );
   }
 
   static async getById(id: number): Promise<SnippetWithCommentsType | null> {
     const snippet = await AppDataSource.getRepository(Snippet).findOne({
       where: { id },
-      relations: ["user", "comments", "comments.user"],
+      relations: ["user", "language", "comments", "comments.user"],
     });
     if (!snippet) return null;
     return {
@@ -39,6 +44,8 @@ export class SnippetService {
       user_id: snippet.user.id,
       pseudo: snippet.user.pseudo,
       firstname: snippet.user.firstname,
+      languageId: snippet.language.id,
+      language: snippet.language.name,
       Comments: snippet.comments.map((comment) => ({
         pseudo: comment.user.pseudo || comment.user.firstname || "Anonymous",
         firstname: comment.user.firstname || "Anonymous",
@@ -57,6 +64,14 @@ export class SnippetService {
       throw new Error("Utilisateur non trouvé");
     }
 
+    const language = await AppDataSource.getRepository(Language).findOneBy({
+      id: snippetData.languageId,
+    });
+
+    if (!language) {
+      throw new Error("Langage non trouvé");
+    }
+
     const snippet = AppDataSource.getRepository(Snippet).create({
       title: snippetData.title,
       message: snippetData.message,
@@ -64,6 +79,7 @@ export class SnippetService {
       firstname: user.firstname,
       pseudo: user.pseudo,
       user,
+      language,
     });
 
     const savedSnippet =
@@ -78,6 +94,8 @@ export class SnippetService {
       user_id: user.id,
       pseudo: user.pseudo,
       firstname: user.firstname,
+      languageId: snippetData.languageId,
+      language: language.name,
     };
   }
 }

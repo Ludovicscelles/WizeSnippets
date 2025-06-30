@@ -22,7 +22,8 @@ async function fetchData() {
   return data;
 }
 fetchData().then(data => console.log(data));`,
-      message: "J’ai du mal à comprendre ce qu’il se passe si `fetch` échoue. Est-ce que je dois forcément utiliser un try/catch ?",
+      message:
+        "J’ai du mal à comprendre ce qu’il se passe si `fetch` échoue. Est-ce que je dois forcément utiliser un try/catch ?",
       userId: userRefs["user9"],
       languageName: "JavaScript",
       refName: "snippet1",
@@ -40,11 +41,10 @@ console.log(doubled);`,
     },
     {
       title: "Gestion des erreurs avec try/catch",
-      code: `
-try {
-  riskyOperation();
-} catch (error) {
-  console.error("Erreur :", error.message);
+      code: `try:
+    risky_operation()
+except Exception as error:
+    print("Erreur :", error)
 }`,
       message: "Comment puis-je gérer les erreurs de manière plus élégante ?",
       userId: userRefs["user3"],
@@ -53,25 +53,28 @@ try {
     },
     {
       title: "Utilisation de la méthode filter",
-      code: `
-const numbers = [1, 2, 3, 4, 5];
-const even = numbers.filter(n => n % 2 === 0);`,
-      message: "Est-ce que je peux utiliser filter pour modifier les éléments d'un tableau ?",
+      code: `const numbers: number[] = [1, 2, 3, 4, 5];
+const even: number[] = numbers.filter((n: number) => n % 2 === 0);`,
+      message:
+        "Est-ce que je peux utiliser filter pour modifier les éléments d'un tableau ?",
       userId: userRefs["user4"],
       languageName: "TypeScript",
       refName: "snippet4",
     },
     {
       title: "Comprendre les closures",
-      code: `
-function makeCounter() {
-  let count = 0;
-  return function() {
-    count++;
-    return count;
-  };
+      code: `std::function<int()> makeCounter() {
+    int count = 0;
+    return [count]() mutable {
+        return ++count;
+    };
 }
-const counter = makeCounter();`,
+
+int main() {
+    auto counter = makeCounter();
+    std::cout << counter() << std::endl; // 1
+    std::cout << counter() << std::endl; // 2
+}`,
       message: "Comment fonctionnent les closures en JavaScript ?",
       userId: userRefs["user5"],
       languageName: "C++",
@@ -83,10 +86,14 @@ const counter = makeCounter();`,
 
   for (const { refName, languageName, ...snippetData } of snippets) {
     const user = await userRepository.findOneBy({ id: snippetData.userId });
-    const language = await languageRepository.findOneBy({ name: languageName as LanguageEnum });
+    const language = await languageRepository.findOneBy({
+      name: languageName as LanguageEnum,
+    });
 
     if (!user || !language) {
-      console.warn(`User ou langage manquant pour le snippet "${snippetData.title}"`);
+      console.warn(
+        `User ou langage manquant pour le snippet "${snippetData.title}"`
+      );
       continue;
     }
 

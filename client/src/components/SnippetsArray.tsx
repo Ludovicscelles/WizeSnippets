@@ -44,12 +44,9 @@ export function SnippetsArray({
 
   const renderedSnippets = snippets.map((snippet) => (
     <tr key={snippet.id} className="hover:bg-gray-800">
-      {!isMobile && (
-        <td className="px-4 py-2">
-          {snippet.pseudo ? snippet.pseudo : snippet.firstname}
-        </td>
-      )}
-
+      <td className={`px-4 py-2 ${isMobile ? "hidden" : ""}`}>
+        {snippet.pseudo ?? snippet.firstname}
+      </td>
       <td className="px-4 py-2">{snippet.title}</td>
       <td className="px-4 py-2 text-center">
         <img

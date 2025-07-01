@@ -1,25 +1,15 @@
 import cross from "../assets/cross_icon.svg";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useAuth } from "../service/UseAuth";
 import { useParams } from "react-router-dom";
+import { useLoaderData } from "react-router-dom";
 
 export default function AddComment() {
   const { id } = useParams<"id">();
-  const [snippetTitle, setSnippetTitle] = useState("");
 
-  useEffect(() => {
-    if (!id) return;
-    axios
-      .get(`${import.meta.env.VITE_API_URL}/snippets/${id}`)
-      .then((response) => {
-        setSnippetTitle(response.data.title);
-      })
-      .catch((error) => {
-        console.error("Erreur lors de la récupération du snippet:", error);
-      });
-  }, [id]);
+  const snippet = useLoaderData() as { title: string };
 
   const { token } = useAuth();
 
@@ -39,8 +29,9 @@ export default function AddComment() {
     setMessage(e.target.value);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
     console.log("Code:", suggestedCode);
     console.log("Message:", message);
 
@@ -49,8 +40,8 @@ export default function AddComment() {
       return;
     }
 
-    axios
-      .post(
+    try {
+      const response = await axios.post(
         `${import.meta.env.VITE_API_URL}/snippets/${id}/comment`,
         {
           suggestedCode,
@@ -61,19 +52,17 @@ export default function AddComment() {
             Authorization: `Bearer ${token}`,
           },
         }
-      )
-      .then((response) => {
-        console.log("Solution ajoutée:", response.data);
-        toast.success("Solution ajoutée avec succès !");
-        setSuggestedCode("");
-        setMessage("");
-        setShowSuggestedCodeInput(false);
-        setShowMessageInput(false);
-      })
-      .catch((error) => {
-        console.error("Erreur:", error);
-        toast.error("Une erreur est survenue lors de l'ajout de la solution.");
-      });
+      );
+      console.log("Détail du Snippet:", response.data);
+      toast.success("Snippet ajouté avec succès !");
+      setSuggestedCode("");
+      setMessage("");
+      setShowSuggestedCodeInput(false);
+      setShowMessageInput(false);
+    } catch (error) {
+      console.error("Erreur:", error);
+      toast.error("Une erreur est survenue lors de l'ajout du snippet.");
+    }
   };
 
   const handleClose = () => {
@@ -89,11 +78,13 @@ export default function AddComment() {
 
       <form className="space-y-6" onSubmit={handleSubmit}>
         <div className="flex justify-center items-center gap-2 border-b border-white pb-2 mb-6">
-          <p>{snippetTitle}</p>
+          <p>{snippet.title}</p>
         </div>
 
         <div>
-          <label className="block text-center mb-2">Ajoute ta proposition de code</label>
+          <label className="block text-center mb-2">
+            Ajoute ta proposition de code
+          </label>
           <div className="w-full flex justify-center border-2 border-bluewize rounded p-4 text-center cursor-pointer hover:bg-gray-800">
             <div className="flex items-center justify-center w-full">
               <button

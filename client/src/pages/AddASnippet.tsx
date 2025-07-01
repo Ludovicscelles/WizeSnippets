@@ -20,15 +20,19 @@ export default function AddASnippet() {
   const [selectedLanguage, setSelectedLanguage] = useState("");
 
   useEffect(() => {
-    axios
-      .get(`${import.meta.env.VITE_API_URL}/languages`)
-      .then((response) => {
-        setLanguages(response.data);
-      })
-      .catch((error) => {
+    const getLanguages = async () => {
+      try {
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_URL}/languages`
+        );
+        const data = response.data;
+        setLanguages(data);
+      } catch (error) {
         console.error("Erreur lors de la récupération des langages:", error);
         toast.error("Erreur lors de la récupération des langages.");
-      });
+      }
+    };
+    getLanguages();
   }, []);
 
   const languageOptions = languages.map((lang) => (

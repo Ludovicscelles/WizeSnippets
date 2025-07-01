@@ -7,6 +7,7 @@
     "dev": "ts-node-dev --respawn src/index.ts",
     "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1",
+    "init-db": "mysql -u root -p < server/init.sql",
     "seed": "ts-node src/seeders/seed.ts",
     "clear": "ts-node src/seeders/clearDatabase.ts",
     "reset": "npm run clear && npm run seed"

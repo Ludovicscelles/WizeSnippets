@@ -32,19 +32,19 @@ export function DetailCardSnippet({
   const navigate = useNavigate();
   const id = snippet.id;
 
-  const snippetCommentsRendered = snippet.Comments ? (
-    snippet.Comments.map((comment) => (
-      <div
-        key={comment.id}
-        className="mb-4 p-4 w-full bg-gray-700 text-white font-bold rounded-lg"
-      >
-        <p className="text-sm ">
-          Par: {comment.pseudo || comment.firstname || "Anonyme"}
-        </p>
-        <p className="text-sm">{comment.message}</p>
-        {comment.suggestedCode && (
-          <pre className="bg-gray-800 text-white p-2 mt-2 rounded-lg overflow-x-auto">
-            <code>
+  const snippetCommentsRendered =
+    snippet.Comments && snippet.Comments.length > 0 ? (
+      snippet.Comments.map((comment) => (
+        <div
+          key={`comment-${comment.id}`}
+          className="mb-4 p-4 w-full bg-gray-700 text-white font-bold rounded-lg"
+        >
+          <p className="text-sm ">
+            Par: {comment.pseudo || comment.firstname || "Anonyme"}
+          </p>
+          <p className="text-sm">{comment.message}</p>
+          {comment.suggestedCode && (
+            <pre className="bg-gray-800 text-white p-2 mt-2 rounded-lg overflow-x-auto">
               <SyntaxHighlighter
                 language="javascript"
                 style={oneDark}
@@ -52,14 +52,13 @@ export function DetailCardSnippet({
               >
                 {comment.suggestedCode}
               </SyntaxHighlighter>
-            </code>
-          </pre>
-        )}
-      </div>
-    ))
-  ) : (
-    <p className="text-sm text-white">Aucun commentaire pour ce snippet.</p>
-  );
+            </pre>
+          )}
+        </div>
+      ))
+    ) : (
+      <p className="text-sm text-white">Aucun commentaire pour ce snippet.</p>
+    );
 
   return (
     <div className="flex justify-center w-full px-4 bg-black mt-10 mb-5">
@@ -97,7 +96,6 @@ export function DetailCardSnippet({
           Solutions
         </h3>
         {snippetCommentsRendered}
-
         <div className="flex flex-col gap-10 md:flex-row h-full items-center md:justify-center mt-10 mb-10 md:h-24 md:gap-20">
           <p className="text-white text-center text-2xl font-bold">
             {`Apporter une solution à ${snippet.pseudo || snippet.firstname || "Anonyme"}`}

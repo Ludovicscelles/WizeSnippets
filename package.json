@@ -1,0 +1,14 @@
+{
+  "name": "wizesnippets",
+  "version": "1.0.0",
+  "description": "Bienvenue sur WizeSnippets, un site web de partage de codes entre développeurs. Le principe est simpple : un développeur (souvent un junior) peut soumettre un morceau de code (un \"snippet\") sur lequel il a un doute ou dont il souhaite avoir un retour. D'autres développeurs, notamment les plus seniors, peuvent alors commenter ce snippet pour l'aider à s'améliorer.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "init-db": "mysql -u root -p < server/init.sql",
+    "dev-server": "ts-node-dev --respawn server/src/index.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

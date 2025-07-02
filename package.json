@@ -1,10 +1,13 @@
 {
   "name": "wizesnippets",
   "version": "1.0.0",
+  "type": "module",
   "description": "Bienvenue sur WizeSnippets, un site web de partage de codes entre développeurs. Le principe est simpple : un développeur (souvent un junior) peut soumettre un morceau de code (un \"snippet\") sur lequel il a un doute ou dont il souhaite avoir un retour. D'autres développeurs, notamment les plus seniors, peuvent alors commenter ce snippet pour l'aider à s'améliorer.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "vitest",
+    "test:client": "vitest --config vitest.config.client.ts",
+    "test:server": "vitest --config vitest.config.server.ts",
     "init-db": "mysql -u root -p < server/init.sql",
     "dev-server": "ts-node-dev --respawn server/src/index.ts"
   },
@@ -12,6 +15,11 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.3.0",
+    "@testing-library/user-event": "^14.6.1",
+    "@vitejs/plugin-react": "^4.6.0",
+    "jsdom": "^26.1.0",
     "typescript": "^5.8.3",
     "vitest": "^3.2.4"
   }

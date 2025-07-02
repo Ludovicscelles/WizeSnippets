@@ -105,76 +105,8 @@
 
 // export default JuniorDeveloperSnippetList;
 
-import React from "react";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
-
-type Snippet = {
-  id: number;
-  title: string;
-  language: string;
-};
-
-function JuniorDeveloperSnippetList() {
-  const [data, setData] = React.useState<Snippet[] | null>(null);
-
-  const navigate = useNavigate();
-
-  React.useEffect(() => {
-    const fetchSnippets = async () => {
-      try {
-        const response = await axios.get(
-          `${import.meta.env.VITE_API_URL}/snippets`
-        );
-        const data = response.data;
-
-        if (!data || data.length === 0) {
-          console.warn("No snippets found");
-        }
-
-        setData(data);
-      } catch (error) {
-        console.error("Error fetching snippets:", error);
-      }
-    };
-    fetchSnippets();
-  }, []);
-
-  if (data === null) {
-    return <div>Chargement...</div>;
-  }
-
-  if (data?.length === 0) {
-    return <div>Aucun snippet trouvé</div>;
-  }
-
-  const handleSnippetClick = (e: React.MouseEvent, id: number) => {
-    e.preventDefault();
-    navigate(`/snippets/${id}`);
-  };
-
-  const snippetItems = data?.map((item) => (
-    <div key={item.id}>
-      <h2>{item.title}</h2>
-      <p>Language: {item.language}</p>
-      <a onClick={(e) => handleSnippetClick(e, item.id)}>
-        View Details View Details
-      </a>
-    </div>
-  ));
-
-  return (
-    <div>
-      <h1>Code Snippets</h1>
-      {snippetItems}
-    </div>
-  );
-}
-
-export default JuniorDeveloperSnippetList;
-
-// import type React from "react";
-// import { useLoaderData } from "react-router-dom";
+// import React from "react";
+// import axios from "axios";
 // import { useNavigate } from "react-router-dom";
 
 // type Snippet = {
@@ -184,24 +116,50 @@ export default JuniorDeveloperSnippetList;
 // };
 
 // function JuniorDeveloperSnippetList() {
-//   const loaderData = useLoaderData() as Snippet[];
+//   const [data, setData] = React.useState<Snippet[] | null>(null);
 
 //   const navigate = useNavigate();
 
-//   const handleSnippetClick = (e: React.MouseEvent, id: number) => {
-//     e.preventDefault(); // facultatif si tu veux éviter navigation par défaut
-//     navigate(`/snippets/${id}`);
-//   };
+//   React.useEffect(() => {
+//     const fetchSnippets = async () => {
+//       try {
+//         const response = await axios.get(
+//           `${import.meta.env.VITE_API_URL}/snippets`
+//         );
+//         const data = response.data;
 
-//   if (loaderData.length === 0) {
+//         if (!data || data.length === 0) {
+//           console.warn("No snippets found");
+//         }
+
+//         setData(data);
+//       } catch (error) {
+//         console.error("Error fetching snippets:", error);
+//       }
+//     };
+//     fetchSnippets();
+//   }, []);
+
+//   if (data === null) {
+//     return <div>Chargement...</div>;
+//   }
+
+//   if (data?.length === 0) {
 //     return <div>Aucun snippet trouvé</div>;
 //   }
 
-//   const snippetItems = loaderData?.map((item) => (
+//   const handleSnippetClick = (e: React.MouseEvent, id: number) => {
+//     e.preventDefault();
+//     navigate(`/snippets/${id}`);
+//   };
+
+//   const snippetItems = data?.map((item) => (
 //     <div key={item.id}>
 //       <h2>{item.title}</h2>
 //       <p>Language: {item.language}</p>
-//       <a onClick={(e) => handleSnippetClick(e, item.id)}>View Details</a>
+//       <a onClick={(e) => handleSnippetClick(e, item.id)}>
+//         View Details View Details
+//       </a>
 //     </div>
 //   ));
 
@@ -214,3 +172,44 @@ export default JuniorDeveloperSnippetList;
 // }
 
 // export default JuniorDeveloperSnippetList;
+
+import { useLoaderData } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
+type Snippet = {
+  id: number;
+  title: string;
+  language: string;
+};
+
+function JuniorDeveloperSnippetList() {
+  const loaderData = useLoaderData() as Snippet[];
+
+  const navigate = useNavigate();
+
+  const handleSnippetClick = (e: React.MouseEvent, id: number) => {
+    e.preventDefault(); 
+    navigate(`/snippets/${id}`);
+  };
+
+  if (loaderData.length === 0) {
+    return <div>Aucun snippet trouvé</div>;
+  }
+
+  const snippetItems = loaderData?.map((item) => (
+    <div key={item.id}>
+      <h2>{item.title}</h2>
+      <p>Language: {item.language}</p>
+      <a onClick={(e) => handleSnippetClick(e, item.id)}>View Details</a>
+    </div>
+  ));
+
+  return (
+    <div>
+      <h1>Code Snippets</h1>
+      {snippetItems}
+    </div>
+  );
+}
+
+export default JuniorDeveloperSnippetList;

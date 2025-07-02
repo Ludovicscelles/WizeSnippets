@@ -5,8 +5,11 @@ import { toast } from "react-toastify";
 import { useAuth } from "../service/UseAuth";
 import { useParams } from "react-router-dom";
 import { useLoaderData } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { Button } from "../components/ui/Button";
 
 export default function AddComment() {
+  const navigate = useNavigate();
   const { id } = useParams<"id">();
 
   const snippet = useLoaderData() as { title: string };
@@ -70,6 +73,7 @@ export default function AddComment() {
     setMessage("");
     setShowSuggestedCodeInput(false);
     setShowMessageInput(false);
+    navigate(`/snippets/${id}`);
   };
 
   return (
@@ -137,19 +141,22 @@ export default function AddComment() {
           </div>
         )}
         <div className="space-y-4">
-          <button
+
+          <Button
             type="submit"
-            className="w-full py-2 bg-bluewize text-white text-xl font-bold rounded hover:bg-bluewize transition"
+            className="bg-bluewize hover:bg-blue-700"
           >
             Valider
-          </button>
-          <button
+          </Button>
+
+          <Button
             type="button"
-            className="w-full py-2 bg-bluewize text-white text-xl font-bold rounded hover:bg-red-500 transition"
+            className="bg-pinkwize hover:bg-red-500"
             onClick={handleClose}
           >
             Fermer
-          </button>
+          </Button>
+         
         </div>
       </form>
     </div>

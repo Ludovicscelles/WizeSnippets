@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express";
-import jwt from "jsonwebtoken";
+import { verifyToken } from "../utils/jwt";
+import { UserType } from "../../models/User";
 import { AppDataSource } from "../../data-source";
 import { User } from "../../entities/User";
 
@@ -16,12 +17,8 @@ export const authMiddleware = async (
   const token = authHeader.split(" ")[1];
 
   try {
-
     console.log("Authenticating token:", authHeader);
-    const decoded = jwt.verify(
-      token,
-      process.env.JWT_SECRET || "dev-secret"
-    ) as { userId: number };
+    const decoded = verifyToken(token) as { userId: number };
 
     console.log("Token extait:  ", token);
 

@@ -8,7 +8,7 @@ import {
 } from "typeorm";
 import { Snippet } from "./Snippet";
 import { Comment } from "./Comment";
-import * as argon2 from "argon2";
+import { hashPassword } from "../service/utils/hash";
 import { IsString, IsEmail, Length, IsNotEmpty } from "class-validator";
 
 @Entity()
@@ -50,6 +50,6 @@ export class User {
 
   @BeforeInsert()
   async hashPassword() {
-    this.password = await argon2.hash(this.password);
+    this.password = await hashPassword(this.password);
   }
 }

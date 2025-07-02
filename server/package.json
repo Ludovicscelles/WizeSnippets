@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "ts-node-dev --respawn src/index.ts",
     "build": "tsc",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "vitest",
     "init-db": "mysql -u root -p < server/init.sql",
     "seed": "ts-node src/seeders/seed.ts",
     "clear": "ts-node src/seeders/clearDatabase.ts",
@@ -32,6 +32,7 @@
     "@types/node": "^24.0.3",
     "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "vitest": "^3.2.4"
   }
 }

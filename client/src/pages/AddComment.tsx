@@ -53,15 +53,15 @@ export default function AddComment() {
           },
         }
       );
-      console.log("Détail du Snippet:", response.data);
-      toast.success("Snippet ajouté avec succès !");
+      console.log("Détail du commentaire:", response.data);
+      toast.success("Commentaire ajouté avec succès !");
       setSuggestedCode("");
       setMessage("");
       setShowSuggestedCodeInput(false);
       setShowMessageInput(false);
     } catch (error) {
       console.error("Erreur:", error);
-      toast.error("Une erreur est survenue lors de l'ajout du snippet.");
+      toast.error("Une erreur est survenue lors de l'ajout du commentaire.");
     }
   };
 
@@ -74,7 +74,9 @@ export default function AddComment() {
 
   return (
     <div className="max-w-md mx-auto mt-10 p-6 border-2 border-bluewize rounded-lg bg-black text-white">
-      <h1 className="text-3xl font-bold text-center mb-2">Snippets</h1>
+      <h1 className="text-3xl font-bold text-center mb-2">
+        Snippets Commentaires{" "}
+      </h1>
 
       <form className="space-y-6" onSubmit={handleSubmit}>
         <div className="flex justify-center items-center gap-2 border-b border-white pb-2 mb-6">

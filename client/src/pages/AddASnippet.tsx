@@ -17,7 +17,7 @@ export default function AddASnippet() {
   const [languages, setLanguages] = useState<{ id: number; name: string }[]>(
     []
   );
-  const [selectedLanguage, setSelectedLanguage] = useState("");
+  const [selectedLanguage, setSelectedLanguage] = useState<string | null>(null);
 
   useEffect(() => {
     const getLanguages = async () => {
@@ -149,10 +149,12 @@ export default function AddASnippet() {
         <div>
           <label className="block text-center mb-2">Choisis ton langage</label>
           <select
-            value={selectedLanguage}
+            value={selectedLanguage || ""} 
             onChange={handleChangeLanguage}
             className="w-full px-4 py-2 bg-black text-white border-2 border-bluewize rounded focus:outline-none focus:ring-2 focus:ring-bluewize"
           >
+
+            <option value="" disabled>Selectionner un langage</option>
             {languageOptions}
           </select>
         </div>

@@ -3,8 +3,11 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useAuth } from "../service/UseAuth";
+import { useNavigate } from "react-router-dom";
+import { Button } from "../components/ui/Button";
 
 export default function AddASnippet() {
+  const navigate = useNavigate();
   const { token } = useAuth();
 
   const [showTitleInput, setShowTitleInput] = useState(false);
@@ -116,6 +119,7 @@ export default function AddASnippet() {
     setShowTitleInput(false);
     setShowCodeInput(false);
     setShowMessageInput(false);
+    navigate("/snippets");
   };
 
   return (
@@ -149,12 +153,13 @@ export default function AddASnippet() {
         <div>
           <label className="block text-center mb-2">Choisis ton langage</label>
           <select
-            value={selectedLanguage || ""} 
+            value={selectedLanguage || ""}
             onChange={handleChangeLanguage}
             className="w-full px-4 py-2 bg-black text-white border-2 border-bluewize rounded focus:outline-none focus:ring-2 focus:ring-bluewize"
           >
-
-            <option value="" disabled>Selectionner un langage</option>
+            <option value="" disabled>
+              Selectionner un langage
+            </option>
             {languageOptions}
           </select>
         </div>
@@ -211,19 +216,16 @@ export default function AddASnippet() {
           </div>
         )}
         <div className="space-y-4">
-          <button
-            type="submit"
-            className="w-full py-2 bg-bluewize text-white text-xl font-bold rounded hover:bg-bluewize transition"
-          >
+          <Button type="submit" className="bg-bluewize hover:bg-blue-700">
             Valider
-          </button>
-          <button
+          </Button>
+          <Button
             type="button"
-            className="w-full py-2 bg-bluewize text-white text-xl font-bold rounded hover:bg-red-500 transition"
+            className="bg-pinkwize hover:bg-red-500"
             onClick={handleClose}
           >
             Fermer
-          </button>
+          </Button>
         </div>
       </form>
     </div>

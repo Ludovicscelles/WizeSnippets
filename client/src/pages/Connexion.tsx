@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useAuth } from "../service/UseAuth";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { Button } from "../components/ui/Button";
 
 export default function Connexion() {
   const { login } = useAuth();
@@ -42,7 +43,7 @@ export default function Connexion() {
         },
         token
       );
-      
+
       console.log("Connexion réussie :", user);
     } catch (error: unknown) {
       console.error("Erreur de connexion :", error);
@@ -81,12 +82,9 @@ export default function Connexion() {
           />
         </div>
         <div>
-          <button
-            type="submit"
-            className="w-full py-2 bg-blue-500 text-white text-xl font-bold rounded hover:bg-bluewize transition"
-          >
-            Valider
-          </button>
+          <Button type="submit" className="bg-bluewize hover:bg-blue-700">
+            Se connecter
+          </Button>
           {error && <p className="text-red-500 text-center mt-2">{error}</p>}
         </div>
       </div>

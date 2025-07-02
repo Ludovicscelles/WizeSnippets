@@ -2,8 +2,11 @@ import { useState } from "react";
 import { useAuth } from "../service/UseAuth";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { Button } from "../components/ui/Button";
+import { useNavigate } from "react-router-dom";
 
 export default function Inscription() {
+  const navigate = useNavigate();
   const { login } = useAuth();
 
   const [pseudo, setPseudo] = useState("");
@@ -84,6 +87,17 @@ export default function Inscription() {
       toast.error("Erreur d'inscription. Veuillez réessayer.");
     }
   };
+
+  const handleClose = () => {
+    setPseudo("");
+    setFirstname("");
+    setLastname("");
+    setEmail("");
+    setPassword("");
+    setConfirmPassword("");
+    navigate("/snippets");
+  };
+  
   return (
     <div className="max-w-md mx-auto mt-10 p-6 border-2 border-blue-500 rounded-lg bg-black text-white">
       <h1 className="text-3xl font-bold text-center mb-2">Inscription</h1>
@@ -134,12 +148,16 @@ export default function Inscription() {
           placeholder="Confirmer Mot de passe"
           className="w-full px-4 py-2 bg-black text-white border-2 border-blue-500 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
         />
-        <button
-          type="submit"
-          className="w-full py-2 bg-blue-500 text-white text-xl font-bold rounded hover:bg-blue-600 transition"
-        >
+        <Button type="submit" className="bg-bluewize hover:bg-blue-700">
           Valider
-        </button>
+        </Button>
+        <Button
+          type="button"
+          className="bg-pinkwize hover:bg-red-500"
+          onClick={handleClose}
+        >
+          Fermer
+        </Button>
       </form>
     </div>
   );

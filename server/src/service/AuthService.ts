@@ -1,8 +1,8 @@
 import { AppDataSource } from "../data-source";
 import { User } from "../entities/User";
 import { PublicUserType, RegisterInput } from "../models/User";
-import argon2 from "argon2";
-import jwt from "jsonwebtoken";
+import { hashPassword, verifyPassword } from "../service/utils/hash";
+import { signToken } from "./utils/jwt";
 
 export class AuthService {
   static async login(
@@ -14,16 +14,12 @@ export class AuthService {
       throw new Error("Identifiants invalides");
     }
 
-    const isPasswordValid = await argon2.verify(user.password, password);
+    const isPasswordValid = await verifyPassword(password, user.password);
     if (!isPasswordValid) {
       throw new Error("Identifiants invalides");
     }
 
-    const token = jwt.sign(
-      { userId: user.id },
-      process.env.JWT_SECRET || "dev-secret",
-      { expiresIn: "1h" }
-    );
+    const token = signToken({ userId: user.id }, { expiresIn: "1h" });
 
     return {
       token,
@@ -39,15 +35,17 @@ export class AuthService {
 
   static async register(
     userData: RegisterInput
-  ): Promise< {token: string; user:PublicUserType}> {
+  ): Promise<{ token: string; user: PublicUserType }> {
     const userRepository = AppDataSource.getRepository(User);
-    const existingUser = await userRepository.findOneBy({ email: userData.email });
+    const existingUser = await userRepository.findOneBy({
+      email: userData.email,
+    });
 
     if (existingUser) {
       throw new Error("Email déjà utilisé");
     }
 
-    const hashedPassword = await argon2.hash(userData.password);
+    const hashedPassword = await hashPassword(userData.password);
     const newUser = userRepository.create({
       ...userData,
       password: hashedPassword,
@@ -55,9 +53,8 @@ export class AuthService {
 
     await userRepository.save(newUser);
 
-    const token = jwt.sign(
+    const token = signToken(
       { userId: newUser.id },
-      process.env.JWT_SECRET || "dev-secret",
       { expiresIn: "1h" }
     );
 

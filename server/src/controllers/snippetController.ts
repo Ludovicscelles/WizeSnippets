@@ -6,6 +6,7 @@ export const getSnippets = async (req: Request, res: Response) => {
     const snippets = await SnippetService.getAll();
     res.json(snippets);
   } catch (e) {
+    console.error("Erreur dans getSnippets:", e); 
     res.status(500).json({ message: "Internal server error" });
   }
 };
@@ -31,7 +32,11 @@ export const getSnippetById = async (
 };
 
 export const createSnippet = async (
-  req: Request<{}, {}, { title: string; message: string; code: string, languageId: number }>,
+  req: Request<
+    {},
+    {},
+    { title: string; message: string; code: string; languageId: number }
+  >,
   res: Response
 ) => {
   const { title, message, code } = req.body;
@@ -58,5 +63,3 @@ export const createSnippet = async (
     res.status(500).json({ message: "Internal server error" });
   }
 };
-
-

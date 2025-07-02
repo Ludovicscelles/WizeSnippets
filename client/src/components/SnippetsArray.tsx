@@ -60,75 +60,38 @@ export function SnippetsArray({
   ));
 
   return (
-    <>
-      {isMobile ? (
-        <div className="flex justify-center  justify-center w-full  bg-black mb-5">
-          <div className="p-4 bg-black text-white border-4  border-bluewize rounded-lg">
-            <h2 className="text-center text-4xl font-bold mb-4">Snippets</h2>
+    <div className="p-4 bg-black text-white border-4 border-bluewize rounded-lg w-full  max-w-4xl mx-auto">
+      <h2 className="text-center text-4xl font-bold mb-4">Snippets</h2>
 
-            <table className="w-full table-auto text-left border-collapse">
-              <thead>
-                <tr className="border-b border-white">
-                  <th className="px-4 py-2">Titre</th>
-                  <th className="px-4 py-2">Voir en détail</th>
-                </tr>
-              </thead>
+      <table className="w-full table-auto text-left border-collapse ">
+        <thead>
+          <tr className="border-b border-white">
+            <th className="px-4 py-2 hidden md:table-cell">Pseudo</th>
+            <th className="px-4 py-2">Titre</th>
+            <th className="px-4 py-2">Voir en détail</th>
+          </tr>
+        </thead>
 
-              <tbody className="text-sm text-bold">{renderedSnippets}</tbody>
-            </table>
-            <div className="flex flex-col h-full items-center mt-10 mb-10 h-24 gap-5">
-              <p className="text-white text-xl font-bold">
-                Envie de partager un snippet ?
-              </p>
-              <img
-                src={chevrons}
-                alt="chevrons "
-                className="w-24 h-24 transform rotate-90"
-              />
-              <img
-                src={cross}
-                alt="croix bleu pour ajouter un snippet"
-                className="w-14 h-14 cursor-pointer"
-                onClick={() =>
-                  isLogged
-                    ? navigate("/ajouter-snippet")
-                    : navigate("/connexion")
-                }
-              />
-            </div>
-          </div>
-        </div>
-      ) : (
-        <div className="p-4 bg-black text-white border-4 border-bluewize rounded-lg w-full  max-w-4xl mx-auto">
-          <h2 className="text-center text-4xl font-bold mb-4">Snippets</h2>
-
-          <table className="w-full table-auto text-left border-collapse">
-            <thead>
-              <tr className="border-b border-white">
-                <th className="px-4 py-2">Pseudo</th>
-                <th className="px-4 py-2">Titre</th>
-                <th className="px-4 py-2">Voir en détail</th>
-              </tr>
-            </thead>
-
-            <tbody className="text-sm text-bold">{renderedSnippets}</tbody>
-          </table>
-          <div className="flex justify-center items-center h-24 gap-20">
-            <p className="text-white text-2xl font-bold">
-              Envie de partager un snippet ?
-            </p>
-            <img src={chevrons} alt="chevrons " className="w-24 h-24" />
-            <img
-              src={cross}
-              alt="croix bleu pour ajouter un snippet"
-              className="w-14 h-14 cursor-pointer"
-              onClick={() =>
-                isLogged ? navigate("/ajouter-snippet") : navigate("/connexion")
-              }
-            />
-          </div>
-        </div>
-      )}
-    </>
+        <tbody className="text-sm text-bold">{renderedSnippets}</tbody>
+      </table>
+      <div className="flex flex-col md:flex-row justify-center items-center gap-5 md:gap-20 mt-10 mb-10">
+        <p className="text-white text-xl md:text-2xl font-bold">
+          Envie de partager un snippet ?
+        </p>
+        <img
+          src={chevrons}
+          alt="chevrons "
+          className="w-24 h-24 transform md:rotate-0 rotate-90"
+        />
+        <img
+          src={cross}
+          alt="croix bleu pour ajouter un snippet"
+          className="w-14 h-14 cursor-pointer"
+          onClick={() =>
+            isLogged ? navigate("/ajouter-snippet") : navigate("/connexion")
+          }
+        />
+      </div>
+    </div>
   );
 }

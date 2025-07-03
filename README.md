@@ -5,7 +5,7 @@ Bienvenue sur WizeSnippets, un site web de partage de codes entre développeurs.
 ## Badges
 
 ![FIGMA](https://img.shields.io/badge/Figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white)
-![NODE](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white)
+![NODE](https://img.shields.io/badge/Node.js-43853D?stylhttps://files09.oaiusercontent.com/file-2Ys1naxskxARyKnchLbfed?se=2025-07-03T16%3A50%3A36Z&sp=r&sv=2024-08-04&sr=b&rscc=max-age%3D299%2C%20immutable%2C%20private&rscd=attachment%3B%20filename%3D58c708a3-d7f5-4f18-a1ca-1fb91bde8689.png&sig=gO7X%2Bt9NFhRO6bOphgLMg%2B8QxqO9dJWhYHCp3NjMXTo%3De=for-the-badge&logo=node.js&logoColor=white)
 ![Express](https://img.shields.io/badge/Express-000000?logo=express&logoColor=white&style=for-the-badge)
 ![TypeORM](https://img.shields.io/badge/TypeORM-262626?logo=typeorm&logoColor=white&style=for-the-badge)
 ![npm](https://img.shields.io/badge/npm-CB3837?logo=npm&logoColor=fff&style=for-the-badge)
@@ -26,11 +26,11 @@ Bienvenue sur WizeSnippets, un site web de partage de codes entre développeurs.
 
 ## Palette de couleurs
 
-| Couleur    | Code Hex  | Aperçu                                                                                                                      |
-| ---------- | --------- | --------------------------------------------------------------------------------------------------------------------------- |
-| Principale | `#000000` | <span style="display:inline-block;width:15px;height:15px;background-color:#000000;border:1px solid #ccc;"></span> `#000000` |
-| bluewize   | `#2A7FFF` | <span style="display:inline-block;width:15px;height:15px;background-color:#2A7FFF;border:1px solid #ccc;"></span> `#2A7FFF` |
-| pinkwize   | `#FE4B9F` | <span style="display:inline-block;width:15px;height:15px;background-color:#FE4B9F;border:1px solid #ccc;"></span> `#FE4B9F` |
+| Couleur    | Code Hex  | Aperçu                                                 |
+| ---------- | --------- | ------------------------------------------------------ |
+| Principale | `#000000` | ![](./client/src/assets/colors/black.png) `#000000`    |
+| bluewize   | `#2A7FFF` | ![](./client/src/assets/colors/bluewize.png) `#2A7FFF` |
+| pinkwize   | `#FE4B9F` | ![](./client/src/assets/colors/pinkwize.png) `#FE4B9F` |
 
 | Font      | Source                                                                                           |
 | --------- | ------------------------------------------------------------------------------------------------ |

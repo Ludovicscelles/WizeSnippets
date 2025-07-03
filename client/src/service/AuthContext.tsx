@@ -9,6 +9,7 @@ export type AuthContextType = {
   isLogged: boolean;
   user: User | null;
   token: string | null;
+  isLoading: boolean;
   login: (user: User, token: string) => void;
   logout: () => void;
 };
@@ -20,6 +21,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const [user, setUser] = useState<User | null>(null);
   const [token, setToken] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -29,13 +31,17 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       setUser(JSON.parse(storedUser));
       setToken(storedToken);
     }
+    setIsLoading(false);
   }, []);
 
   const login = (user: User, token: string) => {
-    localStorage.setItem("user", JSON.stringify(user));
-    localStorage.setItem("token", token);
-    setUser(user);
-    setToken(token);
+    return new Promise<void>((resolve) => {
+      localStorage.setItem("user", JSON.stringify(user));
+      localStorage.setItem("token", token);
+      setUser(user);
+      setToken(token);
+      resolve();
+    });
   };
 
   const logout = () => {
@@ -47,7 +53,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
   return (
     <AuthContext.Provider
-      value={{ isLogged: !!user && !!token, user, token, login, logout }}
+      value={{ isLogged: !!user && !!token, user, token, isLoading, login, logout }}
     >
       {children}
     </AuthContext.Provider>

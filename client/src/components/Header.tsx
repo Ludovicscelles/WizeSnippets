@@ -32,9 +32,15 @@ export default function Header() {
     navigate("/connexion");
   };
 
-  const { user, logout } = useAuth();
+  const { user, logout, isLoading } = useAuth();
+
+  if (isLoading) {
+    return null;
+  }
 
   const greetingName = user?.pseudo || user?.firstname || "à vous";
+
+  console.log("user", user);
 
   return (
     <header className="flex w-full bg-black mt-5 px-8">
@@ -62,10 +68,7 @@ export default function Header() {
                 onClick={handleClickAvatar}
               />
               {user && hovered && (
-                <LogoutButton
-                  onLogout={logout}
-                  isMobile={false}
-                />
+                <LogoutButton onLogout={logout} isMobile={false} />
               )}
             </div>
             {user && (
@@ -99,10 +102,7 @@ export default function Header() {
                   onClick={handleClickAvatar}
                 />
                 {user && hovered && (
-                  <LogoutButton
-                    onLogout={logout}
-                    isMobile={true}
-                  />
+                  <LogoutButton onLogout={logout} isMobile={true} />
                 )}
               </div>
               {user && (

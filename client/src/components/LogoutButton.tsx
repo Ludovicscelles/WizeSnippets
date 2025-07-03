@@ -10,7 +10,7 @@ export const LogoutButton: React.FC<LogoutButtonProps> = ({
 
   const handleLogout = () => {
     onLogout();
-    navigate("/connexion");
+    navigate("/connexion", { state: { reset: true } }); 
   };
 
   return (

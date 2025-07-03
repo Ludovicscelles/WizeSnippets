@@ -6,6 +6,7 @@ import { validateSchema } from "../service/middlewares/validateSchema";
 
 const router = Router();
 
+
 router.post("/login", login as unknown as RequestHandler);
 
 router.post("/register", validateSchema(registerSchema), register as unknown as RequestHandler);

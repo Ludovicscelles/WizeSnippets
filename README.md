@@ -26,11 +26,11 @@ Bienvenue sur WizeSnippets, un site web de partage de codes entre développeurs.
 
 ## Palette de couleurs
 
-| Couleur    | Code Hex  | Aperçu                                                                    |
-| ---------- | --------- | ------------------------------------------------------------------------- |
-| Principale | `#000000` | ![#000000](https://via.placeholder.com/15/000000/000000?text=+) `#000000` |
-| bluewize   | `#2A7FFF` | ![#2A7FFF](https://via.placeholder.com/15/2A7FFF/2A7FFF?text=+) `#2A7FFF` |
-| pinkwize   | `#FE4B9F` | ![#FE4B9F](https://via.placeholder.com/15/FE4B9F/FE4B9F?text=+) `#FE4B9F` |
+| Couleur    | Code Hex  | Aperçu                                                                                                                      |
+| ---------- | --------- | --------------------------------------------------------------------------------------------------------------------------- |
+| Principale | `#000000` | <span style="display:inline-block;width:15px;height:15px;background-color:#000000;border:1px solid #ccc;"></span> `#000000` |
+| bluewize   | `#2A7FFF` | <span style="display:inline-block;width:15px;height:15px;background-color:#2A7FFF;border:1px solid #ccc;"></span> `#2A7FFF` |
+| pinkwize   | `#FE4B9F` | <span style="display:inline-block;width:15px;height:15px;background-color:#FE4B9F;border:1px solid #ccc;"></span> `#FE4B9F` |
 
 | Font      | Source                                                                                           |
 | --------- | ------------------------------------------------------------------------------------------------ |
@@ -40,7 +40,7 @@ Bienvenue sur WizeSnippets, un site web de partage de codes entre développeurs.
 
 - [@Ludovic](https://github.com/Ludovicscelles)
 
-### Windows users
+## Windows users
 
 Be sure to run these commands in a git terminal to avoid [issues with newline formats](https://en.wikipedia.org/wiki/Newline#Issues_with_different_newline_formats):
 
@@ -106,7 +106,7 @@ npm run test:server
 
 npm run test:integration
 
-❓ FAQ
+## ? FAQ
 
 Justification des compétences techniques
 

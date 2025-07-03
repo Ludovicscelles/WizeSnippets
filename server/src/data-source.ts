@@ -11,11 +11,13 @@ dotenv.config();
 const USERNAME = process.env.USERNAME;
 const PASSWORD = process.env.PASSWORD;
 const DATABASE = process.env.DATABASE;
+const HOST = process.env.HOST || "localhost"; 
+const PORT = Number(process.env.DB_PORT) || 3306;
 
 export const AppDataSource = new DataSource({
   type: "mysql",
-  host: "localhost",
-  port: 3306,
+  host: HOST,
+  port: Number(PORT),
   username: USERNAME,
   password: PASSWORD,
   database: DATABASE,

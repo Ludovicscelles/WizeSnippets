@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "ts-node-dev --respawn src/index.ts",
     "build": "tsc",
-    "test": "vitest",
+    "test:unit": "vitest run testsUnit/*.test.ts",
+    "test:integration": "vitest run testsIntegration/*.test.ts",
     "init-db": "mysql -u root -p < server/init.sql",
     "seed": "ts-node src/seeders/seed.ts",
     "clear": "ts-node src/seeders/clearDatabase.ts",
@@ -31,6 +32,7 @@
     "@types/express": "^5.0.3",
     "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^24.0.3",
+    "supertest": "^7.1.1",
     "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.8.3",

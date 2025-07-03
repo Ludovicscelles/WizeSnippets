@@ -26,6 +26,7 @@ export const register = async (req: Request, res: Response) => {
 
     const { token, user } = await AuthService.register(userData);
 
+
     return res.status(201).json({
       message: "Inscription réussie",
       token,

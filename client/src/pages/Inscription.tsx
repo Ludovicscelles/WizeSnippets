@@ -59,6 +59,7 @@ export default function Inscription() {
           lastname,
           email,
           password,
+          confirmPassword,
         }
       );
 
@@ -74,8 +75,6 @@ export default function Inscription() {
         token
       );
 
-      console.log("Inscription réussie :", user);
-
       setPseudo("");
       setFirstname("");
       setLastname("");
@@ -83,8 +82,23 @@ export default function Inscription() {
       setPassword("");
       setConfirmPassword("");
     } catch (error: unknown) {
-      console.error("Erreur d'inscription :", error);
-      toast.error("Erreur d'inscription. Veuillez réessayer.");
+      if (axios.isAxiosError(error)) {
+        const data = error.response?.data;
+
+        if (Array.isArray(data?.errors)) {
+          data.errors.forEach((err: { message: string; path?: string }) => {
+            toast.error(err.message);
+            console.error(`[${err.path}] ${err.message}`);
+          });
+        } else if (data?.message) {
+          toast.error(data.message);
+        } else {
+          toast.error("Erreur d'inscription inconnue.");
+        }
+      } else {
+        console.error("Erreur inconnue :", error);
+        toast.error("Erreur inconnue.");
+      }
     }
   };
 
@@ -97,7 +111,7 @@ export default function Inscription() {
     setConfirmPassword("");
     navigate("/snippets");
   };
-  
+
   return (
     <div className="max-w-md mx-auto mt-10 p-6 border-2 border-blue-500 rounded-lg bg-black text-white">
       <h1 className="text-3xl font-bold text-center mb-2">Inscription</h1>

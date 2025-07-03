@@ -16,16 +16,16 @@ export class User {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @Column({ nullable: false, type: "varchar", length: 150 })
+  @Column({ nullable: false, type: "varchar", length: 60 })
   @IsString()
   @IsNotEmpty()
-  @Length(1, 150)
+  @Length(1, 60)
   firstname!: string;
 
-  @Column({ nullable: false, type: "varchar", length: 150 })
+  @Column({ nullable: false, type: "varchar", length: 60 })
   @IsString()
   @IsNotEmpty()
-  @Length(1, 150)
+  @Length(1, 60)
   lastname!: string;
 
   @Column({ nullable: false, unique: true, type: "varchar", length: 150 })
@@ -34,9 +34,9 @@ export class User {
   @IsNotEmpty()
   email!: string;
 
-  @Column({ nullable: true, unique: true, type: "varchar", length: 150 })
+  @Column({ nullable: true, unique: true, type: "varchar", length: 30 })
   @IsString()
-  @Length(1, 150)
+  @Length(3, 30)
   pseudo?: string;
 
   @Column({ nullable: false, type: "varchar", length: 255 })

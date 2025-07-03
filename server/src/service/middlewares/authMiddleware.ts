@@ -1,6 +1,5 @@
 import { Request, Response, NextFunction } from "express";
 import { verifyToken } from "../utils/jwt";
-import { UserType } from "../../models/User";
 import { AppDataSource } from "../../data-source";
 import { User } from "../../entities/User";
 

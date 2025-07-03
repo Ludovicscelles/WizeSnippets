@@ -1,9 +1,5 @@
 import { Request, Response } from "express";
-import { AppDataSource } from "../data-source";
-import { User } from "../entities/User";
 import { AuthService } from "../service/AuthService";
-import argon2 from "argon2";
-import jwt from "jsonwebtoken";
 
 export const login = async (req: Request, res: Response) => {
   try {
@@ -26,17 +22,19 @@ export const login = async (req: Request, res: Response) => {
 
 export const register = async (req: Request, res: Response) => {
   try {
-    const userData = req.body;
+    const { confirmPassword, ...userData } = req.body;
 
     const { token, user } = await AuthService.register(userData);
 
-    res.status(201).json({
+    return res.status(201).json({
       message: "Inscription réussie",
       token,
       user,
     });
   } catch (error: any) {
     console.error("Erreur inscription", error);
-    res.status(400).json({ message: error.message || "Erreur d'inscription" });
+    return res
+      .status(400)
+      .json({ message: error.message || "Erreur d'inscription" });
   }
 };

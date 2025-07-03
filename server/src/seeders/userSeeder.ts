@@ -10,7 +10,7 @@ export const userSeeder = async () => {
       lastname: "Doe",
       email: "john@example.com",
       pseudo: "johndoe",
-      password: "password123",
+      password: "Password123!",
       refName: "user1",
     },
     {
@@ -18,16 +18,15 @@ export const userSeeder = async () => {
       lastname: "Doe",
       email: "jane@example.com",
       pseudo: "janedoe",
-      password: "password456",
+      password: "SecurePwd456#",
       refName: "user2",
     },
-
     {
       firstname: "Alice",
       lastname: "Smith",
       email: "alice@example.com",
       pseudo: "alicesmith",
-      password: "password789",
+      password: "AlicePwd789@",
       refName: "user3",
     },
     {
@@ -35,7 +34,7 @@ export const userSeeder = async () => {
       lastname: "Johnson",
       email: "bob@example.com",
       pseudo: "bobjohnson",
-      password: "password101",
+      password: "B0bStrongPass$",
       refName: "user4",
     },
     {
@@ -43,7 +42,7 @@ export const userSeeder = async () => {
       lastname: "Brown",
       email: "charlie@example.com",
       pseudo: "charliebrown",
-      password: "password102",
+      password: "Ch@rlie2024",
       refName: "user5",
     },
     {
@@ -51,7 +50,7 @@ export const userSeeder = async () => {
       lastname: "Miller",
       email: "david@example.com",
       pseudo: "davidmiller",
-      password: "password103",
+      password: "Dav1d!Miller",
       refName: "user6",
     },
     {
@@ -59,7 +58,7 @@ export const userSeeder = async () => {
       lastname: "Wilson",
       email: "emma@example.com",
       pseudo: "emmawilson",
-      password: "password104",
+      password: "EmmaW!ls0n*",
       refName: "user7",
     },
     {
@@ -67,7 +66,7 @@ export const userSeeder = async () => {
       lastname: "Taylor",
       email: "frank@example.com",
       pseudo: "franktaylor",
-      password: "password105",
+      password: "Fr4nk#Taylor",
       refName: "user8",
     },
     {
@@ -75,7 +74,7 @@ export const userSeeder = async () => {
       lastname: "Anderson",
       email: "grace@example.com",
       pseudo: "graceanderson",
-      password: "password106",
+      password: "Gr@ceAnd3rs0n",
       refName: "user9",
     },
     {
@@ -83,16 +82,14 @@ export const userSeeder = async () => {
       lastname: "Thomas",
       email: "henry@example.com",
       pseudo: "henrythomas",
-      password: "password107",
+      password: "H3nry!Thom@s",
       refName: "user10",
     },
   ];
 
   const userRefs: Record<string, number> = {};
 
-  for (const {refName, ...userData} of users) {
-
-    
+  for (const { refName, ...userData } of users) {
     const existingUser = await userRepository.findOneBy({
       email: userData.email,
     });
@@ -110,7 +107,6 @@ export const userSeeder = async () => {
         `Utilisateur  ${userData.firstname} ${userData.lastname} existe déjà, pas de création`
       );
       savedUser = existingUser;
-    
     }
     if (refName) {
       userRefs[refName] = savedUser.id;

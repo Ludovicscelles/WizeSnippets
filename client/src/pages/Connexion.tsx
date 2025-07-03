@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../service/UseAuth";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -7,9 +9,22 @@ import { Button } from "../components/ui/Button";
 export default function Connexion() {
   const { login } = useAuth();
 
+  const location = useLocation();
+
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+
+  useEffect(() => {
+    if (location.state?.reset) {
+      setEmail("");
+      setPassword("");
+      setError("");
+      toast.info("Vous avez été déconnecté avec succès.");
+    }
+  }, [location.state]);
 
   const handleChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
@@ -34,15 +49,18 @@ export default function Connexion() {
 
       const { token, user } = response.data;
 
+      console.log("user reçu :", user);
+
       toast.success("Connexion réussie !");
 
-      login(
+      await login(
         {
           pseudo: user.pseudo,
           firstname: user.firstname,
         },
         token
       );
+      navigate("/snippets");
 
       console.log("Connexion réussie :", user);
     } catch (error: unknown) {

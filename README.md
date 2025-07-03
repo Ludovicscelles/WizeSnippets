@@ -26,11 +26,11 @@ Bienvenue sur WizeSnippets, un site web de partage de codes entre développeurs.
 
 ## Palette de couleurs
 
-| Couleur    | Code Hex  | Aperçu                                                 |
-| ---------- | --------- | ------------------------------------------------------ |
-| Principale | `#000000` | ![](./client/src/assets/colors/black.png) `#000000`    |
-| bluewize   | `#2A7FFF` | ![](./client/src/assets/colors/bluewize.png) `#2A7FFF` |
-| pinkwize   | `#FE4B9F` | ![](./client/src/assets/colors/pinkwize.png) `#FE4B9F` |
+| Couleur    | Code Hex  | Aperçu                                       |
+| ---------- | --------- | -------------------------------------------- |
+| Principale | `#000000` | ![](./client/src/assets/colors/black.png)    |
+| bluewize   | `#2A7FFF` | ![](./client/src/assets/colors/bluewize.png) |
+| pinkwize   | `#FE4B9F` | ![](./client/src/assets/colors/pinkwize.png) |
 
 | Font      | Source                                                                                           |
 | --------- | ------------------------------------------------------------------------------------------------ |

@@ -6,16 +6,21 @@ Bienvenue sur WizeSnippets, un site web de partage de codes entre développeurs.
 
 ![FIGMA](https://img.shields.io/badge/Figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white)
 ![NODE](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white)
-![Express](https://img.shields.io/badge/Express-000000?logo=express&logoColor=white)
-![TypeORM](https://img.shields.io/badge/TypeORM-262626?logo=typeorm&logoColor=white)
-![npm](https://img.shields.io/badge/npm-CB3837?logo=npm&logoColor=fff)
-![Argon2](https://img.shields.io/badge/Argon2-2F0C45?logo=argon2&logoColor=white)
-![jsonwebtoken](https://img.shields.io/badge/jsonwebtoken-EF8138?logo=json-web-token&logoColor=white)
-![MySQL](https://img.shields.io/badge/MySQL-4479A1?logo=mysql&logoColor=white)
-![Vite](https://img.shields.io/badge/Vite-646CFF?logo=vite&logoColor=fff)
+![Express](https://img.shields.io/badge/Express-000000?logo=express&logoColor=white&style=for-the-badge)
+![TypeORM](https://img.shields.io/badge/TypeORM-262626?logo=typeorm&logoColor=white&style=for-the-badge)
+![npm](https://img.shields.io/badge/npm-CB3837?logo=npm&logoColor=fff&style=for-the-badge)
+![Argon2](https://img.shields.io/badge/Argon2-2F0C45?logo=argon2&logoColor=white&style=for-the-badge)
+![jsonwebtoken](https://img.shields.io/badge/jsonwebtoken-EF8138?logo=json-web-token&logoColor=white&style=for-the-b)
+![class-validator](https://img.shields.io/badge/class--validator-005A9C?style=for-the-badge)
+![Joi](https://img.shields.io/badge/joi-9900FF?logo=data&logoColor=white&style=for-the-badge)
+![MySQL](https://img.shields.io/badge/MySQL-4479A1?logo=mysql&logoColor=white&style=for-the-badge)
+![Vite](https://img.shields.io/badge/Vite-646CFF?logo=vite&logoColor=fff&style=for-the-badge)
 ![REACT](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
-![TailwindCSS](https://img.shields.io/badge/Tailwind%20CSS-%2338B2AC.svg?logo=tailwind-css&logoColor=white)
-![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=fff)
+![TailwindCSS](https://img.shields.io/badge/Tailwind%20CSS-%2338B2AC.svg?logo=tailwind-css&logoColor=white&style=for-the-badge)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=fff&style=for-the-badge)
+![Vitest](https://img.shields.io/badge/vitest-6E9F18?logo=vitest&logoColor=white&style=for-the-badge)
+![SuperTest](https://img.shields.io/badge/SuperTest-0000FF?logo=supertest&logoColor=white&style=for-the-badge)
+![React Testing Library](https://img.shields.io/badge/React%20Testing%20Library-22BCE5?logo=testinglibrary&logoColor=white&style=for-the-badge)
 ![GIT](https://img.shields.io/badge/GIT-E44C30?style=for-the-badge&logo=git&logoColor=white)
 ![Github](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)
 
@@ -24,9 +29,9 @@ Bienvenue sur WizeSnippets, un site web de partage de codes entre développeurs.
 Voici les couleurs fournies par le client.
 | Color | Hex |
 | ----------------- | ------------------------------------------------------------------ |
-| Principale | ![#000000](https://via.placeholder.com/10/000000?text=+) #000000 |
-| bluewize | ![#2A7FFF](https://via.placeholder.com/10/FE4B9F?text=+) #2A7FFF |
-| pinkwize | ![#FE4B9F](https://via.placeholder.com/10/FE4B9F?text=+) #FE4B9F|
+| Principale | #000000 |
+| bluewize | #2A7FFF |
+| pinkwize | #FE4B9F|
 
 | Font | Source |
 | ----------------- | ------------------------------------------------------------------ |
@@ -76,9 +81,23 @@ npm run init-db
 
 # Puis dans le dossier server
 cd server
-npm install
 npm run dev
-npm run seed   # Optionnel
+npm run seed   
+
+
+### Testing
+
+Test unitaires :
+
+ # À la racine du projet
+npm run test:client
+npm run test:server
+
+Test d'intégration :
+
+ # Dans le dossier `server`
+npm run test:integration
+
 
 
 ❓ FAQ
@@ -99,6 +118,10 @@ Ce projet utilise un ensemble varié de technologies afin de garantir un dévelo
 
   - **Argon2** : Algorithme de hachage sécurisé utilisé pour stocker les mots de passe. Il est réputé pour sa résistance aux attaques par force brute, notamment via GPU.
 
+  - **Class-validator** : Utilisé pour la validation des données. C'est une bibliothèque qui permet de valider les données d'entrée en utilisant des décorateurs, garantissant ainsi que les données reçues par l'API sont conformes aux attentes.
+
+  - **Joi** : Utilisé pour la validation des données. Joi est une bibliothèque de validation de schémas qui permet de s’assurer que les données reçues par l’API respectent les formats et contraintes définis. Je l'ai utilisé pour valider les données d'ajout d'un nouvel utilisateur (notamment le mot de passe), garantissant ainsi que les données sont conformes avant de les traiter.
+
   - **jsonwebtoken** : Utilisé pour l’authentification. Les JWT permettent de sécuriser les échanges entre le client et le serveur, en encodant des informations dans un format compact et sécurisé.
 
   - **MySQL** : Système de gestion de base de données relationnelle utilisé pour stocker les données de manière fiable et performante.
@@ -114,3 +137,9 @@ Ce projet utilise un ensemble varié de technologies afin de garantir un dévelo
   - **Git** : Système de gestion de version distribué. Il permet de suivre les modifications du code, de travailler en équipe et de gérer différentes branches de développement.
 
   - **GitHub** : Plateforme d’hébergement Git qui facilite la collaboration, la revue de code, la gestion des issues, et le déploiement continu.
+
+  - **Vitest** : Framework de test unitaire et d'intégration pour les projets JavaScript/TypeScript. Il est rapide, facile à configurer et s'intègre bien avec Vite.
+
+  - **SuperTest** : Utilisé pour tester les API HTTP. Il permet d'effectuer des requêtes HTTP et de vérifier les réponses, facilitant ainsi les tests d'intégration des endpoints de l'API.
+
+  - **React Testing Library** : Utilisée pour tester les composants React. Elle encourage les tests basés sur l'interaction utilisateur, garantissant que les composants fonctionnent comme prévu dans un environnement réel.

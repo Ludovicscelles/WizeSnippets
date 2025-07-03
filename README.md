@@ -10,7 +10,7 @@ Bienvenue sur WizeSnippets, un site web de partage de codes entre développeurs.
 ![TypeORM](https://img.shields.io/badge/TypeORM-262626?logo=typeorm&logoColor=white&style=for-the-badge)
 ![npm](https://img.shields.io/badge/npm-CB3837?logo=npm&logoColor=fff&style=for-the-badge)
 ![Argon2](https://img.shields.io/badge/Argon2-2F0C45?logo=argon2&logoColor=white&style=for-the-badge)
-![jsonwebtoken](https://img.shields.io/badge/jsonwebtoken-EF8138?logo=json-web-token&logoColor=white&style=for-the-b)
+![jsonwebtoken](https://img.shields.io/badge/jsonwebtoken-EF8138?logo=json-web-token&logoColor=white&style=for-the-badge)
 ![class-validator](https://img.shields.io/badge/class--validator-005A9C?style=for-the-badge)
 ![Joi](https://img.shields.io/badge/joi-9900FF?logo=data&logoColor=white&style=for-the-badge)
 ![MySQL](https://img.shields.io/badge/MySQL-4479A1?logo=mysql&logoColor=white&style=for-the-badge)
@@ -26,15 +26,14 @@ Bienvenue sur WizeSnippets, un site web de partage de codes entre développeurs.
 
 ## Palette de couleurs
 
-Voici les couleurs fournies par le client.
-| Color | Hex |
-| ----------------- | ------------------------------------------------------------------ |
-| Principale | #000000 |
-| bluewize | #2A7FFF |
-| pinkwize | #FE4B9F|
+| Couleur    | Code Hex  | Aperçu                                                                    |
+| ---------- | --------- | ------------------------------------------------------------------------- |
+| Principale | `#000000` | ![#000000](https://via.placeholder.com/15/000000/000000?text=+) `#000000` |
+| bluewize   | `#2A7FFF` | ![#2A7FFF](https://via.placeholder.com/15/2A7FFF/2A7FFF?text=+) `#2A7FFF` |
+| pinkwize   | `#FE4B9F` | ![#FE4B9F](https://via.placeholder.com/15/FE4B9F/FE4B9F?text=+) `#FE4B9F` |
 
-| Font | Source |
-| ----------------- | ------------------------------------------------------------------ |
+| Font      | Source                                                                                           |
+| --------- | ------------------------------------------------------------------------------------------------ |
 | Quicksand | [Google Fonts](https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;700&display=swap) |
 
 ## Auteur
@@ -50,55 +49,62 @@ git config --global core.eol lf
 git config --global core.autocrlf false
 ```
 
-### Project Initialization
+## Project Initialization
 
-# Cloner le dépôt
+### Cloner le dépôt
+
 git clone https://github.com/Ludovicscelles/WizeSnippets
 
-# Aller dans le dossier
+### Aller dans le dossier
+
 cd wizesnippets
 
-# Installer les dépendances du client et du serveur
+### Installer les dépendances du client et du serveur
+
 cd client && npm install
 cd ../server && npm install
 
-# Environnement files
+### Environnement files
+
 Create environment files (`.env`) in both `api` and `client`: you can copy `.env.sample` files as starters (**don't** delete them)
 
-### Available Commands
+## Available Commands
 
 Dans le dossier `client` :
+
 - `dev` : Starts the React frontend server
 
 Dans le dossier `server` :
+
 - `dev` : Starts the backend server
 - `seed` : Seeds the database with initial data in the server
 
-### Initialize Database
+## Initialize Database
 
- # À la racine du projet
+### À la racine du projet
+
 npm run init-db
 
-# Puis dans le dossier server
+### Puis dans le dossier server
+
 cd server
 npm run dev
-npm run seed   
+npm run seed
 
+## Testing
 
-### Testing
+### Tests unitaires :
 
-Test unitaires :
+#### À la racine du projet
 
- # À la racine du projet
 npm run test:client
 npm run test:server
 
-Test d'intégration :
+### Test d'intégration :
 
- # Dans le dossier `server`
+#### Dans le dossier `server`
+
 npm run test:integration
-
-
 
 ❓ FAQ
 
@@ -106,40 +112,40 @@ Justification des compétences techniques
 
 Ce projet utilise un ensemble varié de technologies afin de garantir un développement robuste, efficace et moderne. Voici un aperçu des outils et technologies mis en œuvre :
 
-  - **Figma** : Utilisé pour la conception UI/UX. Figma est une application web collaborative permettant de créer des maquettes et des prototypes interactifs, facilitant ainsi le travail en équipe sur le design.
+- **Figma** : Utilisé pour la conception UI/UX. Figma est une application web collaborative permettant de créer des maquettes et des prototypes interactifs, facilitant ainsi le travail en équipe sur le design.
 
-  - **Node.js** : Utilisé pour le serveur backend. Node.js est un environnement d'exécution JavaScript basé sur le moteur V8 de Chrome, permettant de développer des applications côté serveur avec JavaScript.
+- **Node.js** : Utilisé pour le serveur backend. Node.js est un environnement d'exécution JavaScript basé sur le moteur V8 de Chrome, permettant de développer des applications côté serveur avec JavaScript.
 
-  - **Express** : Framework web minimaliste pour Node.js. Il fournit une base solide pour créer des API REST de manière rapide et flexible.
+- **Express** : Framework web minimaliste pour Node.js. Il fournit une base solide pour créer des API REST de manière rapide et flexible.
 
-  - **TypeORM** : Utilisé pour les interactions avec la base de données. C’est un ORM (Object Relational Mapper) qui permet de manipuler les données via des entités TypeScript, tout en masquant la complexité du SQL.
+- **TypeORM** : Utilisé pour les interactions avec la base de données. C’est un ORM (Object Relational Mapper) qui permet de manipuler les données via des entités TypeScript, tout en masquant la complexité du SQL.
 
-  - **npm** : Utilisé pour la gestion des dépendances. npm (Node Package Manager) est le gestionnaire de paquets officiel de Node.js, facilitant l’installation, la mise à jour et la gestion des librairies.
+- **npm** : Utilisé pour la gestion des dépendances. npm (Node Package Manager) est le gestionnaire de paquets officiel de Node.js, facilitant l’installation, la mise à jour et la gestion des librairies.
 
-  - **Argon2** : Algorithme de hachage sécurisé utilisé pour stocker les mots de passe. Il est réputé pour sa résistance aux attaques par force brute, notamment via GPU.
+- **Argon2** : Algorithme de hachage sécurisé utilisé pour stocker les mots de passe. Il est réputé pour sa résistance aux attaques par force brute, notamment via GPU.
 
-  - **Class-validator** : Utilisé pour la validation des données. C'est une bibliothèque qui permet de valider les données d'entrée en utilisant des décorateurs, garantissant ainsi que les données reçues par l'API sont conformes aux attentes.
+- **Class-validator** : Utilisé pour la validation des données. C'est une bibliothèque qui permet de valider les données d'entrée en utilisant des décorateurs, garantissant ainsi que les données reçues par l'API sont conformes aux attentes.
 
-  - **Joi** : Utilisé pour la validation des données. Joi est une bibliothèque de validation de schémas qui permet de s’assurer que les données reçues par l’API respectent les formats et contraintes définis. Je l'ai utilisé pour valider les données d'ajout d'un nouvel utilisateur (notamment le mot de passe), garantissant ainsi que les données sont conformes avant de les traiter.
+- **Joi** : Utilisé pour la validation des données. Joi est une bibliothèque de validation de schémas qui permet de s’assurer que les données reçues par l’API respectent les formats et contraintes définis. Je l'ai utilisé pour valider les données d'ajout d'un nouvel utilisateur (notamment le mot de passe), garantissant ainsi que les données sont conformes avant de les traiter.
 
-  - **jsonwebtoken** : Utilisé pour l’authentification. Les JWT permettent de sécuriser les échanges entre le client et le serveur, en encodant des informations dans un format compact et sécurisé.
+- **jsonwebtoken** : Utilisé pour l’authentification. Les JWT permettent de sécuriser les échanges entre le client et le serveur, en encodant des informations dans un format compact et sécurisé.
 
-  - **MySQL** : Système de gestion de base de données relationnelle utilisé pour stocker les données de manière fiable et performante.
+- **MySQL** : Système de gestion de base de données relationnelle utilisé pour stocker les données de manière fiable et performante.
 
-  - **Vite** : Outil de build moderne pour le frontend. Il offre un démarrage ultra rapide, un rechargement à chaud efficace, et une configuration simplifiée.
+- **Vite** : Outil de build moderne pour le frontend. Il offre un démarrage ultra rapide, un rechargement à chaud efficace, et une configuration simplifiée.
 
-  - **React** : Bibliothèque JavaScript utilisée pour construire l’interface utilisateur. Elle permet de créer des composants réutilisables et de gérer efficacement l’état de l’application.
+- **React** : Bibliothèque JavaScript utilisée pour construire l’interface utilisateur. Elle permet de créer des composants réutilisables et de gérer efficacement l’état de l’application.
 
-  - **TailwindCSS** : Framework CSS utilitaire-first qui permet de créer des interfaces rapidement et de manière cohérente, directement depuis le HTML.
+- **TailwindCSS** : Framework CSS utilitaire-first qui permet de créer des interfaces rapidement et de manière cohérente, directement depuis le HTML.
 
-  - **TypeScript** : Sur-ensemble de JavaScript avec typage statique. Il permet de détecter des erreurs dès l'écriture du code et d'améliorer la lisibilité, la maintenabilité et la robustesse du projet, côté frontend comme backend.
+- **TypeScript** : Sur-ensemble de JavaScript avec typage statique. Il permet de détecter des erreurs dès l'écriture du code et d'améliorer la lisibilité, la maintenabilité et la robustesse du projet, côté frontend comme backend.
 
-  - **Git** : Système de gestion de version distribué. Il permet de suivre les modifications du code, de travailler en équipe et de gérer différentes branches de développement.
+- **Git** : Système de gestion de version distribué. Il permet de suivre les modifications du code, de travailler en équipe et de gérer différentes branches de développement.
 
-  - **GitHub** : Plateforme d’hébergement Git qui facilite la collaboration, la revue de code, la gestion des issues, et le déploiement continu.
+- **GitHub** : Plateforme d’hébergement Git qui facilite la collaboration, la revue de code, la gestion des issues, et le déploiement continu.
 
-  - **Vitest** : Framework de test unitaire et d'intégration pour les projets JavaScript/TypeScript. Il est rapide, facile à configurer et s'intègre bien avec Vite.
+- **Vitest** : Framework de test unitaire et d'intégration pour les projets JavaScript/TypeScript. Il est rapide, facile à configurer et s'intègre bien avec Vite.
 
-  - **SuperTest** : Utilisé pour tester les API HTTP. Il permet d'effectuer des requêtes HTTP et de vérifier les réponses, facilitant ainsi les tests d'intégration des endpoints de l'API.
+- **SuperTest** : Utilisé pour tester les API HTTP. Il permet d'effectuer des requêtes HTTP et de vérifier les réponses, facilitant ainsi les tests d'intégration des endpoints de l'API.
 
-  - **React Testing Library** : Utilisée pour tester les composants React. Elle encourage les tests basés sur l'interaction utilisateur, garantissant que les composants fonctionnent comme prévu dans un environnement réel.
+- **React Testing Library** : Utilisée pour tester les composants React. Elle encourage les tests basés sur l'interaction utilisateur, garantissant que les composants fonctionnent comme prévu dans un environnement réel.

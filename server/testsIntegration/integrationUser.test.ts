@@ -35,7 +35,7 @@ describe("POST /api/users", () => {
       .send(newUser)
       .expect(201);
 
-    console.log("Response body:", response.body);
+    console.info("Response body:", response.body);
 
     expect(response.body).toHaveProperty("token");
     expect(response.body).toHaveProperty("user");

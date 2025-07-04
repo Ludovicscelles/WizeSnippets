@@ -40,8 +40,6 @@ export default function Header() {
 
   const greetingName = user?.pseudo || user?.firstname || "à vous";
 
-  console.log("user", user);
-
   return (
     <header className="flex w-full bg-black mt-5 px-8">
       {isDesktop ? (

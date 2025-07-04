@@ -109,7 +109,7 @@ int main() {
         language,
       });
       await snippetRepository.save(snippet);
-      console.log(`Snippet "${snippetData.title}" mis à jour.`);
+      console.info(`Snippet "${snippetData.title}" mis à jour.`);
     } else {
       snippet = snippetRepository.create({
         ...snippetData,
@@ -120,7 +120,7 @@ int main() {
         createdAt: new Date(),
       });
       await snippetRepository.save(snippet);
-      console.log(`Snippet "${snippetData.title}" créé.`);
+      console.info(`Snippet "${snippetData.title}" créé.`);
     }
 
     if (refName) {
@@ -128,7 +128,7 @@ int main() {
     }
   }
 
-  console.log("Seeding des snippets terminé");
+  console.info("Seeding des snippets terminé");
   return snippetRefs;
 };
 export default snippetSeeder;

@@ -40,7 +40,7 @@ export const languageSeeder = async () => {
     languageRefs[lang.name] = language;
   }
 
-  console.log("Languages seeded:", languageRefs);
+  console.info("Languages seeded:", languageRefs);
 
   // Update snippets with language objects if needed
   const snippets = await snippetRepository.find({
@@ -60,7 +60,7 @@ export const languageSeeder = async () => {
     }
   }
 
-  console.log("Snippets updated with languages");
+  console.info("Snippets updated with languages");
   return languageRefs;
 };
 

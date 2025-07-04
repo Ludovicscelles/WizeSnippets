@@ -16,10 +16,13 @@ export const authMiddleware = async (
   const token = authHeader.split(" ")[1];
 
   try {
-    console.log("Authenticating token:", authHeader);
+    if (process.env.NODE_ENV === "development") {
+      console.info("Authenticating token...");
+    }
+
     const decoded = verifyToken(token) as { userId: number };
 
-    console.log("Token extait:  ", token);
+    console.info("Token extait:  ", token);
 
     const user = await AppDataSource.getRepository(User).findOneBy({
       id: decoded.userId,

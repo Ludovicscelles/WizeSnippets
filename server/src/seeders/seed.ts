@@ -7,7 +7,7 @@ import { languageSeeder } from "./languageSeeder";
 async function seedDatabase() {
   try {
     await AppDataSource.initialize();
-    console.log("Connexion à la base de données réussie");
+    console.info("Connexion à la base de données réussie");
 
     // Call the user seeder
     await userSeeder();
@@ -18,7 +18,7 @@ async function seedDatabase() {
     // Call the comment seeder
     await commentSeeder();
 
-    console.log("Base de données initialisée avec succès");
+    console.info("Base de données initialisée avec succès");
   } catch (error) {
     console.error(
       "Erreur lors de l'initialisation de la base de données :",

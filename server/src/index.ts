@@ -8,10 +8,10 @@ const PORT = process.env.PORT;
 
 AppDataSource.initialize()
   .then(() => {
-    console.log("Connexion à MySQL réussie !");
+    console.info("Connexion à MySQL réussie !");
 
     app.listen(PORT, () => {
-      console.log(`Serveur lancé sur http://localhost:${PORT}`);
+      console.info(`Serveur lancé sur http://localhost:${PORT}`);
     });
   })
 

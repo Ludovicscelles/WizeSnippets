@@ -99,11 +99,11 @@ export const userSeeder = async () => {
     if (!existingUser) {
       const user = userRepository.create(userData);
       savedUser = await userRepository.save(user);
-      console.log(
+      console.info(
         `Utilisateur ${userData.firstname} ${userData.lastname} créé avec succès`
       );
     } else {
-      console.log(
+      console.info(
         `Utilisateur  ${userData.firstname} ${userData.lastname} existe déjà, pas de création`
       );
       savedUser = existingUser;
@@ -112,6 +112,6 @@ export const userSeeder = async () => {
       userRefs[refName] = savedUser.id;
     }
   }
-  console.log("Seeding des utilisateurs terminé");
+  console.info("Seeding des utilisateurs terminé");
   return userRefs;
 };

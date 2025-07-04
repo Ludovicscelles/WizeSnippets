@@ -11,13 +11,13 @@ export const clearDatabase = async () => {
   const userRepo = AppDataSource.getRepository(User);
 
   await commentRepo.createQueryBuilder().delete().execute();
-  console.log("Commentaires supprimés.");
+  console.info("Commentaires supprimés.");
   await snippetRepo.createQueryBuilder().delete().execute();
-  console.log("Snippets supprimés.");
+  console.info("Snippets supprimés.");
   await userRepo.createQueryBuilder().delete().execute();
-  console.log("Utilisateurs supprimés.");
+  console.info("Utilisateurs supprimés.");
 
-  console.log(
+  console.info(
     "Tous les enregistrements de la base de données ont été supprimés."
   );
 

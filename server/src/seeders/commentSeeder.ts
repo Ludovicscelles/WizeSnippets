@@ -205,7 +205,7 @@ console.log(multiplesOfTen); // [10, 20, 30]
         createdAt: commentData.createdAt,
       });
       await commentRepository.save(comment);
-      console.log(`Commentaire avec l'ID ${comment.id} mis à jour avec succès`);
+      console.info(`Commentaire avec l'ID ${comment.id} mis à jour avec succès`);
     } else {
       comment = commentRepository.create({
         ...commentData,
@@ -213,7 +213,7 @@ console.log(multiplesOfTen); // [10, 20, 30]
         snippet,
       });
       await commentRepository.save(comment);
-      console.log(
+      console.info(
         `Commentaire avec le titre du snippet "${snippet.title}" créé avec succès`
       );
     }
@@ -223,6 +223,6 @@ console.log(multiplesOfTen); // [10, 20, 30]
     }
   }
 
-  console.log("Commentaires insérés avec succès");
+  console.info("Commentaires insérés avec succès");
   return commentRefs;
 };

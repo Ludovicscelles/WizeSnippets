@@ -49,8 +49,6 @@ export default function Connexion() {
 
       const { token, user } = response.data;
 
-      console.log("user reçu :", user);
-
       toast.success("Connexion réussie !");
 
       await login(
@@ -62,7 +60,6 @@ export default function Connexion() {
       );
       navigate("/snippets");
 
-      console.log("Connexion réussie :", user);
     } catch (error: unknown) {
       console.error("Erreur de connexion :", error);
       setError("Identifiants invalides. Veuillez réessayer.");

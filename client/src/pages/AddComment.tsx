@@ -35,9 +35,6 @@ export default function AddComment() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    console.log("Code:", suggestedCode);
-    console.log("Message:", message);
-
     if (!suggestedCode || !message) {
       toast.error("Tous les champs doivent être remplis.");
       return;
@@ -56,7 +53,9 @@ export default function AddComment() {
           },
         }
       );
-      console.log("Détail du commentaire:", response.data);
+      if (import.meta.env.DEV) {
+        console.info("Détail du commentaire:", response.data);
+      }
       toast.success("Commentaire ajouté avec succès !");
       setSuggestedCode("");
       setMessage("");
@@ -141,11 +140,7 @@ export default function AddComment() {
           </div>
         )}
         <div className="space-y-4">
-
-          <Button
-            type="submit"
-            className="bg-bluewize hover:bg-blue-700"
-          >
+          <Button type="submit" className="bg-bluewize hover:bg-blue-700">
             Valider
           </Button>
 
@@ -156,7 +151,6 @@ export default function AddComment() {
           >
             Fermer
           </Button>
-         
         </div>
       </form>
     </div>

@@ -62,10 +62,6 @@ export default function AddASnippet() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Title:", title);
-    console.log("Code:", code);
-    console.log("Message:", message);
-    console.log("Language:", languages);
 
     if (!title || !code || !message) {
       toast.error("Tous les champs doivent être remplis.");
@@ -97,7 +93,9 @@ export default function AddASnippet() {
         }
       )
       .then((response) => {
-        console.log("Snippet ajouté:", response.data);
+        if (import.meta.env.DEV) {
+          console.info("Snippet ajouté:", response.data);
+        }
         toast.success("Snippet ajouté avec succès !");
         setTitle("");
         setCode("");

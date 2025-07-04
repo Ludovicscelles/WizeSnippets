@@ -79,7 +79,7 @@ Dans le dossier `server` :
 - `dev` : Starts the backend server
 - `seed` : Seeds the database with initial data in the server
 
-## Initialize Database
+## Initialize Database and Start Server
 
 ### À la racine du projet
 
@@ -90,6 +90,18 @@ npm run init-db
 cd server
 npm run dev
 npm run seed
+
+## Frontend
+
+### Démarrer le serveur de développement    
+
+Dans le dossier `client` :  
+npm run dev
+
+Attention : Si problème de version de Node.js, assurez-vous d'utiliser la version 20.19.0 (voir le fichier `.nvmrc`).
+Faire la commande suivante pour changer de version de Node.js :
+nvm use 20.19.0 ou nvm use
+
 
 ## Testing
 

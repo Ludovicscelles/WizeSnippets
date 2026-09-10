@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { Request, Response, RequestHandler } from "express";
 import { AuthService } from "../service/AuthService";
 
 export const login = async (req: Request, res: Response) => {
@@ -20,22 +20,21 @@ export const login = async (req: Request, res: Response) => {
   }
 };
 
-export const register = async (req: Request, res: Response) => {
+export const register: RequestHandler = async (req: Request, res: Response) => {
   try {
     const { confirmPassword, ...userData } = req.body;
 
     const { token, user } = await AuthService.register(userData);
 
-
-    return res.status(201).json({
+    res.status(201).json({
       message: "Inscription réussie",
       token,
       user,
     });
   } catch (error: any) {
     console.error("Erreur inscription", error);
-    return res
-      .status(400)
-      .json({ message: error.message || "Erreur d'inscription" });
+    res.status(400).json({
+      message: error.message || "Erreur d'inscription",
+    });
   }
 };

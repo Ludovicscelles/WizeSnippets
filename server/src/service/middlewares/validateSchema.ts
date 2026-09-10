@@ -3,7 +3,10 @@ import { ObjectSchema } from "joi";
 
 export const validateSchema = (schema: ObjectSchema): RequestHandler => {
   return (req, res, next) => {
-    const { error } = schema.validate(req.body, { abortEarly: false });
+    const { error, value } = schema.validate(req.body, { 
+      abortEarly: false,
+      stripUnknown: true, 
+    });
 
     if (error) {
       res.status(400).json({
@@ -15,6 +18,7 @@ export const validateSchema = (schema: ObjectSchema): RequestHandler => {
       return;
     }
 
+    req.body = value; 
     next();
   };
 };

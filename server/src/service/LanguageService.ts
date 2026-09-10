@@ -1,5 +1,5 @@
 import { AppDataSource } from "../data-source";
-import { LanguageType, LanguageInputType } from "../models/Language";
+import { LanguageType } from "../models/Language";
 import { Language } from "../entities/Languages";
 
 export class LanguageService {

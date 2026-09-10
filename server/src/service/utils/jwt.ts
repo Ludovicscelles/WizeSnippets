@@ -22,3 +22,5 @@ export const verifyToken = (token: string): { userId: number } => {
     throw new Error("Invalid token");
   }
 }
+
+

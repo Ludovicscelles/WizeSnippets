@@ -9,6 +9,10 @@ const router = Router();
 
 router.post("/login", login as unknown as RequestHandler);
 
-router.post("/register", validateSchema(registerSchema), register as unknown as RequestHandler);
+router.post(
+  "/register", 
+  validateSchema(registerSchema), 
+  register 
+);
 
 export default router;

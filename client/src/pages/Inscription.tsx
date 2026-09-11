@@ -37,7 +37,7 @@ export default function Inscription() {
   };
 
   const handleChangeConfirmPassword = (
-    e: React.ChangeEvent<HTMLInputElement>
+    e: React.ChangeEvent<HTMLInputElement>,
   ) => {
     setConfirmPassword(e.target.value);
   };
@@ -51,36 +51,32 @@ export default function Inscription() {
     }
 
     try {
+      const payload = {
+        firstname: firstname.trim(),
+        lastname: lastname.trim(),
+        email: email.trim().toLowerCase(),
+        password,
+        confirmPassword,
+        ...(pseudo.trim() !== "" && { pseudo: pseudo.trim() }),
+      };
+
       const response = await axios.post(
         `${import.meta.env.VITE_API_URL}/auth/register`,
-        {
-          pseudo,
-          firstname,
-          lastname,
-          email,
-          password,
-          confirmPassword,
-        }
+        payload,
       );
 
       const { token, user } = response.data;
-
-      toast.success("Inscription réussie !");
 
       login(
         {
           pseudo: user.pseudo,
           firstname: user.firstname,
         },
-        token
+        token,
       );
 
-      setPseudo("");
-      setFirstname("");
-      setLastname("");
-      setEmail("");
-      setPassword("");
-      setConfirmPassword("");
+      toast.success("Inscription réussie ! Vous êtes maintenant connecté.");
+      navigate("/snippets");
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
         const data = error.response?.data;

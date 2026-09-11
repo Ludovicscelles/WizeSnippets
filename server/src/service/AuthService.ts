@@ -10,7 +10,10 @@ export class AuthService {
     email: string,
     password: string,
   ): Promise<{ token: string; user: PublicUserType }> {
-    const user = await AppDataSource.getRepository(User).findOneBy({ email });
+    const normalizedEmail = email.trim().toLowerCase();
+    const user = await AppDataSource.getRepository(User).findOneBy({
+      email: normalizedEmail,
+    });
     if (!user) {
       throw new Error("Identifiants invalides");
     }

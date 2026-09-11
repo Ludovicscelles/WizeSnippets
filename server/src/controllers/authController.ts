@@ -1,7 +1,7 @@
 import { Request, Response, RequestHandler } from "express";
 import { AuthService } from "../service/AuthService";
 
-export const login = async (req: Request, res: Response) => {
+export const login: RequestHandler = async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
 

@@ -3,6 +3,7 @@ import { User } from "../entities/User";
 import { PublicUserType, RegisterInput } from "../models/User";
 import { hashPassword, verifyPassword } from "../service/utils/hash";
 import { signToken } from "./utils/jwt";
+import { validateOrReject } from "class-validator";
 
 export class AuthService {
   static async login(
@@ -55,6 +56,8 @@ export class AuthService {
       pseudo: userData.pseudo,
       password: hashedPassword,
     });
+
+    await validateOrReject(newUser);
 
     await userRepository.save(newUser);
 

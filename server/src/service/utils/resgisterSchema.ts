@@ -1,24 +1,22 @@
 import Joi from "joi";
 import { passwordRule } from "./password.schema";
- 
 
 export const registerSchema = Joi.object({
-  pseudo: Joi.string().min(3).max(30).required().messages({
+  pseudo: Joi.string().trim().empty("").min(3).max(30).optional().messages({
     "string.min": "Pseudo must be at least 3 characters long",
     "string.max": "Pseudo must not exceed 30 characters",
-    "any.required": "Pseudo is required",
   }),
-  firstname: Joi.string().min(1).max(60).required().messages({
+  firstname: Joi.string().trim().min(1).max(60).required().messages({
     "string.min": "Firstname must be at least 1 character long",
     "string.max": "Firstname must not exceed 60 characters",
     "any.required": "Firstname is required",
   }),
-  lastname: Joi.string().min(1).max(60).required().messages({
+  lastname: Joi.string().trim().min(1).max(60).required().messages({
     "string.min": "Lastname must be at least 1 character long",
     "string.max": "Lastname must not exceed 60 characters",
     "any.required": "Lastname is required",
   }),
-  email: Joi.string().email().max(150).required().messages({
+  email: Joi.string().email().max(150).trim().lowercase().required().messages({
     "string.email": "Email must be a valid email address",
     "any.required": "Email is required",
   }),
@@ -26,11 +24,8 @@ export const registerSchema = Joi.object({
     "any.required": "Password is required",
   }),
 
-  confirmPassword: Joi.string()
-    .valid(Joi.ref("password"))
-    .required()
-    .messages({
-      "any.only": "Confirm Password must match Password",
-      "any.required": "Confirm Password is required",
-    }),
+  confirmPassword: Joi.string().valid(Joi.ref("password")).required().messages({
+    "any.only": "Confirm Password must match Password",
+    "any.required": "Confirm Password is required",
+  }),
 });

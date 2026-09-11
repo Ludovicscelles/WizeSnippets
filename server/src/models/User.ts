@@ -7,6 +7,12 @@ export interface UserType {
   password: string;
 }
 
-export type PublicUserType = Omit<UserType, "password">;
+export interface RegisterInput {
+  firstname: string;
+  lastname: string;
+  email: string;
+  pseudo?: string;
+  password: string;
+}
 
-export type RegisterInput = Omit<UserType, "id">;
+export type PublicUserType = Omit<UserType, "password">;

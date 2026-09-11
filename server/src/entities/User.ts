@@ -4,12 +4,10 @@ import {
   Column,
   PrimaryGeneratedColumn,
   OneToMany,
-  BeforeInsert,
 } from "typeorm";
 import { Snippet } from "./Snippet";
 import { Comment } from "./Comment";
-import { hashPassword } from "../service/utils/hash";
-import { IsString, IsEmail, Length, IsNotEmpty } from "class-validator";
+import { IsString, IsEmail, Length, IsNotEmpty, IsOptional } from "class-validator";
 
 @Entity()
 export class User {
@@ -35,6 +33,7 @@ export class User {
   email!: string;
 
   @Column({ nullable: true, unique: true, type: "varchar", length: 30 })
+  @IsOptional()
   @IsString()
   @Length(3, 30)
   pseudo?: string;
@@ -48,8 +47,4 @@ export class User {
   @OneToMany(() => Comment, (comment) => comment.user)
   comments!: Comment[];
 
-  @BeforeInsert()
-  async hashPassword() {
-    this.password = await hashPassword(this.password);
-  }
 }

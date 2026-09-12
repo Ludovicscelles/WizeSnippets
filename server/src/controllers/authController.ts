@@ -1,15 +1,22 @@
 import { Request, Response, RequestHandler } from "express";
 import { AuthService } from "../service/AuthService";
 
-export const login = async (req: Request, res: Response) => {
+export const login: RequestHandler = async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
 
     const { token, user } = await AuthService.login(email, password);
 
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+      maxAge: 60 * 60 * 1000, // 1 hour
+      path: "/",
+    });
+
     res.status(200).json({
       message: "Connexion réussie",
-      token,
       user,
     });
   } catch (error: any) {

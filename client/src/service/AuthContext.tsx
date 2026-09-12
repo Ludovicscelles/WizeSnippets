@@ -1,7 +1,7 @@
 import { createContext, useState, useEffect } from "react";
 
 export type User = {
-  pseudo: string;
+  pseudo?: string;
   firstname: string;
 };
 
@@ -35,13 +35,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   }, []);
 
   const login = (user: User, token: string) => {
-    return new Promise<void>((resolve) => {
-      localStorage.setItem("user", JSON.stringify(user));
-      localStorage.setItem("token", token);
-      setUser(user);
-      setToken(token);
-      resolve();
-    });
+    localStorage.setItem("user", JSON.stringify(user));
+    localStorage.setItem("token", token);
+    
+    setUser(user);
+    setToken(token);
   };
 
   const logout = () => {
@@ -53,7 +51,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
   return (
     <AuthContext.Provider
-      value={{ isLogged: !!user && !!token, user, token, isLoading, login, logout }}
+      value={{
+        isLogged: !!user && !!token,
+        user,
+        token,
+        isLoading,
+        login,
+        logout,
+      }}
     >
       {children}
     </AuthContext.Provider>

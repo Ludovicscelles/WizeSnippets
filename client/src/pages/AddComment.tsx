@@ -1,8 +1,7 @@
 import cross from "../assets/cross_icon.svg";
 import { useState } from "react";
-import axios from "axios";
+import api from "../service/api";
 import { toast } from "react-toastify";
-import { useAuth } from "../service/UseAuth";
 import { useParams } from "react-router-dom";
 import { useLoaderData } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -14,8 +13,6 @@ export default function AddComment() {
 
   const snippet = useLoaderData() as { title: string };
 
-  const { token } = useAuth();
-
   const [showSuggestedCodeInput, setShowSuggestedCodeInput] = useState(false);
   const [showMessageInput, setShowMessageInput] = useState(false);
 
@@ -23,7 +20,7 @@ export default function AddComment() {
   const [message, setMessage] = useState("");
 
   const handleChangeSuggestedCode = (
-    e: React.ChangeEvent<HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLTextAreaElement>,
   ) => {
     setSuggestedCode(e.target.value);
   };
@@ -40,19 +37,17 @@ export default function AddComment() {
       return;
     }
 
+    if (!id) {
+      toast.error("ID du snippet manquant.");
+      return;
+    }
+
     try {
-      const response = await axios.post(
-        `${import.meta.env.VITE_API_URL}/snippets/${id}/comment`,
-        {
-          suggestedCode,
-          message,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await api.post(`/comments`, {
+        suggestedCode,
+        message,
+        snippetId: Number(id),
+      });
       if (import.meta.env.DEV) {
         console.info("Détail du commentaire:", response.data);
       }
@@ -72,7 +67,11 @@ export default function AddComment() {
     setMessage("");
     setShowSuggestedCodeInput(false);
     setShowMessageInput(false);
-    navigate(`/snippets/${id}`);
+    if (id) {
+      navigate(`/snippets/${id}`);
+    } else {
+      navigate("/snippets");
+    }
   };
 
   return (
@@ -97,7 +96,7 @@ export default function AddComment() {
                 className="hover:scale-110 transition"
                 onClick={() => setShowSuggestedCodeInput((prev) => !prev)}
               >
-                <img src={cross} />
+                <img src={cross} alt="Ajouter une proposition de code" />
               </button>
             </div>
           </div>
@@ -123,7 +122,7 @@ export default function AddComment() {
               className="hover:scale-110 transition"
               onClick={() => setShowMessageInput((prev) => !prev)}
             >
-              <img src={cross} />
+              <img src={cross} alt="Ajouter un message" />
             </button>
           </div>
         </div>

@@ -1,14 +1,12 @@
 import cross from "../assets/cross_icon.svg";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../service/api";
 import { toast } from "react-toastify";
-import { useAuth } from "../service/UseAuth";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../components/ui/Button";
 
 export default function AddASnippet() {
   const navigate = useNavigate();
-  const { token } = useAuth();
 
   const [showTitleInput, setShowTitleInput] = useState(false);
   const [showCodeInput, setShowCodeInput] = useState(false);
@@ -18,16 +16,14 @@ export default function AddASnippet() {
   const [code, setCode] = useState("");
   const [message, setMessage] = useState("");
   const [languages, setLanguages] = useState<{ id: number; name: string }[]>(
-    []
+    [],
   );
   const [selectedLanguage, setSelectedLanguage] = useState<string | null>(null);
 
   useEffect(() => {
     const getLanguages = async () => {
       try {
-        const response = await axios.get(
-          `${import.meta.env.VITE_API_URL}/languages`
-        );
+        const response = await api.get(`/languages`);
         const data = response.data;
         setLanguages(data);
       } catch (error) {
@@ -60,7 +56,7 @@ export default function AddASnippet() {
     setSelectedLanguage(e.target.value);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!title || !code || !message) {
@@ -72,42 +68,31 @@ export default function AddASnippet() {
       toast.error("Veuillez sélectionner un langage.");
       return;
     }
-    if (!token) {
-      toast.error("Vous devez être connecté pour ajouter un snippet.");
-      return;
-    }
 
-    axios
-      .post(
-        `${import.meta.env.VITE_API_URL}/snippets`,
-        {
-          title,
-          code,
-          message,
-          languageId: selectedLanguage,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
-      .then((response) => {
-        if (import.meta.env.DEV) {
-          console.info("Snippet ajouté:", response.data);
-        }
-        toast.success("Snippet ajouté avec succès !");
-        setTitle("");
-        setCode("");
-        setMessage("");
-        setShowTitleInput(false);
-        setShowCodeInput(false);
-        setShowMessageInput(false);
-      })
-      .catch((error) => {
-        console.error("Erreur:", error);
-        toast.error("Une erreur est survenue lors de l'ajout du snippet.");
+    try {
+      const response = await api.post(`/snippets`, {
+        title,
+        code,
+        message,
+        languageId: Number(selectedLanguage),
       });
+
+      if (import.meta.env.DEV) {
+        console.info("Snippet ajouté:", response.data);
+      }
+
+      toast.success("Snippet ajouté avec succès !");
+      setTitle("");
+      setCode("");
+      setMessage("");
+      setShowTitleInput(false);
+      setShowCodeInput(false);
+      setShowMessageInput(false);
+      setSelectedLanguage(null);
+    } catch (error) {
+      console.error("Erreur:", error);
+      toast.error("Une erreur est survenue lors de l'ajout du snippet.");
+    }
   };
 
   const handleClose = () => {
@@ -117,6 +102,7 @@ export default function AddASnippet() {
     setShowTitleInput(false);
     setShowCodeInput(false);
     setShowMessageInput(false);
+    setSelectedLanguage(null);
     navigate("/snippets");
   };
 
@@ -171,7 +157,7 @@ export default function AddASnippet() {
                 className="hover:scale-110 transition"
                 onClick={() => setShowCodeInput((prev) => !prev)}
               >
-                <img src={cross} />
+                <img src={cross} alt="Ajouter un code" />
               </button>
             </div>
           </div>
@@ -197,7 +183,7 @@ export default function AddASnippet() {
               className="hover:scale-110 transition"
               onClick={() => setShowMessageInput((prev) => !prev)}
             >
-              <img src={cross} />
+              <img src={cross} alt="Ajouter un message" />
             </button>
           </div>
         </div>

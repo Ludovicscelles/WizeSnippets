@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../service/UseAuth";
-import axios from "axios";
+import api from "../service/api";
 import { toast } from "react-toastify";
 import { Button } from "../components/ui/Button";
 
@@ -39,27 +38,20 @@ export default function Connexion() {
     setError("");
 
     try {
-      const response = await axios.post(
-        `${import.meta.env.VITE_API_URL}/auth/login`,
-        {
-          email,
-          password,
-        }
-      );
+      const response = await api.post(`/auth/login`, {
+        email,
+        password,
+      });
 
-      const { token, user } = response.data;
+      const { user } = response.data;
 
       toast.success("Connexion réussie !");
 
-      await login(
-        {
-          pseudo: user.pseudo,
-          firstname: user.firstname,
-        },
-        token
-      );
+      login({
+        pseudo: user.pseudo,
+        firstname: user.firstname,
+      });
       navigate("/snippets");
-
     } catch (error: unknown) {
       console.error("Erreur de connexion :", error);
       setError("Identifiants invalides. Veuillez réessayer.");
@@ -81,6 +73,7 @@ export default function Connexion() {
         <div>
           <input
             type="email"
+            required
             value={email}
             onChange={handleChangeEmail}
             placeholder="Adresse Email"
@@ -90,6 +83,7 @@ export default function Connexion() {
         <div>
           <input
             type="password"
+            required
             value={password}
             onChange={handleChangePassword}
             placeholder="Mot de passe"
@@ -105,13 +99,13 @@ export default function Connexion() {
       </div>
 
       <p className="text-center mt-6 text-sm">
-        Envie de nous rejoindre ?
-        <a
-          href="/inscription"
+        Envie de nous rejoindre ?{" "}
+        <Link
+          to="/inscription"
           className="font-semibold underline hover:text-bluewize"
         >
           créer un compte
-        </a>
+        </Link>
       </p>
     </form>
   );

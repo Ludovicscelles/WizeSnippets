@@ -27,6 +27,32 @@ export const login: RequestHandler = async (req: Request, res: Response) => {
   }
 };
 
+export const me: RequestHandler = async (req: Request, res: Response) => {
+  try {
+    const userId = Number(req.user?.id);
+
+    if (!userId) {
+      res.status(401).json({ message: "Utilisateur non authentifié" });
+      return;
+    }
+
+    const user = await AuthService.getCurrentUser(userId);
+
+    if (!user) {
+      res.status(404).json({ message: "Utilisateur non trouvé" });
+      return;
+    }
+
+    res.status(200).json({ user });
+  } catch (error: any) {
+    console.error("Erreur récupération utilisateur", error);
+    res.status(500).json({
+      message:
+        error.message || "Erreur lors de la récupération de l'utilisateur",
+    });
+  }
+};
+
 export const register: RequestHandler = async (req: Request, res: Response) => {
   try {
     const { confirmPassword, ...userData } = req.body;

@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+import cookieParser from "cookie-parser";
 import userRouter from "./routes/userRoutes";
 import snippetRouter from "./routes/snippetRoutes";
 import commentRouter from "./routes/commentRoutes";
@@ -17,8 +18,10 @@ app.use(
   cors({
     origin: process.env.FRONTEND_URL,
     credentials: true,
-  })
+  }),
 );
+
+app.use(cookieParser());
 
 app.get("/", (req, res) => {
   res.send("Bienvenue sur l'API WizeSnippets !");

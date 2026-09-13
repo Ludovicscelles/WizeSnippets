@@ -6,23 +6,21 @@ import { User } from "../../entities/User";
 export const authMiddleware = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
-  const authHeader = req.headers.authorization;
-  if (!authHeader || !authHeader.startsWith("Bearer ")) {
-    res.status(401).json({ message: "Token manquant ou invalide" });
+  const token = req.cookies?.token;
+
+  if (!token) {
+    res.status(401).json({ message: "Token manquant" });
     return;
   }
-  const token = authHeader.split(" ")[1];
 
   try {
     if (process.env.NODE_ENV === "development") {
       console.info("Authenticating token...");
     }
 
-    const decoded = verifyToken(token) as { userId: number };
-
-    console.info("Token extait:  ", token);
+    const decoded = verifyToken(token);
 
     const user = await AppDataSource.getRepository(User).findOneBy({
       id: decoded.userId,

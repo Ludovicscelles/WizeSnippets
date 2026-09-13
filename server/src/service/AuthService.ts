@@ -37,6 +37,24 @@ export class AuthService {
     };
   }
 
+  static async getCurrentUser(
+    userId: number,
+  ): Promise<PublicUserType | null> {
+    const user = await AppDataSource.getRepository(User).findOneBy({ id: userId });
+
+    if (!user) {
+      return null;
+    }
+
+    return {
+      id: user.id,
+      email: user.email,
+      pseudo: user.pseudo,
+      firstname: user.firstname,
+      lastname: user.lastname,
+    };
+  }
+
   static async register(
     userData: RegisterInput,
   ): Promise<{ token: string; user: PublicUserType }> {

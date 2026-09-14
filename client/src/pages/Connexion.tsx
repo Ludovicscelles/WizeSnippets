@@ -21,9 +21,11 @@ export default function Connexion() {
       setEmail("");
       setPassword("");
       setError("");
-      toast.info("Vous avez été déconnecté avec succès.");
+      toast.info("Vous avez été déconnecté avec succès.", {
+        toastId: "logout-success",
+      });
     }
-  }, [location.state]);
+  }, [location.state, navigate]);
 
   const handleChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);

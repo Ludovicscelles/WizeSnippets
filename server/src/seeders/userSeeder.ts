@@ -1,5 +1,6 @@
 import { AppDataSource } from "../data-source";
 import { User } from "../entities/User";
+import { hashPassword } from "../service/utils/hash";
 
 export const userSeeder = async () => {
   const userRepository = AppDataSource.getRepository(User);
@@ -10,7 +11,7 @@ export const userSeeder = async () => {
       lastname: "Doe",
       email: "john@example.com",
       pseudo: "johndoe",
-      password: "Password123!",
+      password: await hashPassword("Password123!"),
       refName: "user1",
     },
     {
@@ -18,7 +19,7 @@ export const userSeeder = async () => {
       lastname: "Doe",
       email: "jane@example.com",
       pseudo: "janedoe",
-      password: "SecurePwd456#",
+      password: await hashPassword("SecurePwd456#"),
       refName: "user2",
     },
     {
@@ -26,7 +27,7 @@ export const userSeeder = async () => {
       lastname: "Smith",
       email: "alice@example.com",
       pseudo: "alicesmith",
-      password: "AlicePwd789@",
+      password: await hashPassword("AlicePwd789@"),
       refName: "user3",
     },
     {
@@ -34,7 +35,7 @@ export const userSeeder = async () => {
       lastname: "Johnson",
       email: "bob@example.com",
       pseudo: "bobjohnson",
-      password: "B0bStrongPass$",
+      password: await hashPassword("B0bStrongPass$"),
       refName: "user4",
     },
     {
@@ -42,7 +43,7 @@ export const userSeeder = async () => {
       lastname: "Brown",
       email: "charlie@example.com",
       pseudo: "charliebrown",
-      password: "Ch@rlie2024",
+      password: await hashPassword("Ch@rlie2024"),
       refName: "user5",
     },
     {
@@ -50,7 +51,7 @@ export const userSeeder = async () => {
       lastname: "Miller",
       email: "david@example.com",
       pseudo: "davidmiller",
-      password: "Dav1d!Miller",
+      password: await hashPassword("Dav1d!Miller"),
       refName: "user6",
     },
     {
@@ -58,7 +59,7 @@ export const userSeeder = async () => {
       lastname: "Wilson",
       email: "emma@example.com",
       pseudo: "emmawilson",
-      password: "EmmaW!ls0n*",
+      password: await hashPassword("EmmaW!ls0n*"),
       refName: "user7",
     },
     {
@@ -66,7 +67,7 @@ export const userSeeder = async () => {
       lastname: "Taylor",
       email: "frank@example.com",
       pseudo: "franktaylor",
-      password: "Fr4nk#Taylor",
+      password: await hashPassword("Fr4nk#Taylor"),
       refName: "user8",
     },
     {
@@ -74,7 +75,7 @@ export const userSeeder = async () => {
       lastname: "Anderson",
       email: "grace@example.com",
       pseudo: "graceanderson",
-      password: "Gr@ceAnd3rs0n",
+      password: await hashPassword("Gr@ceAnd3rs0n"),
       refName: "user9",
     },
     {
@@ -82,7 +83,7 @@ export const userSeeder = async () => {
       lastname: "Thomas",
       email: "henry@example.com",
       pseudo: "henrythomas",
-      password: "H3nry!Thom@s",
+      password: await hashPassword("H3nry!Thom@s"),
       refName: "user10",
     },
   ];
@@ -100,11 +101,11 @@ export const userSeeder = async () => {
       const user = userRepository.create(userData);
       savedUser = await userRepository.save(user);
       console.info(
-        `Utilisateur ${userData.firstname} ${userData.lastname} créé avec succès`
+        `Utilisateur ${userData.firstname} ${userData.lastname} créé avec succès`,
       );
     } else {
       console.info(
-        `Utilisateur  ${userData.firstname} ${userData.lastname} existe déjà, pas de création`
+        `Utilisateur  ${userData.firstname} ${userData.lastname} existe déjà, pas de création`,
       );
       savedUser = existingUser;
     }

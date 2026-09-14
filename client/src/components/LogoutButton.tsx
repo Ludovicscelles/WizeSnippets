@@ -1,6 +1,9 @@
 import { useNavigate } from "react-router-dom";
 
-type LogoutButtonProps = { onLogout: () => void; isMobile?: boolean };
+type LogoutButtonProps = {
+  onLogout: () => Promise<void>;
+  isMobile?: boolean;
+};
 
 export const LogoutButton: React.FC<LogoutButtonProps> = ({
   onLogout,
@@ -8,9 +11,9 @@ export const LogoutButton: React.FC<LogoutButtonProps> = ({
 }) => {
   const navigate = useNavigate();
 
-  const handleLogout = () => {
-    onLogout();
-    navigate("/snippets", { state: { reset: true } }); 
+  const handleLogout = async () => {
+    await onLogout();
+    navigate("/connexion", { state: { reset: true } });
   };
 
   return (

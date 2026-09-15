@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useAuth } from "../service/UseAuth";
+import api from "../service/api";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { Button } from "../components/ui/Button";
@@ -60,22 +61,18 @@ export default function Inscription() {
         ...(pseudo.trim() !== "" && { pseudo: pseudo.trim() }),
       };
 
-      const response = await axios.post(
-        `${import.meta.env.VITE_API_URL}/auth/register`,
-        payload,
-      );
+      const response = await api.post(`/auth/register`, payload);
 
-      const { token, user } = response.data;
+      const { user } = response.data;
 
-      login(
-        {
-          pseudo: user.pseudo,
-          firstname: user.firstname,
-        },
-        token,
-      );
+      login({
+        pseudo: user.pseudo,
+        firstname: user.firstname,
+      });
 
-      toast.success("Inscription réussie ! Vous êtes maintenant connecté.");
+      toast.success("Inscription réussie ! Vous êtes maintenant connecté.", {
+        toastId: "inscription-success",
+      });
       navigate("/snippets");
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {

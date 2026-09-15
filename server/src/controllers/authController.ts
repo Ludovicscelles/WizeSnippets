@@ -70,9 +70,16 @@ export const register: RequestHandler = async (req: Request, res: Response) => {
 
     const { token, user } = await AuthService.register(userData);
 
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+      maxAge: 60 * 60 * 1000,
+      path: "/",
+    });
+
     res.status(201).json({
       message: "Inscription réussie",
-      token,
       user,
     });
   } catch (error: any) {

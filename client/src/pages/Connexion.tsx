@@ -4,6 +4,8 @@ import { useAuth } from "../service/UseAuth";
 import api from "../service/api";
 import { toast } from "react-toastify";
 import { Button } from "../components/ui/Button";
+import eye from "../assets/eye_icon.svg";
+import eyeOff from "../assets/eye_off_icon.svg";
 
 export default function Connexion() {
   const { login } = useAuth();
@@ -15,6 +17,7 @@ export default function Connexion() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   useEffect(() => {
     if (location.state?.reset) {
@@ -25,7 +28,7 @@ export default function Connexion() {
         toastId: "logout-success",
       });
     }
-  }, [location.state, navigate]);
+  }, [location.state]);
 
   const handleChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
@@ -33,6 +36,10 @@ export default function Connexion() {
 
   const handleChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
+  };
+
+  const handleTogglePasswordVisibility = () => {
+    setIsPasswordVisible((prevState) => !prevState);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -47,7 +54,9 @@ export default function Connexion() {
 
       const { user } = response.data;
 
-      toast.success("Connexion réussie !");
+      toast.success("Connexion réussie !", {
+        toastId: "login-success",
+      });
 
       login({
         pseudo: user.pseudo,
@@ -82,15 +91,33 @@ export default function Connexion() {
             className="w-full px-4 py-2 bg-black text-white border-2 border-bluewize rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
         </div>
-        <div>
+        <div className="relative">
           <input
-            type="password"
+            id="password-input"
+            type={isPasswordVisible ? "text" : "password"}
             required
             value={password}
             onChange={handleChangePassword}
             placeholder="Mot de passe"
-            className="w-full px-4 py-2 bg-black text-white border-2 border-bluewize rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="w-full px-4 py-2 pr-12 bg-black text-white border-2 border-bluewize rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
+          <button
+            type="button"
+            onClick={handleTogglePasswordVisibility}
+            aria-pressed={isPasswordVisible}
+            aria-label={
+              isPasswordVisible
+                ? "Cacher le mot de passe"
+                : "Voir le mot de passe"
+            }
+            className="w-6 h-6 absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
+          >
+            <img
+              src={isPasswordVisible ? eyeOff : eye}
+              alt=""
+              className="w-full h-full"
+            />
+          </button>
         </div>
         <div>
           <Button type="submit" className="bg-bluewize hover:bg-blue-700">

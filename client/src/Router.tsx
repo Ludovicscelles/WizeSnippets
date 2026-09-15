@@ -1,4 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
+import api from "./service/api";
 import IntroPage from "./pages/IntroPage";
 import Snippets from "./pages/Snippets";
 import DetailSnippet from "./pages/DetailSnippet";
@@ -24,43 +25,28 @@ const router = createBrowserRouter([
         path: "snippets",
         element: <Snippets />,
         loader: async () => {
-          const response = await fetch(
-            `${import.meta.env.VITE_API_URL}/snippets`
-          );
-          if (!response.ok) {
-            throw new Error("Erreur de chargement des snippets");
-          }
-          return response.json();
+          const response = await api.get(`/snippets`);
+          return response.data;
         },
       },
       {
         path: "snippets/:id",
         element: <DetailSnippet />,
         loader: async ({ params }) => {
-          const response = await fetch(
-            `${import.meta.env.VITE_API_URL}/snippets/${params.id}`
-          );
-          if (!response.ok) {
-            throw new Error("Erreur de chargement du snippet");
-          }
-          return response.json();
+          const response = await api.get(`/snippets/${params.id}`);
+          return response.data;
         },
       },
       {
         path: "snippets/:id/ajouter-commentaire",
         element: (
           <ProtectedRoute>
-            <AddComment />,
+            <AddComment />
           </ProtectedRoute>
         ),
         loader: async ({ params }) => {
-          const response = await fetch(
-            `${import.meta.env.VITE_API_URL}/snippets/${params.id}`
-          );
-          if (!response.ok) {
-            throw new Error("Erreur de chargement du snippet");
-          }
-          return response.json();
+          const response = await api.get(`/snippets/${params.id}`);
+          return response.data;
         },
       },
       { path: "inscription", element: <Inscription /> },
@@ -77,13 +63,8 @@ const router = createBrowserRouter([
         path: "junior-snippets-list",
         element: <JuniorDeveloperSnippetList />,
         loader: async () => {
-          const response = await fetch(
-            `${import.meta.env.VITE_API_URL}/snippets`
-          );
-          if (!response.ok) {
-            throw new Error("Erreur de chargement des snippets");
-          }
-          return response.json();
+          const response = await api.get(`/snippets`);
+          return response.data;
         },
       },
     ],

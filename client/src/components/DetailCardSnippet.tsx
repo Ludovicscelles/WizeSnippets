@@ -4,30 +4,10 @@ import cross from "../assets/cross_icon.svg";
 import chevrons from "../assets/chevron_icon.png";
 import { useAuth } from "../service/UseAuth";
 import { useNavigate } from "react-router-dom";
+import type { DetailCardSnippetProps } from "../types/Snippet";
+import { getPrismLanguage } from "../service/utils/prismLanguage";
 
-export function DetailCardSnippet({
-  snippet,
-}: {
-  snippet: {
-    id: number;
-    title: string;
-    code: string;
-    message: string;
-    createdAt: string;
-    user_id: number;
-    pseudo?: string;
-    firstname: string;
-    languageId: number;
-    language: string;
-    Comments?: {
-      id: number;
-      pseudo?: string;
-      firstname: string;
-      suggestedCode: string;
-      message: string;
-    }[];
-  };
-}) {
+export function DetailCardSnippet({ snippet }: DetailCardSnippetProps) {
   const { isLogged } = useAuth();
   const navigate = useNavigate();
   const id = snippet.id;
@@ -44,15 +24,15 @@ export function DetailCardSnippet({
           </p>
           <p className="text-sm">{comment.message}</p>
           {comment.suggestedCode && (
-            <pre className="bg-gray-800 text-white p-2 mt-2 rounded-lg overflow-x-auto">
+            <div className="bg-gray-800 text-white p-2 mt-2 rounded-lg overflow-x-auto">
               <SyntaxHighlighter
-                language="javascript"
+                language={getPrismLanguage(snippet.language)}
                 style={oneDark}
                 customStyle={{ backgroundColor: "#191F34" }}
               >
                 {comment.suggestedCode}
               </SyntaxHighlighter>
-            </pre>
+            </div>
           )}
         </div>
       ))
@@ -83,15 +63,15 @@ export function DetailCardSnippet({
             Par: {snippet.pseudo || snippet.firstname || "Anonyme"}
           </p>
         </div>
-        <pre className="bg-gray-800 w-full p-4 rounded-lg overflow-x-auto">
+        <div className="bg-gray-800 w-full p-4 rounded-lg overflow-x-auto">
           <SyntaxHighlighter
-            language="javascript"
+            language={getPrismLanguage(snippet.language)}
             style={oneDark}
             customStyle={{ backgroundColor: "#191F34" }}
           >
             {snippet.code}
           </SyntaxHighlighter>
-        </pre>
+        </div>
         <h3 className="text-2xl text-white font-semibold mt-8 mb-4">
           Solutions
         </h3>
@@ -105,16 +85,17 @@ export function DetailCardSnippet({
             alt="chevrons "
             className="w-24 h-24 transform rotate-90 md:rotate-0"
           />
-          <img
-            src={cross}
-            alt="croix bleu pour ajouter un snippet"
-            className="w-14 h-14 cursor-pointer"
+          <button
+            type="button"
             onClick={() =>
               isLogged
                 ? navigate(`/snippets/${id}/ajouter-commentaire`)
                 : navigate("/connexion")
             }
-          />
+            aria-label="Ajouter une solution"
+          >
+            <img src={cross} alt="" className="w-14 h-14" />
+          </button>
         </div>
       </div>
     </div>

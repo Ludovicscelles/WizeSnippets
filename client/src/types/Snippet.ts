@@ -21,3 +21,12 @@ export type Snippet = {
 export type DetailCardSnippetProps = {
   snippet: Snippet;
 };
+
+export type SnippetListItem = Pick<
+  Snippet,
+  "id" | "pseudo" | "firstname" | "title"
+>;
+
+export type SnippetsArrayProps = {
+  snippets: SnippetListItem[];
+};

@@ -5,6 +5,7 @@ import chevrons from "../assets/chevron_icon.png";
 import { useAuth } from "../service/UseAuth";
 import { useNavigate } from "react-router-dom";
 import type { DetailCardSnippetProps } from "../types/Snippet";
+import { getPrismLanguage } from "../service/utils/prismLanguage";
 
 export function DetailCardSnippet({ snippet }: DetailCardSnippetProps) {
   const { isLogged } = useAuth();
@@ -25,7 +26,7 @@ export function DetailCardSnippet({ snippet }: DetailCardSnippetProps) {
           {comment.suggestedCode && (
             <div className="bg-gray-800 text-white p-2 mt-2 rounded-lg overflow-x-auto">
               <SyntaxHighlighter
-                language={snippet.language.toLowerCase()}
+                language={getPrismLanguage(snippet.language)}
                 style={oneDark}
                 customStyle={{ backgroundColor: "#191F34" }}
               >
@@ -64,7 +65,7 @@ export function DetailCardSnippet({ snippet }: DetailCardSnippetProps) {
         </div>
         <div className="bg-gray-800 w-full p-4 rounded-lg overflow-x-auto">
           <SyntaxHighlighter
-            language={snippet.language.toLowerCase()}
+            language={getPrismLanguage(snippet.language)}
             style={oneDark}
             customStyle={{ backgroundColor: "#191F34" }}
           >

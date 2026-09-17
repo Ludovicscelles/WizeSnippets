@@ -14,12 +14,12 @@ const getSnippetRepository = () => AppDataSource.getRepository(Snippet);
 
 export class SnippetService {
   static async getAll(): Promise<SnippetType[]> {
-    const snippets = await AppDataSource.getRepository(Snippet).find({
+    const snippets = await getSnippetRepository().find({
       relations: ["user", "language"],
     });
     return snippets.map(
       ({ id, title, message, code, createdAt, user, language }) => ({
-        id: id,
+        id,
         title,
         message,
         code,

@@ -1,15 +1,12 @@
 import { Request, Response, RequestHandler } from "express";
 import { SnippetService } from "../service/SnippetService";
 
-export const getSnippets: RequestHandler = async (
-  req: Request,
-  res: Response,
-) => {
+export const getSnippets: RequestHandler = async (_req, res) => {
   try {
     const snippets = await SnippetService.getAll();
     res.json(snippets);
-  } catch (e) {
-    console.error("Erreur dans getSnippets:", e);
+  } catch (error) {
+    console.error("Erreur dans getSnippets:", error);
     res.status(500).json({ message: "Internal server error" });
   }
 };

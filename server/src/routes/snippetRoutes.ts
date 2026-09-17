@@ -13,7 +13,7 @@ const router = Router();
 
 router.get("/", getSnippets);
 
-router.get("/:id", getSnippetById as unknown as RequestHandler);
+router.get("/:id", getSnippetById);
 
 router.post(
   "/",

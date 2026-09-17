@@ -8,6 +8,10 @@ import {
   SnippetInputType,
 } from "../models/Snippet";
 
+const getUserRepository = () => AppDataSource.getRepository(User);
+const getLanguageRepository = () => AppDataSource.getRepository(Language);
+const getSnippetRepository = () => AppDataSource.getRepository(Snippet);
+
 export class SnippetService {
   static async getAll(): Promise<SnippetType[]> {
     const snippets = await AppDataSource.getRepository(Snippet).find({
@@ -30,7 +34,7 @@ export class SnippetService {
   }
 
   static async getById(id: number): Promise<SnippetWithCommentsType | null> {
-    const snippet = await AppDataSource.getRepository(Snippet).findOne({
+    const snippet = await getSnippetRepository().findOne({
       where: { id },
       relations: ["user", "language", "comments", "comments.user"],
     });
@@ -47,8 +51,9 @@ export class SnippetService {
       languageId: snippet.language.id,
       language: snippet.language.name,
       Comments: snippet.comments.map((comment) => ({
-        pseudo: comment.user.pseudo || comment.user.firstname || "Anonymous",
-        firstname: comment.user.firstname || "Anonymous",
+        id: comment.id,
+        pseudo: comment.user.pseudo,
+        firstname: comment.user.firstname,
         suggestedCode: comment.suggestedCode,
         message: comment.message,
       })),
@@ -56,11 +61,9 @@ export class SnippetService {
   }
 
   static async create(snippetData: SnippetInputType): Promise<SnippetType> {
-    const userRepository = AppDataSource.getRepository(User);
-    const languageRepository = AppDataSource.getRepository(Language);
-    const snippetRepository = AppDataSource.getRepository(Snippet);
+    const snippetRepository = getSnippetRepository();
 
-    const user = await userRepository.findOneBy({
+    const user = await getUserRepository().findOneBy({
       id: snippetData.user_id,
     });
 
@@ -68,7 +71,7 @@ export class SnippetService {
       throw new Error("Utilisateur non trouvé");
     }
 
-    const language = await languageRepository.findOneBy({
+    const language = await getLanguageRepository().findOneBy({
       id: snippetData.languageId,
     });
 

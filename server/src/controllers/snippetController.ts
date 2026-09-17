@@ -14,22 +14,26 @@ export const getSnippets: RequestHandler = async (
   }
 };
 
-export const getSnippetById = async (
-  req: Request<{ id: string }>,
-  res: Response,
-) => {
+type IdParams = {
+  id: string;
+};
+
+export const getSnippetById: RequestHandler<IdParams> = async (req, res) => {
   const id = parseInt(req.params.id, 10);
-  if (isNaN(id)) {
-    return res.status(400).json({ message: "Invalid snippet ID" });
+  if (Number.isNaN(id)) {
+    res.status(400).json({ message: "Invalid snippet ID" });
+    return;
   }
 
   try {
     const snippet = await SnippetService.getById(id);
     if (!snippet) {
-      return res.status(404).json({ message: "Snippet not found" });
+      res.status(404).json({ message: "Snippet not found" });
+      return;
     }
     res.json(snippet);
-  } catch (e) {
+  } catch (error) {
+    console.error("Erreur récupération snippet :", error);
     res.status(500).json({ message: "Internal server error" });
   }
 };

@@ -23,7 +23,7 @@ export default function AddASnippet() {
   useEffect(() => {
     const getLanguages = async () => {
       try {
-        const response = await api.get(`/languages`);
+        const response = await api.get("/languages");
         const data = response.data;
         setLanguages(data);
       } catch (error) {
@@ -59,7 +59,7 @@ export default function AddASnippet() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!title || !code || !message) {
+    if (!title.trim() || !code.trim() || !message.trim()) {
       toast.error("Tous les champs doivent être remplis.");
       return;
     }
@@ -70,7 +70,7 @@ export default function AddASnippet() {
     }
 
     try {
-      const response = await api.post(`/snippets`, {
+      const response = await api.post("/snippets", {
         title,
         code,
         message,
@@ -115,10 +115,11 @@ export default function AddASnippet() {
           <p>Ajoute ton titre</p>
           <button
             type="button"
+            aria-label="Ajouter un titre"
             className="hover:scale-110 transition"
             onClick={() => setShowTitleInput((prev) => !prev)}
           >
-            <img src={cross} width={20} alt="Ajouter un titre" />
+            <img src={cross} width={20} alt="" />
           </button>
         </div>
 

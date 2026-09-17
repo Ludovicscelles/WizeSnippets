@@ -25,7 +25,7 @@ export class SnippetService {
         firstname: user.firstname,
         languageId: language.id,
         language: language.name,
-      })
+      }),
     );
   }
 
@@ -56,7 +56,11 @@ export class SnippetService {
   }
 
   static async create(snippetData: SnippetInputType): Promise<SnippetType> {
-    const user = await AppDataSource.getRepository(User).findOneBy({
+    const userRepository = AppDataSource.getRepository(User);
+    const languageRepository = AppDataSource.getRepository(Language);
+    const snippetRepository = AppDataSource.getRepository(Snippet);
+
+    const user = await userRepository.findOneBy({
       id: snippetData.user_id,
     });
 
@@ -64,7 +68,7 @@ export class SnippetService {
       throw new Error("Utilisateur non trouvé");
     }
 
-    const language = await AppDataSource.getRepository(Language).findOneBy({
+    const language = await languageRepository.findOneBy({
       id: snippetData.languageId,
     });
 
@@ -72,7 +76,7 @@ export class SnippetService {
       throw new Error("Langage non trouvé");
     }
 
-    const snippet = AppDataSource.getRepository(Snippet).create({
+    const snippet = snippetRepository.create({
       title: snippetData.title,
       message: snippetData.message,
       code: snippetData.code,
@@ -82,8 +86,7 @@ export class SnippetService {
       language,
     });
 
-    const savedSnippet =
-      await AppDataSource.getRepository(Snippet).save(snippet);
+    const savedSnippet = await snippetRepository.save(snippet);
 
     return {
       id: savedSnippet.id,
@@ -94,7 +97,7 @@ export class SnippetService {
       user_id: user.id,
       pseudo: user.pseudo,
       firstname: user.firstname,
-      languageId: snippetData.languageId,
+      languageId: language.id,
       language: language.name,
     };
   }

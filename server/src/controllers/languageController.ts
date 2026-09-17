@@ -1,31 +1,36 @@
-import { Request, Response } from "express";
+import { RequestHandler } from "express";
 import { LanguageService } from "../service/LanguageService";
 
-export const getLanguages = async (req: Request, res: Response) => {
+export const getLanguages: RequestHandler = async (_req, res) => {
   try {
     const languages = await LanguageService.getAll();
     res.json(languages);
-  } catch (e) {
+  } catch (error) {
+    console.error("Erreur récupération des langages", error);
     res.status(500).json({ message: "Internal server error" });
   }
 };
 
-export const getLanguageById = async (
-  req: Request<{ id: string }>,
-  res: Response
-) => {
+type IdParams = {
+  id: string;
+};
+
+export const getLanguageById: RequestHandler<IdParams> = async (req, res) => {
   const id = parseInt(req.params.id, 10);
-  if (isNaN(id)) {
-    return res.status(400).json({ message: "Invalid language ID" });
+  if (Number.isNaN(id)) {
+    res.status(400).json({ message: "Invalid language ID" });
+    return;
   }
 
   try {
     const language = await LanguageService.getById(id);
     if (!language) {
-      return res.status(404).json({ message: "Language not found" });
+      res.status(404).json({ message: "Language not found" });
+      return;
     }
     res.json(language);
-  } catch (e) {
+  } catch (error) {
+    console.error("Erreur récupération du langage", error);
     res.status(500).json({ message: "Internal server error" });
   }
 };

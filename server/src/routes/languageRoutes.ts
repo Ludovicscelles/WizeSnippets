@@ -1,4 +1,4 @@
-import { Router, RequestHandler } from "express";
+import { Router } from "express";
 import {
   getLanguages,
   getLanguageById,
@@ -7,6 +7,6 @@ import {
 const router = Router();
 
 router.get("/", getLanguages);
-router.get("/:id", getLanguageById as unknown as RequestHandler);
+router.get("/:id", getLanguageById);
 
 export default router;

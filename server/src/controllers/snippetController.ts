@@ -1,19 +1,22 @@
-import { Request, Response } from "express";
+import { Request, Response, RequestHandler } from "express";
 import { SnippetService } from "../service/SnippetService";
 
-export const getSnippets = async (req: Request, res: Response) => {
+export const getSnippets: RequestHandler = async (
+  req: Request,
+  res: Response,
+) => {
   try {
     const snippets = await SnippetService.getAll();
     res.json(snippets);
   } catch (e) {
-    console.error("Erreur dans getSnippets:", e); 
+    console.error("Erreur dans getSnippets:", e);
     res.status(500).json({ message: "Internal server error" });
   }
 };
 
 export const getSnippetById = async (
   req: Request<{ id: string }>,
-  res: Response
+  res: Response,
 ) => {
   const id = parseInt(req.params.id, 10);
   if (isNaN(id)) {
@@ -31,22 +34,19 @@ export const getSnippetById = async (
   }
 };
 
-export const createSnippet = async (
+export const createSnippet: RequestHandler = async (
   req: Request<
     {},
     {},
     { title: string; message: string; code: string; languageId: number }
   >,
-  res: Response
+  res: Response,
 ) => {
-  const { title, message, code } = req.body;
-
-  if (!title || !message || !code) {
-    return res.status(400).json({ message: "All fields are required" });
-  }
+  const { title, message, code, languageId } = req.body;
 
   if (!req.user) {
-    return res.status(401).json({ message: "Non autorisé" });
+    res.status(401).json({ message: "Non autorisé" });
+    return;
   }
 
   try {
@@ -54,12 +54,13 @@ export const createSnippet = async (
       title,
       message,
       code,
-      languageId: req.body.languageId || 1, // Default to a language ID if not provided
-      user_id: req.user.id, // Assuming req.user is set by authentication middleware
+      languageId,
+      user_id: req.user.id,
     };
     const newSnippet = await SnippetService.create(snippetData);
     res.status(201).json(newSnippet);
-  } catch (e) {
+  } catch (error) {
+    console.error("Erreur création snippet :", error);
     res.status(500).json({ message: "Internal server error" });
   }
 };

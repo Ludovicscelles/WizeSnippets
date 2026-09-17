@@ -75,7 +75,7 @@ int main() {
     std::cout << counter() << std::endl; // 1
     std::cout << counter() << std::endl; // 2
 }`,
-      message: "Comment fonctionnent les closures en JavaScript ?",
+      message: "Comment fonctionnent les closures en C++ ?",
       userId: userRefs["user5"],
       languageName: "C++",
       refName: "snippet5",
@@ -92,7 +92,7 @@ int main() {
 
     if (!user || !language) {
       console.warn(
-        `User ou langage manquant pour le snippet "${snippetData.title}"`
+        `User ou langage manquant pour le snippet "${snippetData.title}"`,
       );
       continue;
     }

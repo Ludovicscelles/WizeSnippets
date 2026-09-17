@@ -16,3 +16,5 @@ export interface RegisterInput {
 }
 
 export type PublicUserType = Omit<UserType, "password">;
+
+export type UserProfileType = Omit<UserType, "password" | "email">;

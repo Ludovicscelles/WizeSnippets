@@ -1,4 +1,4 @@
-import { Router, RequestHandler } from "express";
+import { Router } from "express";
 import {
   createSnippet,
   getSnippets,
@@ -25,7 +25,7 @@ router.post(
 router.post(
   "/:id/comment",
   authMiddleware,
-  createComment as unknown as RequestHandler,
+  createComment,
 );
 
 export default router;

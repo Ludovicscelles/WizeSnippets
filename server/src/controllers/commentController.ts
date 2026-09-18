@@ -1,4 +1,4 @@
-import { Request, Response, RequestHandler } from "express";
+import { RequestHandler } from "express";
 import { CommentService } from "../service/CommentService";
 
 export const getComments: RequestHandler = async (_req, res) => {
@@ -35,19 +35,32 @@ export const getCommentById: RequestHandler<IdParams> = async (req, res) => {
   }
 };
 
-export const createComment = async (
-  req: Request<{ id: string }, {}, { suggestedCode: string; message: string }>,
-  res: Response,
-) => {
+type CreateCommentBody = {
+  suggestedCode: string;
+  message: string;
+};
+
+export const createComment: RequestHandler<
+  IdParams,
+  unknown,
+  CreateCommentBody
+> = async (req, res) => {
   const { suggestedCode, message } = req.body;
   const snippetId = parseInt(req.params.id, 10);
 
+  if (Number.isNaN(snippetId)) {
+    res.status(400).json({ message: "Invalid snippet ID" });
+    return;
+  }
+
   if (!suggestedCode || !message) {
-    return res.status(400).json({ message: "Tous les champs sont requis" });
+    res.status(400).json({ message: "Tous les champs sont requis" });
+    return;
   }
 
   if (!req.user) {
-    return res.status(401).json({ message: "Non autorisé" });
+    res.status(401).json({ message: "Non autorisé" });
+    return;
   }
 
   try {
@@ -60,7 +73,8 @@ export const createComment = async (
 
     const newComment = await CommentService.create(commentData);
     res.status(201).json(newComment);
-  } catch (e) {
+  } catch (error) {
+    console.error("Erreur lors de la création du commentaire :", error);
     res.status(500).json({ message: "Erreur de serveur" });
   }
 };

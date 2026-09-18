@@ -1,42 +1,43 @@
-import { Request, Response } from "express";
+import { Request, Response, RequestHandler } from "express";
 import { CommentService } from "../service/CommentService";
 
-export const getComments = async (req: Request, res: Response) => {
+export const getComments: RequestHandler = async (_req, res) => {
   try {
     const comments = await CommentService.getAll();
     res.json(comments);
-  } catch (e) {
+  } catch (error) {
+    console.error("Erreur lors de la récupération des commentaires :", error);
     res.status(500).json({ message: "Internal server error" });
   }
 };
 
-export const getCommentById = async (
-  req: Request<{ id: string }>,
-  res: Response
-) => {
+type IdParams = {
+  id: string;
+};
+
+export const getCommentById: RequestHandler<IdParams> = async (req, res) => {
   const id = parseInt(req.params.id, 10);
-  if (isNaN(id)) {
-    return res.status(400).json({ message: "Invalid comment ID" });
+  if (Number.isNaN(id)) {
+    res.status(400).json({ message: "Invalid comment ID" });
+    return;
   }
 
   try {
     const comment = await CommentService.getById(id);
     if (!comment) {
-      return res.status(404).json({ message: "Comment not found" });
+      res.status(404).json({ message: "Comment not found" });
+      return;
     }
     res.json(comment);
-  } catch (e) {
+  } catch (error) {
+    console.error("Erreur récupération du commentaire", error);
     res.status(500).json({ message: "Internal server error" });
   }
 };
 
 export const createComment = async (
-  req: Request<
-    { id: string },
-    {},
-    { suggestedCode: string; message: string}
-  >,
-  res: Response
+  req: Request<{ id: string }, {}, { suggestedCode: string; message: string }>,
+  res: Response,
 ) => {
   const { suggestedCode, message } = req.body;
   const snippetId = parseInt(req.params.id, 10);
@@ -55,7 +56,6 @@ export const createComment = async (
       message,
       snippetId,
       userId: req.user.id,
-      
     };
 
     const newComment = await CommentService.create(commentData);
@@ -64,4 +64,3 @@ export const createComment = async (
     res.status(500).json({ message: "Erreur de serveur" });
   }
 };
-

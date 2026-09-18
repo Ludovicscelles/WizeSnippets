@@ -4,9 +4,11 @@ import { User } from "../entities/User";
 import { Comment } from "../entities/Comment";
 import { CommentType, CommentInputType } from "../models/Comment";
 
+const getCommentRepository = () => AppDataSource.getRepository(Comment);
+
 export class CommentService {
   static async getAll(): Promise<CommentType[]> {
-    const comments = await AppDataSource.getRepository(Comment).find({
+    const comments = await getCommentRepository().find({
       relations: ["user", "snippet"],
     });
     return comments.map(
@@ -16,13 +18,15 @@ export class CommentService {
         message,
         createdAt,
         userId: user.id,
+        userPseudo: user.pseudo,
+        userFirstname: user.firstname,
         snippetId: snippet.id,
-      })
+      }),
     );
   }
 
   static async getById(id: number): Promise<CommentType | null> {
-    const comment = await AppDataSource.getRepository(Comment).findOne({
+    const comment = await getCommentRepository().findOne({
       where: { id },
       relations: ["user", "snippet"],
     });
@@ -33,6 +37,8 @@ export class CommentService {
       message: comment.message,
       createdAt: comment.createdAt,
       userId: comment.user.id,
+      userPseudo: comment.user.pseudo,
+      userFirstname: comment.user.firstname,
       snippetId: comment.snippet.id,
     };
   }

@@ -6,7 +6,7 @@ export interface CommentType {
   snippetId: number;
   userId: number;
   userPseudo?: string;
-  userFirstname?: string;
+  userFirstname: string;
 }
 
 export type CommentInputType = {

@@ -1,10 +1,10 @@
-import { Router, RequestHandler } from "express";
+import { Router } from "express";
 import { getComments, getCommentById } from "../controllers/commentController";
 
 const router = Router();
 
 router.get("/", getComments);
 
-router.get("/:id", getCommentById as unknown as RequestHandler);
+router.get("/:id", getCommentById);
 
 export default router;

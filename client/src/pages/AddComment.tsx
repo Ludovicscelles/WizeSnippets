@@ -2,9 +2,7 @@ import cross from "../assets/cross_icon.svg";
 import { useState } from "react";
 import api from "../service/api";
 import { toast } from "react-toastify";
-import { useParams } from "react-router-dom";
-import { useLoaderData } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { useParams, useLoaderData, useNavigate } from "react-router-dom";
 import { Button } from "../components/ui/Button";
 
 export default function AddComment() {
@@ -32,7 +30,7 @@ export default function AddComment() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!suggestedCode || !message) {
+    if (!suggestedCode.trim() || !message.trim()) {
       toast.error("Tous les champs doivent être remplis.");
       return;
     }
@@ -43,19 +41,15 @@ export default function AddComment() {
     }
 
     try {
-      const response = await api.post(`/comments`, {
-        suggestedCode,
-        message,
-        snippetId: Number(id),
+      const response = await api.post(`/snippets/${id}/comment`, {
+        suggestedCode: suggestedCode.trim(),
+        message: message.trim(),
       });
       if (import.meta.env.DEV) {
         console.info("Détail du commentaire:", response.data);
       }
       toast.success("Commentaire ajouté avec succès !");
-      setSuggestedCode("");
-      setMessage("");
-      setShowSuggestedCodeInput(false);
-      setShowMessageInput(false);
+      navigate(`/snippets/${id}`);
     } catch (error) {
       console.error("Erreur:", error);
       toast.error("Une erreur est survenue lors de l'ajout du commentaire.");
@@ -63,21 +57,13 @@ export default function AddComment() {
   };
 
   const handleClose = () => {
-    setSuggestedCode("");
-    setMessage("");
-    setShowSuggestedCodeInput(false);
-    setShowMessageInput(false);
-    if (id) {
-      navigate(`/snippets/${id}`);
-    } else {
-      navigate("/snippets");
-    }
+    navigate(id ? `/snippets/${id}` : "/snippets");
   };
 
   return (
     <div className="max-w-md mx-auto mt-10 p-6 border-2 border-bluewize rounded-lg bg-black text-white">
       <h1 className="text-3xl font-bold text-center mb-2">
-        Snippets Commentaires{" "}
+        Snippets Commentaires
       </h1>
 
       <form className="space-y-6" onSubmit={handleSubmit}>

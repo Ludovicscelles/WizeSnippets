@@ -5,6 +5,8 @@ import { Comment } from "../entities/Comment";
 import { CommentType, CommentInputType } from "../models/Comment";
 
 const getCommentRepository = () => AppDataSource.getRepository(Comment);
+const getUserRepository = () => AppDataSource.getRepository(User);
+const getSnippetRepository = () => AppDataSource.getRepository(Snippet);
 
 export class CommentService {
   static async getAll(): Promise<CommentType[]> {
@@ -44,7 +46,9 @@ export class CommentService {
   }
 
   static async create(commentData: CommentInputType): Promise<CommentType> {
-    const user = await AppDataSource.getRepository(User).findOneBy({
+    const commentRepository = getCommentRepository();
+
+    const user = await getUserRepository().findOneBy({
       id: commentData.userId,
     });
 
@@ -52,7 +56,7 @@ export class CommentService {
       throw new Error("Utilisateur non trouvé");
     }
 
-    const snippet = await AppDataSource.getRepository(Snippet).findOneBy({
+    const snippet = await getSnippetRepository().findOneBy({
       id: commentData.snippetId,
     });
 
@@ -60,15 +64,14 @@ export class CommentService {
       throw new Error("Snippet non trouvé");
     }
 
-    const comment = AppDataSource.getRepository(Comment).create({
+    const comment = commentRepository.create({
       suggestedCode: commentData.suggestedCode,
       message: commentData.message,
       snippet,
       user,
     });
 
-    const savedComment =
-      await AppDataSource.getRepository(Comment).save(comment);
+    const savedComment = await commentRepository.save(comment);
 
     return {
       id: savedComment.id,

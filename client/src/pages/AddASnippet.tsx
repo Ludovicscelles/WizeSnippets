@@ -8,17 +8,17 @@ import { Button } from "../components/ui/Button";
 export default function AddASnippet() {
   const navigate = useNavigate();
 
-  const [showTitleInput, setShowTitleInput] = useState(false);
-  const [showCodeInput, setShowCodeInput] = useState(false);
-  const [showMessageInput, setShowMessageInput] = useState(false);
+  const [showTitleInput, setShowTitleInput] = useState<boolean>(false);
+  const [showCodeInput, setShowCodeInput] = useState<boolean>(false);
+  const [showMessageInput, setShowMessageInput] = useState<boolean>(false);
 
-  const [title, setTitle] = useState("");
-  const [code, setCode] = useState("");
-  const [message, setMessage] = useState("");
+  const [title, setTitle] = useState<string>("");
+  const [code, setCode] = useState<string>("");
+  const [message, setMessage] = useState<string>("");
   const [languages, setLanguages] = useState<{ id: number; name: string }[]>(
     [],
   );
-  const [selectedLanguage, setSelectedLanguage] = useState<string | null>(null);
+  const [selectedLanguage, setSelectedLanguage] = useState<string>("");
 
   useEffect(() => {
     const getLanguages = async () => {
@@ -71,9 +71,9 @@ export default function AddASnippet() {
 
     try {
       const response = await api.post("/snippets", {
-        title,
-        code,
-        message,
+        title: title.trim(),
+        code: code.trim(),
+        message: message.trim(),
         languageId: Number(selectedLanguage),
       });
 
@@ -82,13 +82,7 @@ export default function AddASnippet() {
       }
 
       toast.success("Snippet ajouté avec succès !");
-      setTitle("");
-      setCode("");
-      setMessage("");
-      setShowTitleInput(false);
-      setShowCodeInput(false);
-      setShowMessageInput(false);
-      setSelectedLanguage(null);
+      navigate("/snippets");
     } catch (error) {
       console.error("Erreur:", error);
       toast.error("Une erreur est survenue lors de l'ajout du snippet.");
@@ -96,13 +90,6 @@ export default function AddASnippet() {
   };
 
   const handleClose = () => {
-    setTitle("");
-    setCode("");
-    setMessage("");
-    setShowTitleInput(false);
-    setShowCodeInput(false);
-    setShowMessageInput(false);
-    setSelectedLanguage(null);
     navigate("/snippets");
   };
 
@@ -138,7 +125,7 @@ export default function AddASnippet() {
         <div>
           <label className="block text-center mb-2">Choisis ton langage</label>
           <select
-            value={selectedLanguage || ""}
+            value={selectedLanguage}
             onChange={handleChangeLanguage}
             className="w-full px-4 py-2 bg-black text-white border-2 border-bluewize rounded focus:outline-none focus:ring-2 focus:ring-bluewize"
           >

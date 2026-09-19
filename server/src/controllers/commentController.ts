@@ -53,11 +53,6 @@ export const createComment: RequestHandler<
     return;
   }
 
-  if (!suggestedCode || !message) {
-    res.status(400).json({ message: "Tous les champs sont requis" });
-    return;
-  }
-
   if (!req.user) {
     res.status(401).json({ message: "Non autorisé" });
     return;

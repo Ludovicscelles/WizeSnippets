@@ -7,6 +7,7 @@ export const passwordRule = Joi.string()
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+[\]{};':"\\|,.<>?]).+$/
   )
   .messages({
+    "string.base": "Le mot de passe doit être une chaîne de caractères",
     "string.min": "Le mot de passe doit contenir au moins 8 caractères",
     "string.max": "Le mot de passe ne doit pas dépasser 64 caractères",
     "string.pattern.base":
